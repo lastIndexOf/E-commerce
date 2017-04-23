@@ -1,2 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 master
+=======
+sdada
+dasdad
+asdasd
+a
+da
+da
+>>>>>>> dev
+new master and dev
