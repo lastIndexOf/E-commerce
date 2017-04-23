@@ -8,6 +8,9 @@ module.exports = router => {
    * 201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。
    * 202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）
    * 204 NO CONTENT - [DELETE]：用户删除数据成功。
+   * 301：永久重定向。
+   * 302：临时重定定向。
+   * 304：文件未更新, 用户使用缓存。
    * 400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。
    * 401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。
    * 403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。
