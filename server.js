@@ -1,10 +1,11 @@
 const
-	Koa = require('koa')
-  session = require('koa-session2'),
-  renderer = require('koa-views'),
-  bodyParser = require('koa-bodyparser'),
-  Router = require('koa-router'),
-  static = require('koa-static2')
+	Koa         =  require('koa')
+  session     =  require('koa-session2'),
+  renderer    =  require('koa-views'),
+  bodyParser  =  require('koa-bodyparser'),
+  Router      =  require('koa-router'),
+  static      =  require('koa-static2')
+	mongoose    =  require('mongoose')
 
 const config = require('./config.js').serverConfig
 const app = new Koa()
@@ -13,6 +14,10 @@ const router = new Router()
 const render = renderer('./app/view', {
 	map: { html: 'pug' },
 	extension: 'pug'
+})
+
+mongoose.connect('mongodb://localhost:27017/commerce', () => {
+	console.log('connect to mongoDB success!')
 })
 
 require('./router/router.js')(router)

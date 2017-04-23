@@ -61,7 +61,7 @@ gulp.task('watch', () => {
 	gulp.watch('app/styl/*.styl', ['cssreload'])
 	gulp.watch('app/es6/*.js', ['reload'])
 	gulp.watch('app/view/*.*', reload)
-	gulp.watch('app/view/html/*.*', reload)
+	gulp.watch('app/view/html/**/*.*', reload)
 })
 
 

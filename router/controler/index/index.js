@@ -5,6 +5,6 @@ const
 
 module.exports = class Index {
   static async homeAction(ctx) {
-    await send(ctx, '/app/view/html/home.html')
+    await send(ctx, '/app/view/html/front/home.html')
   }
 }

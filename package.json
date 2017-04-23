@@ -9,6 +9,7 @@
   "author": "zfk",
   "license": "ISC",
   "dependencies": {
+    "animejs": "^2.0.2",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "next",
@@ -16,8 +17,12 @@
     "koa-session2": "^2.2.3",
     "koa-static2": "^0.1.8",
     "koa-views": "^6.0.1",
+    "mongoose": "^4.9.5",
     "pug": "^2.0.0-beta11",
-    "superagent": "^3.5.2"
+    "scrollreveal": "^3.3.5",
+    "superagent": "^3.5.2",
+    "sweetalert2": "^6.6.1",
+    "vue": "^2.2.6"
   },
   "devDependencies": {
     "babel-plugin-transform-runtime": "^6.22.0",
@@ -46,7 +51,6 @@
     "morgan": "^1.7.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "vue": "^2.2.6",
     "watchify": "^3.9.0"
   }
 }
