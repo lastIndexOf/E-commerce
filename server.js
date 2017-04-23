@@ -7,7 +7,7 @@ const
   static      =  require('koa-static2')
 	mongoose    =  require('mongoose')
 
-const config = require('./config.js').serverConfig
+const config = require('./config.js')
 const app = new Koa()
 
 const router = new Router()
@@ -16,7 +16,7 @@ const render = renderer('./app/view', {
 	extension: 'pug'
 })
 
-mongoose.connect('mongodb://localhost:27017/commerce', () => {
+mongoose.connect(config.db.url, () => {
 	console.log('connect to mongoDB success!')
 })
 
@@ -29,7 +29,7 @@ app
 	.use(router.routes())
 	.use(router.allowedMethods())
 
-app.listen(config.port, () => {
+app.listen(config.serverConfig.port, () => {
 	console.log(`server running at http://localhost:${ config.port }`)
 })
 
