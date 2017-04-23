@@ -1,11 +1,10 @@
-import swal from 'sweetalert2'
+import Vue from 'vue/dist/vue.js'
 
 
-swal({
-  title: 'title',
-  text: 'hello, world',
-  showCancelButton: true,
-  confirmButtonText: 'yes',
-  cancelButtonText: 'no',
-  timer: 3000
-})
+new Vue({
+  data () {
+    return {
+      message: 'hello, world'
+    }
+  }
+}).$mount('#app')

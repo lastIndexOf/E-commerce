@@ -1,5 +1,4 @@
 const
-  path            =  require('path'),
   { send }        =  require('../../utils'),
   BaseContructor  =  require('./base.js')
 
@@ -13,5 +12,8 @@ module.exports = class Index extends BaseContructor {
     await send(ctx, '/app/view/html/front/vedio.html')
   }
 
+  static async testAction(ctx) {
+    await send(ctx, '/app/view/html/front/css.html')
+  }
 
 }

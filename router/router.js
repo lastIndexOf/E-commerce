@@ -25,6 +25,7 @@ module.exports = router => {
    *  访问URL   
    */
    router.get('/home', Index.homeAction)
+   router.get('/test', Index.testAction)
   
   /**
    *  User 接口
