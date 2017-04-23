@@ -12,6 +12,7 @@
     "animejs": "^2.0.2",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^2.0.1",
     "koa-router": "next",
     "koa-send": "^3.3.0",
     "koa-session2": "^2.2.3",
