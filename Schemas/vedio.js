@@ -11,8 +11,12 @@ let vedioSchema = new Schema({
 	author: {
 		type: Schema.Types.ObjectId,
 		required: true,
-		ref: 'User'
+		ref: 'Master'
 	},
+	type: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Type'
+	}],
 	meta: {
 		createdAt: {
 			type: Date,

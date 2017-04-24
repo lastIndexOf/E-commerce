@@ -1,0 +1,58 @@
+.new-container {
+  width: 100%;
+}
+.target:not(:target) {
+  display: none;
+}
+.target:target {
+  display: inherit;
+}
+.wrapper {
+  margin-bottom: 24px;
+}
+.checkbox {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.handle-wrapper {
+  margin-bottom: 12px;
+}
+.target-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 6px 12px;
+  color: #fff;
+  background-color: #428bca;
+  border-radius: 6px;
+  transform: translate3d(-50%, -50%, 0);
+  transition: all .8s;
+  visibility: hidden;
+  opacity: 0;
+}
+.image-input-wrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align :top;
+  border: 1px solid rgba(42, 42, 42, .6);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.image-input-wrapper::after {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  font-size: 32px;
+  color: rgb(42, 42, 42);
+}
+.image-input-wrapper > .showPicReader {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 9999;
+}

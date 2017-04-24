@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Teenlong 后台管理</title>
+  <link rel="stylesheet" href="../../static/bootstrap/dist/css/bootstrap.css">
+  <!-- <link rel="stylesheet" href="./index.css"> -->
+  <link rel="stylesheet" href="../../static/styles/css/main.css">
+  <link rel="stylesheet" href="../../static/styles/css/sweetalert2.min.css">
+</head>
+<body>
+  <!--navbar-->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+        <a class="navbar-brand" href="./">Teenlong</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="../index/index.html?">用户<span class="sr-only">(current)</span></a></li>
+          <li><a href="../local/local.html?">地区</a></li>
+          <li><a href="../room/room.html?">房间</a></li>
+          <li class="active"><a href="../others/others.html?">others</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">One</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="javascript:;">
+              欢迎你, <span id="adminUsrName"></span>
+              <span href="javascript:;" id="singOut"> 退出登录</span>
+            </a>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <!-- container -->
+  <div class="new-container">
+    <!-- nav - small -->
+    <div class="col-sm-2 left-menu">
+      <ul class="nav nav-pills nav-stacked">
+        <li class="li-target active" data-type="1" role="presentation"><a href="#target1">用户收藏信息</a></li>
+        <li class="li-target" data-type="2" role="presentation"><a href="#target2">用户浏览信息</a></li>
+        <li class="li-target" data-type="3" role="presentation"><a href="#target3">用户登录信息</a></li>
+      </ul>
+    </div>
+    <!-- main wrapper -->
+    <div class="col-sm-10 right-content">
+
+      <div id="target1" class="target">
+        <h4>用户收藏信息 &gt;</h4>
+        <!-- search, lots of operation -->
+        <div class="wrapper">
+          <form class="form-inline" id="target1-searchForm">
+            <div class="form-group">
+              <label for="exampleInputName2">关键字</label>
+              <input type="text"
+                class="form-control"
+                id="exampleInputName2"
+                placeholder="请输入关键字">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail2">类型</label>
+              <select
+                class="form-control"
+                style="min-width: 64px;"
+                id="target1-keyWords"
+                name="keyWords">
+              </select>
+            </div>
+            <button type="button" class="btn btn-default" id="target1-searchForKey">搜索</button>
+          </form>
+        </div>
+        <!-- multiple handle -->
+        <div class="handle-wrapper">
+          <!-- <button id="target1-mul-remove"
+            class="btn btn-warning">批量删除</button> -->
+            <!-- <button id="target1-add"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#addDialog1">增加</button> -->
+          <!-- <button id="target1-add"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#addDialog">增加</button> -->
+        </div>
+        <!-- table wrapper -->
+        <div class="table-responsive">
+          <form class="target-form">
+            <table id="target1-table" class="table table-bordered .table-hover">
+              <thead>
+                <tr>
+                  <td class="text-center">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="allSelect">全选
+                      </label>
+                    </div>
+                  </td>
+                  <td>照片Id</td>
+                  <td>房间名称</td>
+                  <td>用户名称</td>
+                  <td>用户昵称</td>
+                </tr>
+              </thead>
+              <tbody id="target1-body">
+
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group target1-btns" style="float: right;">
+            <button class="btn btn-default" data-page="0"><<</button>
+            <button class="btn btn-default" data-page="1">1</button>
+            <button class="btn btn-default" data-page="2">2</button>
+            <button class="btn btn-default" data-page="3">3</button>
+            <button class="btn btn-default" data-page="-1">>></button>
+          </div>
+        </div>
+      </div>
+      <!-- *************************************************** -->
+      <div id="target2" class="target">
+        <h4>用户浏览信息 &gt;</h4>
+        <!-- search, lots of operation -->
+        <div class="wrapper">
+          <form class="form-inline" id="target2-searchForm">
+            <div class="form-group">
+              <label for="exampleInputName2">关键字</label>
+              <input type="text"
+                class="form-control"
+                id="exampleInputName2"
+                placeholder="请输入关键字">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail2">类型</label>
+              <select
+                class="form-control"
+                style="min-width: 64px;"
+                id="target2-keyWords"
+                name="keyWords">
+              </select>
+            </div>
+            <button type="button" class="btn btn-default" id="target2-searchForKey">搜索</button>
+          </form>
+        </div>
+        <!-- multiple handle -->
+        <div class="handle-wrapper">
+          <!-- <button id="target2-mul-remove" class="btn btn-warning">批量删除</button> -->
+          <!-- <button id="target2-add"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#addDialog2">增加</button> -->
+        </div>
+        <!-- table wrapper -->
+        <div class="table-responsive">
+          <form class="target-form">
+            <table id="target2-table" class="table table-bordered .table-hover">
+              <thead>
+                <tr>
+                  <td class="text-center">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="allSelect">全选
+                      </label>
+                    </div>
+                  </td>
+                  <td>记录Id</td>
+                  <td>房屋Id</td>
+                  <td>当天最后浏览时间</td>
+                  <td>用户Id</td>
+                  <td>记录日期</td>
+                  <td>当天浏览次数</td>
+                </tr>
+              </thead>
+              <tbody id="target2-body">
+
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group target2-btns" style="float: right;">
+            <button class="btn btn-default" data-page="0"><<</button>
+            <button class="btn btn-default" data-page="1">1</button>
+            <button class="btn btn-default" data-page="2">2</button>
+            <button class="btn btn-default" data-page="3">3</button>
+            <button class="btn btn-default" data-page="-1">>></button>
+          </div>
+        </div>
+      </div>
+      <!-- *************************************************** -->
+      <div id="target3" class="target">
+        <h4>用户登录信息 &gt;</h4>
+        <!-- search, lots of operation -->
+        <div class="wrapper">
+          <form class="form-inline" id="target3-searchForm">
+            <div class="form-group">
+              <label for="exampleInputName3">关键字</label>
+              <input type="text"
+                class="form-control"
+                id="exampleInputName3"
+                placeholder="请输入关键字">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail2">类型</label>
+              <select
+                class="form-control"
+                style="min-width: 64px;"
+                id="target3-keyWords"
+                name="keyWords">
+              </select>
+            </div>
+            <button type="button"
+              class="btn btn-default"
+              id="target3-searchForKey">搜索</button>
+          </form>
+        </div>
+        <!-- multiple handle -->
+        <div class="handle-wrapper">
+          <!-- <button id="target3-mul-remove" class="btn btn-warning">批量删除</button>
+          <button id="target3-add"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#addDialog3">增加</button> -->
+        </div>
+        <!-- table wrapper -->
+        <div class="table-responsive">
+          <form class="target-form">
+            <table id="target3-table" class="table table-bordered .table-hover">
+              <thead>
+                <tr>
+                  <td class="text-center">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="allSelect">全选
+                      </label>
+                    </div>
+                  </td>
+                  <td>记录Id</td>
+                  <td>登录Ip</td>
+                  <td>当天最后登录时间</td>
+                  <td>用户Id</td>
+                  <td>记录日期</td>
+                  <td>当天登录次数</td>
+                </tr>
+              </thead>
+              <tbody id="target3-body">
+
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group target3-btns" style="float: right;">
+            <button class="btn btn-default" data-page="0"><<</button>
+            <button class="btn btn-default" data-page="1">1</button>
+            <button class="btn btn-default" data-page="2">2</button>
+            <button class="btn btn-default" data-page="3">3</button>
+            <button class="btn btn-default" data-page="-1">>></button>
+          </div>
+        </div>
+      </div>
+      <!-- *************************************************** -->
+    </div>
+  </div>
+
+  <!-- dialog -->
+  <!-- <div class="modal fade" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">警告</h4>
+        </div>
+        <div class="modal-body">
+          你确定要删除该数据吗
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+             class="btn btn-default"
+             data-dismiss="modal"
+             id="noneDisplayremove">关闭</button>
+          <button type="button"
+            class="btn btn-danger"
+            onclick="removeOne(event)">删除</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- add content -->
+  <!-- <div class="modal fade" id="addDialog1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" id="target1-add-form">
+            <div class="form-group">
+              <label for="LandlordId" class="col-sm-2 control-label">房东Id</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="LandlordId"
+                  placeholder="LandlordId">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="PurposeId"
+                class="col-sm-2 control-label">房间类型Id</label>
+              <div class="col-sm-10">
+                <input type="text"
+                   class="form-control"
+                   name="PurposeId"
+                   placeholder="PurposeId">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ShowPic" class="col-sm-2 control-label">房子展示图片</label>
+              <div class="col-sm-10">
+                <div class="image-input-wrapper">
+                  <input type="file"
+                    class="form-control showPicReader"
+                    name="ShowPic"
+                    placeholder="ShowPic">
+                </div>
+                <img src=""
+                  alt="please chose image"
+                  width="200"
+                  style="margin-left: 32px;border-radius: 4px;"
+                  height="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Area" class="col-sm-2 control-label">房子面积</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Area"
+                  placeholder="Area">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="DistrictId" class="col-sm-2 control-label">房屋地区Id</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="DistrictId"
+                  placeholder="DistrictId">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Title" class="col-sm-2 control-label">房屋题目</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Title"
+                  placeholder="Title">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Latitude" class="col-sm-2 control-label">房屋所在纬度</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Latitude"
+                  placeholder="Latitude(double)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Longitude" class="col-sm-2 control-label">房屋所在经度</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Longitude"
+                  placeholder="Longitude(double)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Address" class="col-sm-2 control-label">房屋详细地址</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Address"
+                  placeholder="Address">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Introduce" class="col-sm-2 control-label">房屋介绍</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Introduce"
+                  placeholder="Introduce">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="RoomNumber" class="col-sm-2 control-label">房间数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="RoomNumber"
+                  placeholder="RoomNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="LivingRoomNumber" class="col-sm-2 control-label">客厅数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="LivingRoomNumber"
+                  placeholder="LivingRoomNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="BathroomNumber" class="col-sm-2 control-label">洗漱间数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="BathroomNumber"
+                  placeholder="BathroomNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="KitchenNumber" class="col-sm-2 control-label">厨房数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="KitchenNumber"
+                  placeholder="KitchenNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="BalconyNumber" class="col-sm-2 control-label">阳台数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="BalconyNumber"
+                  placeholder="BalconyNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="PeopleNumber" class="col-sm-2 control-label">宜居人数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="PeopleNumber"
+                  placeholder="PeopleNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="RentType" class="col-sm-2 control-label">出租类型</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="RentType"
+                  placeholder="(0：整套出租，1：单间出租，2：合租房间)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Type" class="col-sm-2 control-label">房屋种类</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="Type"
+                  placeholder="(0:其他,1:一居室,2:二居室,3:三居室,4:四居室,5:别墅)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Deposit" class="col-sm-2 control-label">押金</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="Deposit"
+                  placeholder="Deposit(单位:元)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Deadline" class="col-sm-2 control-label">房屋展示截止日期</label>
+              <div class="col-sm-10">
+                <input type="date"
+                  class="form-control"
+                  name="Deadline"
+                  placeholder="Deadline(若当前时间大于截止时间则表示当前不允许显示)">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary"
+            type="button"
+            id="addNewFloor1">添加</button>
+          <button type="button"
+            class="btn btn-danger"
+            data-dismiss="modal"
+            id="target1-add-close">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addDialog2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" id="target2-add-form">
+            <div class="form-group">
+              <label for="HouseId" class="col-sm-2 control-label">房屋Id</label>
+              <div class="col-sm-10">
+                <input type="email"
+                  class="form-control"
+                  name="HouseId"
+                  placeholder="HouseId">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Url" class="col-sm-2 control-label">照片</label>
+              <div class="col-sm-10">
+                <div class="image-input-wrapper">
+                  <input type="file"
+                    class="form-control showPicReader"
+                    name="Url"
+                    placeholder="Url">
+                </div>
+                <img src=""
+                  alt="please chose image"
+                  width="200"
+                  style="margin-left: 32px;border-radius: 4px;"
+                  height="200">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary"
+            type="button"
+            id="addNewFloor2">添加</button>
+          <button type="button"
+            class="btn btn-danger"
+            data-dismiss="modal"
+            id="target2-add-close">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addDialog3">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" id="target3-add-form">
+            <div class="form-group">
+              <label for="Name" class="col-sm-2 control-label">分类名称</label>
+              <div class="col-sm-10">
+                <input type="text"
+                class="form-control"
+                name="Name"
+                placeholder="Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Img" class="col-sm-2 control-label">分类图标</label>
+              <div class="col-sm-10">
+                <div class="image-input-wrapper">
+                  <input type="file"
+                  class="form-control showPicReader"
+                  name="Img"
+                  placeholder="Img">
+                </div>
+                <img src=""
+                alt="please chose image"
+                width="200"
+                style="margin-left: 32px;border-radius: 4px;"
+                height="200">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary"
+          type="button"
+          id="addNewFloor3">添加</button>
+          <button type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+          id="target3-add-close">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- edit content -->
+  <!-- <div class="modal fade" id="editDialog1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" id="target1-edit-form">
+            <div class="form-group">
+              <label for="LandlordId" class="col-sm-2 control-label">房东Id</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="LandlordId"
+                  placeholder="LandlordId">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="PurposeId"
+                class="col-sm-2 control-label">房间类型Id</label>
+              <div class="col-sm-10">
+                <input type="text"
+                   class="form-control"
+                   name="PurposeId"
+                   placeholder="PurposeId">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ShowPic" class="col-sm-2 control-label">房子展示图片</label>
+              <div class="col-sm-10">
+                <div class="image-input-wrapper">
+                  <input type="file"
+                    class="form-control showPicReader"
+                    name="ShowPic"
+                    placeholder="ShowPic">
+                </div>
+                <img src=""
+                  alt="please chose image"
+                  width="200"
+                  style="margin-left: 32px;border-radius: 4px;"
+                  height="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Area" class="col-sm-2 control-label">房子面积</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Area"
+                  placeholder="Area">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="DistrictId" class="col-sm-2 control-label">房屋地区Id</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="DistrictId"
+                  placeholder="DistrictId">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Title" class="col-sm-2 control-label">房屋题目</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Title"
+                  placeholder="Title">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Latitude" class="col-sm-2 control-label">房屋所在纬度</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Latitude"
+                  placeholder="Latitude(double)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Longitude" class="col-sm-2 control-label">房屋所在经度</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Longitude"
+                  placeholder="Longitude(double)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Address" class="col-sm-2 control-label">房屋详细地址</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Address"
+                  placeholder="Address">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Introduce" class="col-sm-2 control-label">房屋介绍</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="Introduce"
+                  placeholder="Introduce">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="RoomNumber" class="col-sm-2 control-label">房间数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="RoomNumber"
+                  placeholder="RoomNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="LivingRoomNumber" class="col-sm-2 control-label">客厅数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="LivingRoomNumber"
+                  placeholder="LivingRoomNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="BathroomNumber" class="col-sm-2 control-label">洗漱间数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="BathroomNumber"
+                  placeholder="BathroomNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="KitchenNumber" class="col-sm-2 control-label">厨房数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="KitchenNumber"
+                  placeholder="KitchenNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="BalconyNumber" class="col-sm-2 control-label">阳台数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="BalconyNumber"
+                  placeholder="BalconyNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="PeopleNumber" class="col-sm-2 control-label">宜居人数</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="PeopleNumber"
+                  placeholder="PeopleNumber">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="RentType" class="col-sm-2 control-label">出租类型</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="RentType"
+                  placeholder="(0：整套出租，1：单间出租，2：合租房间)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Type" class="col-sm-2 control-label">房屋种类</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="Type"
+                  placeholder="(0:其他,1:一居室,2:二居室,3:三居室,4:四居室,5:别墅)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Deposit" class="col-sm-2 control-label">押金</label>
+              <div class="col-sm-10">
+                <input type="number"
+                  class="form-control"
+                  name="Deposit"
+                  placeholder="Deposit(单位:元)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Deadline" class="col-sm-2 control-label">房屋展示截止日期</label>
+              <div class="col-sm-10">
+                <input type="date"
+                  class="form-control"
+                  name="Deadline"
+                  placeholder="Deadline(若当前时间大于截止时间则表示当前不允许显示)">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary"
+            type="button"
+            id="editOldFloor1">添加</button>
+          <button type="button"
+            class="btn btn-danger"
+            data-dismiss="modal"
+            id="target1-edit-close">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="editDialog2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" id="target2-edit-form">
+            <div class="form-group">
+              <label for="HouseId" class="col-sm-2 control-label">房屋Id</label>
+              <div class="col-sm-10">
+                <input type="email"
+                class="form-control"
+                name="HouseId"
+                placeholder="HouseId">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Url" class="col-sm-2 control-label">照片</label>
+              <div class="col-sm-10">
+                <div class="image-input-wrapper">
+                  <input type="file"
+                  class="form-control showPicReader"
+                  name="Url"
+                  placeholder="Url">
+                </div>
+                <img src=""
+                alt="please chose image"
+                width="200"
+                style="margin-left: 32px;border-radius: 4px;"
+                height="200">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary"
+          type="button"
+          id="editOldFloor2">添加</button>
+          <button type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+          id="target2-edit-close">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="editDialog3">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" id="target3-edit-form">
+            <div class="form-group">
+              <label for="Name" class="col-sm-2 control-label">分类名称</label>
+              <div class="col-sm-10">
+                <input type="text"
+                class="form-control"
+                name="Name"
+                placeholder="Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Img" class="col-sm-2 control-label">分类图标</label>
+              <div class="col-sm-10">
+                <div class="image-input-wrapper">
+                  <input type="file"
+                  class="form-control showPicReader"
+                  name="Img"
+                  placeholder="Img">
+                </div>
+                <img src=""
+                alt="please chose image"
+                width="200"
+                style="margin-left: 32px;border-radius: 4px;"
+                height="200">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary"
+          type="button"
+          id="editOldFloor3">添加</button>
+          <button type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+          id="target3-edit-close">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- alert -->
+  <div class="target-alert">
+    <i class="glyphicon glyphicon-ok"></i>
+  </div>
+
+  <!-- table template -->
+  <script id='target1-table-template' type='text/template'>
+    <% for (var i = 0, len = ResultList.length; i < len; i++) { %>
+      <tr>
+        <th class="text-center">
+          <div class="checkbox">
+            <label>
+              <input
+                class="childbox"
+                type="checkbox"
+                value="<%= ResultList[i].Id %>">选择
+            </label>
+          </div>
+        </th>
+        <% for (var key in ResultList[i]) { %>
+          <td class="text-center">
+            <% if (key === 'HeadImgUrl'
+              || key === 'ShowPicUrl'
+              || key === 'Url') { %>
+              <img
+                width="60"
+                height="60"
+                src="<%= ResultList[i][key] %>"
+                alt="error"/>
+            <% } else if (key === 'HeadImgUrl') { %>
+              <%= ResultList[i][key] === 0 ? '保密' : (ResultList[i][key] === 1 ? '男' : '女') %>
+            <% } else if (key === ' IsThroughAudit') { %>
+              <%= ResultList[i][key] === 0 ? '未通过' : '通过' %>
+            <% } else { %>
+              <%= ResultList[i][key] %>
+            <% } %>
+          </td>
+        <% } %>
+      </tr>
+    <% } %>
+  </script>
+
+  <!-- else -->
+  <!-- <td>
+    <button class="btn btn-primary"
+    data-id="<%= ResultList[i].Id %>"
+    data-type="<%= type %>"
+    data-toggle="modal"
+    data-target="#editDialog<%= type %>"
+    onclick="editId=$(this).data('id');
+    editType=$(this).data('type');
+    editDate(editType, editId)">编辑</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-danger"
+    data-id="<%= ResultList[i].Id %>"
+    data-type="<%= type %>"
+    data-toggle="modal"
+    data-target="#myModal"
+    onclick="removeId=$(this).data('id');
+    removeType=$(this).data('type')">删除</button>
+  </td> -->
+
+
+  <!-- scripts -->
+  <script src="../../static/jquery/dist/jquery.js"></script>
+  <script src="../../static/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="../../static/js/ejs.js"></script>
+  <script src="../../static/js/sweetalert2.min.js"></script>
+  <script src="../../static/js/hash.js"></script>
+  <script src="./others.js"></script>
+</body>
+</html>
