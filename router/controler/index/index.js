@@ -16,4 +16,10 @@ module.exports = class Index extends BaseContructor {
     await send(ctx, '/app/view/html/front/css.html')
   }
 
+  static async notFoundAction(ctx) {
+    if (ctx.status === 404) {
+       ctx.body = '404 Not Found'
+     }
+  }
+
 }

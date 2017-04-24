@@ -1,1 +1,1 @@
-{"version":3,"sources":["css.js"],"names":["title","text","timer"],"mappings":";;AAAA;;;;AAEA;;;;;;AAEA,0BAAK;AACHA,SAAO,OADJ;AAEHC,QAAM,cAFH;AAGHC,SAAO;AAHJ,CAAL","file":"../css.js","sourcesContent":["import swal from 'sweetalert2'\n\nimport Vue from 'vue/dist/vue.js'\n\nswal({\n  title: 'title',\n  text: 'hello, world',\n  timer: 2000\n})"]}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"../css.js","sourcesContent":[]}

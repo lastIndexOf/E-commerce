@@ -25,8 +25,10 @@ module.exports = router => {
    *  访问URL   
    */
    router.get('/home', Index.homeAction)
-   router.get('/test', Index.testAction)
+   router.get('/test/:id', Index.testAction)
   
+  //  错误404页面
+   router.get('*', Index.notFoundAction)
   /**
    *  User 接口
    */
