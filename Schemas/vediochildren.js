@@ -3,16 +3,24 @@ const
 	Schema    =  mongoose.Schema
 
 
-let typeSchema = new Schema({
-  name: {
-    Type: String,
-    required: true
-  },
-  vedios: [{
+let vedioChildrenSchema = new Schema({
+	title: {
+		type: String,
+		required: true
+	},
+	parent: {
     type: Schema.Types.ObjectId,
     ref: 'Vedio'
+  },
+  src: {
+    type: String,
+    required: true
+  },
+  comment: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment'
   }],
-  meta: {
+	meta: {
 		createdAt: {
 			type: Date,
 			default: new Date()
@@ -24,7 +32,7 @@ let typeSchema = new Schema({
 	}
 })
 
-typeSchema.pre('save', function (next) {
+vedioChildrenSchema.pre('save', function (next) {
 	if (this.isNew) {
 		this.meta.updateAt = this.meta.createdAt = new Date()
 	} else {
@@ -32,8 +40,8 @@ typeSchema.pre('save', function (next) {
 	}
 })
 
-typeSchema.methods = {}
-typeSchema.statics = {}
+vedioChildrenSchema.methods = {}
+vedioChildrenSchema.statics = {}
 
-module.exports = typeSchema
+module.exports = vedioChildrenSchema
 

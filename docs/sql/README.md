@@ -21,6 +21,7 @@ Schema: `vedio`
     totaltime:String => 该视频总时长
     diffculty:Number => 该视频难度(2高级|1中级|0初级)
     children:[ObjectId] => 每一章节对应的子视频
+    comment:[ObjectId] => 用户对该视频的评价
     promotion:String => 作者对该视频的介绍
     isthrough:Boolean => 是否通过审核
 ```
@@ -35,6 +36,16 @@ Schema: `vediochildren`
     comment:[ObjectId] => 该子章节对应的评论
 ```
 
+Schema: `comment`
+
+```
+    _id:ObjectId => id
+    vedio:ObjectId => 该评论所属视频
+    vediochildren:ObjectId => 该评论所属子视频
+    from:ObjectId => 该评论对应的评论人
+    content:String => 该评论内容
+```
+
 Schema: `type`
 
 ```
@@ -43,12 +54,12 @@ Schema: `type`
     vedios:[ObjectId] => 属于该分类的视频
 ```
 
-Schema: `User`
+Schema: `user`
 
 ```
     _id:ObjectId => id
     password:String => bcrypt加密后的密码串
-    nickname:String => 昵称
+    username:String => 昵称
     avatar:String => 头像url
     name:String => 姓名
     job:String => 工作岗位
@@ -63,13 +74,28 @@ Schema: `User`
     role:number(0) => 权限(默认0， 超级管理员>=50)
 ```
 
+Schema: `master`
+
+```
+    _id:ObjectId => id
+    password:String => bcrypt加密后的密码串
+    username:String => 昵称
+    avatar:String => 头像url
+    name:String => 姓名
+    job:String => 工作岗位
+    gender:Number => 性别(0|男|1女|2保密)
+    summary:String => 个人简介
+    own:[ObjectId] => 发布的视频
+    role:number(0) => 权限(默认0， 超级管理员>=50)
+```
+
 Schema: `admin`
 
 ```
     _id:ObjectId => id
     name:String => 姓名
     password:String => bcrypt加密后的密码串
-    nickname:String => 昵称
+    username:String => 昵称
     gender:Number => 性别(0|男|1女|2保密)
     role:number(50) => 权限(默认0， 超级管理员>=50)
 ```

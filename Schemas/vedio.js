@@ -8,6 +8,7 @@ let vedioSchema = new Schema({
 		type: String,
 		required: true
 	},
+	avatar: String,
 	author: {
 		type: Schema.Types.ObjectId,
 		required: true,
@@ -17,6 +18,35 @@ let vedioSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Type'
 	}],
+	followers: [{
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	}],
+	summary: {
+		type: String,
+		default: '本视频网精心推荐...'
+	},
+	totaltime: {
+		type: String,
+		default: '0小时0分0秒'	
+	},
+	diffculty: {
+		type: Schema.Types.ObjectId,
+		default: 0
+	},
+	children: [{
+		type: Schema.Types.ObjectId,
+		ref: 'VedioChildren'
+	}],
+	comment: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Comment'
+	}],
+	promotion: String,
+	isthrough: {
+		type: Boolean,
+		default: false
+	},
 	meta: {
 		createdAt: {
 			type: Date,
