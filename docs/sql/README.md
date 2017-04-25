@@ -1,4 +1,4 @@
-# 数据库设计文件
+# 数据库设计文档
 
 - 每个`Schema`中都有一个`meta`字段
 ```
@@ -8,19 +8,39 @@
     }
 ```
 
-Schema: `Vedio`
+Schema: `vedio`
 
 ```
     _id:ObjectId => id
     title:String => 该套视频标题
+    avatar:String => 该套视频的图标
     ahtuor:ObjectId => 该套视频作者
     type:[ObjectId] => 该视频所属类别
     followers:[ObjectId] => 关注改视频的用户
     summary:String => 该视频简介
     totaltime:String => 该视频总时长
     diffculty:Number => 该视频难度(2高级|1中级|0初级)
+    children:[ObjectId] => 每一章节对应的子视频
     promotion:String => 作者对该视频的介绍
     isthrough:Boolean => 是否通过审核
+```
+
+Schema: `vediochildren`
+
+```
+    _id:ObjectId => id
+    parent:ObjectId => 所属的父视频
+    title:String => 该子章节的标题
+    src:String => 该子章节对应的路径
+    comment:[ObjectId] => 该子章节对应的评论
+```
+
+Schema: `type`
+
+```
+    _id:ObjectId => id
+    name:String => 该分类名称
+    vedios:[ObjectId] => 属于该分类的视频
 ```
 
 Schema: `User`
