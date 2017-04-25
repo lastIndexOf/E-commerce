@@ -20,13 +20,20 @@ module.exports = router => {
    * 422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。
    * 500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。
    */
-  
+
   /**
-   *  访问URL   
+   *  访问URL
    */
    router.get('/', Index.homeAction)
    router.get('/test/:id', Index.testAction)
-  
+
+
+  // 后台管理页面
+  router.get('/admin/user', Index.adminUserAction)
+  router.get('/admin/location', Index.adminLocationAction)
+  router.get('/admin/vedio', Index.adminVedioAction)
+  router.get('/admin/other', Index.adminOtherAction)
+
   //  错误404页面
    router.get('*', Index.notFoundAction)
   /**
@@ -36,8 +43,8 @@ module.exports = router => {
   /**
    *  Admin 接口
    */
-  
-  
+
+
   /**
    *  Video 接口
    */
