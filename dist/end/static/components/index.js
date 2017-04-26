@@ -141,17 +141,10 @@ var editType
   function ajaxToDate(type) {
     switch (type) {
       case 1:
-        $.get('/teenlong/src/v1/user/user.php', {
-          Type: 1,
-          Keys: 'Id+OpenId+NickName+Sex+Name+Phone+HeadImgUrl+Deadline',
-          Page: page1,
-          PageSize: 10,
-          Search: {
-            OpenId: '',
-            Name: '',
-            Sex: '',
-            Phone: ''
-          }
+        $.get('/v1/api/users', {
+          page: page1,
+          limit: 10,
+          key: '_id+username+name+gender+avatar+phone+email+lastmodified'
         })
         .done(function (data) {
           data = JSON.parse(data)
@@ -164,23 +157,19 @@ var editType
           changePageBtns(Btns1, 1, data.Total)
         })
         .fail(function (err) {
-          swal('', 'something was wrong', 'error')
+          swal('', JSON.parse(err).message, 'error')
           pageBtn1 = true
         })
         break
       case 2:
-        $.get('/teenlong/src/v1/landlord/landlord.php', {
-          Type: 0,
-          Keys: 'Id+Sex+Name+Phone+WeixinCode+QQCode',
-          Page: page2,
-          PageSize: 10,
-          Search: {
-            Id: ''
-          }
+        $.get('/v1/api/masters', {
+          page: page2,
+          limit: 10,
+          key: '_id+username+name+gender+avatar'
         })
         .done(function (data) {
           data = JSON.parse(data)
-          data.LEN = 6
+          data.LEN = 5
           data.type = type
           var tpl = $('#target1-table-template').html()
           var tmp = ejs.render(tpl, data)
@@ -189,7 +178,7 @@ var editType
           changePageBtns(Btns2, 2, data.Total)
         })
         .fail(function (err) {
-          swal('', 'something was wrong', 'error')
+          swal('', JSON.parse(err).message, 'error')
           pageBtn2 = true
         })
         break
@@ -197,12 +186,8 @@ var editType
   }
 
   function getAdminName() {
-    $.get('/teenlong/src/v1/user/admin.php', {
-      Type: 0,
-      Keys: 'Name',
-      Search: {
-        Id: ''
-      }
+    $.get('/v1/api/admin', {
+      key: 'name'
     })
     .done(function (data) {
       data = JSON.parse(data)
@@ -327,7 +312,7 @@ var editType
           removeType = ''
         })
         .fail(function (err) {
-          swal('', 'something was wrong', 'error')
+          swal('', JSON.parse(err).message, 'error')
         })
         break
       case 2:
@@ -349,7 +334,7 @@ var editType
           removeType = ''
         })
         .fail(function (err) {
-          swal('', 'something was wrong', 'error')
+          swal('', JSON.parse(err).message, 'error')
         })
         break
     }
@@ -378,7 +363,7 @@ var editType
           }
         })
         .fail(function (err) {
-          swal('', 'something was wrong', 'error')
+          swal('', JSON.parse(err).message, 'error')
         })
         break
     }
