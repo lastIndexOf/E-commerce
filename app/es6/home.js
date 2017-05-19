@@ -7,4 +7,4 @@ new Vue({
       message: 'hello, world'
     }
   }
-}).$mount('#app')
+}).$mount('#root')

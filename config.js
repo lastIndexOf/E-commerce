@@ -1,7 +1,7 @@
 const serverPort = 8000
 
 module.exports = {
-	enter: 'css.js',
+	enter: 'home.js',
  	server: 'server.js',
  	proxy: `http://localhost:${ serverPort }`,  // 需要开启代理监听的端口
  	port: 8001, // 开启代理的端口号

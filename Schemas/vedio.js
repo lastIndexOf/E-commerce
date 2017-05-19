@@ -1,5 +1,5 @@
 const
-	mongoose  =  require('mongoose')
+	mongoose  =  require('mongoose'),
 	Schema    =  mongoose.Schema
 
 
@@ -28,7 +28,7 @@ let vedioSchema = new Schema({
 	},
 	totaltime: {
 		type: String,
-		default: '0小时0分0秒'	
+		default: '0小时0分0秒'
 	},
 	diffculty: {
 		type: Schema.Types.ObjectId,
@@ -71,4 +71,3 @@ vedioSchema.methods = {}
 vedioSchema.statics = {}
 
 module.exports = vedioSchema
-

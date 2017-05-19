@@ -33,11 +33,13 @@ module.exports = class Index extends BaseContructor {
   static async adminOtherAction(ctx) {
     await send(ctx, '/app/view/html/end/components/others/others.html')
   }
-
+  
+  // 错误页面
   static async notFoundAction(ctx) {
-    if (ctx.status === 404) {
-       ctx.body = '404 Not Found'
-     }
-  }
+    if (ctx.status >= 400) {
+      const msgs = Index.getPage(ctx.status)
 
+      await ctx.render(`error/${ ctx.status }error`, msgs)
+    }
+  }
 }

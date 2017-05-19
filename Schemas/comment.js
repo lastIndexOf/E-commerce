@@ -1,5 +1,5 @@
 const
-	mongoose  =  require('mongoose')
+	mongoose  =  require('mongoose'),
 	Schema    =  mongoose.Schema
 
 
@@ -44,4 +44,3 @@ commentSchema.methods = {}
 commentSchema.statics = {}
 
 module.exports = commentSchema
-

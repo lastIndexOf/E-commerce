@@ -13,7 +13,7 @@ new _vue2.default({
       message: 'hello, world'
     };
   }
-}).$mount('#app');
+}).$mount('#root');
 
 
 },{"vue/dist/vue.js":2}],2:[function(require,module,exports){

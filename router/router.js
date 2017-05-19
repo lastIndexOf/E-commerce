@@ -24,8 +24,9 @@ module.exports = router => {
   /**
    *  访问URL
    */
-   router.get('/', Index.homeAction)
-   router.get('/test/:id', Index.testAction)
+
+  router.get('/', Index.homeAction)
+  router.get('/test/:id', Index.testAction)
 
 
   // 后台管理页面
@@ -35,7 +36,7 @@ module.exports = router => {
   router.get('/admin/other', Index.adminOtherAction)
 
   //  错误404页面
-   router.get('*', Index.notFoundAction)
+  router.get('*', Index.notFoundAction)
   /**
    *  User 接口
    */

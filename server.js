@@ -1,18 +1,18 @@
 const
-	Koa          =  require('koa')
-  session      =  require('koa-session2'),
-  renderer     =  require('koa-views'),
-  bodyParser   =  require('koa-bodyparser'),
-  Router       =  require('koa-router'),
-  static       =  require('koa-static2'),
-	logger       =  require('koa-logger'),
-	mongoose     =  require('mongoose')
+	Koa        =  require('koa'),
+  session    =  require('koa-session2'),
+  renderer   =  require('koa-views'),
+	bodyParser =  require('koa-bodyparser'),
+  Router     =  require('koa-router'),
+  static     =  require('koa-static2'),
+	logger     =  require('koa-logger'),
+	mongoose   =  require('mongoose')
 
 const config = require('./config.js')
 const app = new Koa()
 
 const router = new Router()
-const render = renderer('./app/view', {
+const render = renderer('./app/view/html', {
 	map: { html: 'pug' },
 	extension: 'pug'
 })
@@ -38,4 +38,3 @@ app
 app.listen(config.serverConfig.port, () => {
 	console.log(`server running at http://localhost:${ config.port }`)
 })
-

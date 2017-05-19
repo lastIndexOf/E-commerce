@@ -34,9 +34,9 @@ gulp.task('es6', () => {
 		.pipe(changed('dist/js'))
 		.pipe(sourcemaps.init())
 		.pipe(plumber({errorHandler: notify.onError('\n\033[31m Error: <%= error.message %> \033[0m')}))
-		.pipe(babel({ 
-			presets: ['es2015', 'stage-3', 'react'], 
-			plugins: [ 'transform-runtime' ] 
+		.pipe(babel({
+			presets: ['es2015', 'stage-3', 'react'],
+			plugins: [ 'transform-runtime' ]
 		}))
 		// .pipe(uglify())
 		.pipe(sourcemaps.write('./maps'))
@@ -60,7 +60,7 @@ gulp.task('watch', () => {
 	// bundle()
 	gulp.watch('app/styl/*.styl', ['cssreload'])
 	gulp.watch('app/es6/*.js', ['reload'])
-	gulp.watch('app/view/*.*', reload)
+	gulp.watch('app/view/**/*.*', reload)
 	gulp.watch('app/view/html/**/*.*', reload)
 })
 
@@ -97,7 +97,7 @@ function bundle() {
 		.pipe(source(config.enter))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({loadMaps: true}))
-		// .pipe(plumber({errorHandler: notify.onError('\n\033[31m Error: <%= error.message %> \033[0m')}))			
+		// .pipe(plumber({errorHandler: notify.onError('\n\033[31m Error: <%= error.message %> \033[0m')}))
 		.pipe(sourcemaps.write('./maps'))
 		.pipe(gulp.dest('dist/js/bundles'))
 }
@@ -109,7 +109,7 @@ gulp.task('build', () => {
 		.pipe(source(config.enter))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(plumber({errorHandler: notify.onError('\n\033[31m Error: <%= error.message %> \033[0m')}))			
+		.pipe(plumber({errorHandler: notify.onError('\n\033[31m Error: <%= error.message %> \033[0m')}))
 		.pipe(uglify())
 		.pipe(sourcemaps.write('./maps'))
 		.pipe(gulp.dest('dist/js/bundles'))

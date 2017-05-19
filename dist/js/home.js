@@ -12,5 +12,5 @@ new _vue2.default({
       message: 'hello, world'
     };
   }
-}).$mount('#app');
+}).$mount('#root');
 //# sourceMappingURL=maps/home.js.map
