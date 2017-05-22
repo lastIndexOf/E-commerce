@@ -54,6 +54,15 @@ Schema: `type`
     vedios:[ObjectId] => 属于该分类的视频
 ```
 
+Schema: `order` (订单)
+
+```
+    _id:ObjectId => id
+    from:ObjectId => 该订单的创建人
+    vedio:ObjectId => 该订单上对应购买的视频
+    payment:Boolean => 是否付过款
+```
+
 Schema: `user`
 
 ```
