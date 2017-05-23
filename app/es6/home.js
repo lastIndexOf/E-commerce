@@ -1,6 +1,7 @@
 import Vue from 'vue/dist/vue.js'
 
 
+
 new Vue({
   data () {
     return {
@@ -8,3 +9,6 @@ new Vue({
     }
   }
 }).$mount('#root')
+
+
+

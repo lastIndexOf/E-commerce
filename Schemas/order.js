@@ -41,5 +41,4 @@ orderSchema.pre('save', function (next) {
 
 orderSchema.methods = {}
 orderSchema.statics = {}
-
 module.exports = orderSchema
