@@ -14,7 +14,7 @@ Schema: `vedio`
     _id:ObjectId => id
     title:String => 该套视频标题
     avatar:String => 该套视频的图标
-    ahtuor:ObjectId => 该套视频作者
+    author:ObjectId => 该套视频作者
     money:Number => 该套视频的售价
     type:[ObjectId] => 该视频所属类别
     followers:[ObjectId] => 关注改视频的用户
