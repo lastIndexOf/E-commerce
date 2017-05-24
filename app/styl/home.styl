@@ -1,7 +1,245 @@
 @import '../../node_modules/sweetalert2/dist/sweetalert2.min.css';
 
+body
+	background-color rgba(245, 245, 245, 1)
+
 #root
+	.header
+		width 100%
+		height 80px
+		background-color rgba(245, 245, 245, .4)
+		.left
+			display inline-block
+			height 100%
+			padding 20px 32px
+			.logo
+				width 40px
+				height 40px
+				vertical-align middle
+			.title
+				font-size 18px
+				font-weight 700
+				padding-left 12px
+				line-height 40px
+		.tab
+			display inline-block
+			padding-left 64px
+			height 100%
+			vertical-align middle
+			.tab-item
+				display inherit
+				height 100%
+				vertical-align middle
+				padding-right 32px
+				&:last-of-type
+					padding-right 0
+				.item
+					font-size 16px
+					line-height 80px
+					&:hover
+						color #fa3140
+		.form-wrapper
+			float right
+			height 100%
+			padding-right 72px
+			.form-item
+				padding-top 20px
+				.form-control
+					height 100%
+					.input-content
+						border 0
+						padding 12px 0 12px 6px
+						border-bottom 1px solid rgba(7, 17, 27, .2)
+						background-color transparent
+					.submit
+						display inline-block
+						border 0
+						padding-top 12px
+						background-color transparent
+						.iconfont
+							color #999
+							font-size 16px
+		.right
+			float right
+			height 100%
+			display flex
+			flex-flow row nowrap
+			justify-content center
+			align-items center
+			.shopcar
+				flex 0 0 100px
+				width 100px
+				cursor pointer
+				&:hover
+					color #fa3140
+					& > .title
+						color #fa3140
+				.iconfont
+					font-size 24px
+					padding-right 12px
+				.title
+					color #999
+			.sign
+				flex 1
+				padding-left 24px
+				color #999
+				.signin
+					display inline-block
+					padding-right 32px
+					&:hover
+						color #fa3140
+						cursor pointer
+				.signup
+					display inline-block
+					padding-right 32px
+					&:hover
+						color #fa3140
+						cursor pointer
+	.nav
+		width 100%
+		min-height 460px
+		text-align center
+		background-image url(/static/images/bk.jpg)
+		background-size 100% 400px
+		background-repeat no-repeat
+		.nav-wrapper
+			display inline-block
+			width 1200px
+			margin-top 48px
+			.content-wrapper
+				display flex
+				flex-flow row nowrap
+				background-size 100% 100%
+				background-repeat no-repeat
+				.left-tab
+					flex 0 0 200px
+					padding 12px
+					background-color rgba(147, 153, 159, .1)
+					cursor pointer
+					.tab
+						width 100%
+						.item
+							text-align left
+							text-indent 12px
+							padding 24px 0
+							color #fff
+							border-bottom 1px solid rgba(255, 255, 255, .5)
+							&:last-of-type
+								border-bottom 0
+							&:hover
+								background-color rgba(147, 153, 159, 1)
+							.title
+								font-size 16px
+								font-weight 500
+							.goto
+								float right
+								padding-right 24px
+				.right-bander
+					flex 1
+					position relative
+					.toleft, .toright
+						display inline-block
+						position relative
+						width 100px
+						height 100%
+						&:hover
+							background-color rgba(147, 153, 159, .6)
+						.iconfont
+							color #fff
+							font-size 32px
+							position absolute
+							top 50%
+							left 50%
+							transform translate3d(-50%, -50%, 0)
+					.toleft
+						float left
+					.toright
+						float right
+					.check-point
+						position absolute
+						padding 12px
+						bottom 32px
+						left 50%
+						transform translate3d(-50%, 0, 0)
+						.point
+							display inline-block
+							width 16px
+							height 16px
+							border-radius 16px
+							background-color rgba(147, 153, 159, .8)
+							margin-right 6px
+							&:last-of-type
+								margin-right 0
+							&.active
+								background-color #fa3140
+								opacity .8
+			.nav-bottom
+				min-height 120px
+				background-color #fff
+				box-shadow 0 5px 10px #ddd, 0 2px 10px #ddd inset
+				.bottom-tab
+					width 100%
+					height 100%
+					display flex
+					flex-flow row nowrap
+					.item
+						flex 0 0 20%
+						height 120px
+						background-size 100%
+						background-repeat no-repeat
+						cursor pointer
+						background-position center -10%
+						transition transform .3s
+						&:hover
+							transform translate3d(0, -12px, 0)
 	.wrapper
-		color red
-	.wrapper2
-		color blue
+		text-align center
+		.details-wrapper
+			width 1200px
+			margin 0 auto
+			.title
+				padding 24px 0
+				text-align left
+				font-size 20px
+				font-weight 700
+				.more
+					float right
+					font-size 14px
+					color #999
+					line-height 24px
+					.iconfont
+						font-size 12px
+						color #999
+						line-height 24px
+			.details
+				display flex
+				flex-flow row wrap
+				width 100%
+				.detail
+					flex 0 0 20%
+					width 20%
+					padding-right 12px
+					box-sizing border-box
+					padding-bottom 24px
+					cursor pointer
+					&:hover > .body
+						box-shadow 2px 2px 10px #ddd, 2px 0 10px #ddd inset
+					&:nth-of-type(5n)
+						padding-right 0
+					.child-title
+						padding 12px
+						height 32px
+						line-height 32px
+						text-align left
+						color #fff
+						background linear-gradient(270deg, rgba(210,115,230,.7), #d273e6)
+					.body
+						height 200px
+						padding 12px
+						box-sizing border-box
+						background-color #fff
+						transition box-shadow .3s
+						box-shadow 2px 2px 2px #ddd, 2px 0 5px #ddd inset
+						.heading
+							font-weight 500
+							font-size 14px
