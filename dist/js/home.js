@@ -47,53 +47,10 @@ new _vue2.default({
           src: '#',
           instruction: 'test instruction',
           diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
         }]
       }, {
         title: '前端开发工程师',
         children: [{
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }]
-      }, {
-        title: '前端开发工程师',
-        children: [{
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
           title: '从H5网页开发到移动响应式开发',
           src: '#',
           instruction: 'test instruction',
@@ -146,11 +103,6 @@ new _vue2.default({
           src: '#',
           instruction: 'test instruction',
           diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
         }]
       }, {
         title: '前端开发工程师',
@@ -160,6 +112,29 @@ new _vue2.default({
           instruction: 'test instruction',
           diff: '1'
         }, {
+          title: '从H5网页开发到移动响应式开发',
+          src: '#',
+          instruction: 'test instruction',
+          diff: '1'
+        }, {
+          title: '从H5网页开发到移动响应式开发',
+          src: '#',
+          instruction: 'test instruction',
+          diff: '1'
+        }, {
+          title: '从H5网页开发到移动响应式开发',
+          src: '#',
+          instruction: 'test instruction',
+          diff: '1'
+        }, {
+          title: '从H5网页开发到移动响应式开发',
+          src: '#',
+          instruction: 'test instruction',
+          diff: '1'
+        }]
+      }, {
+        title: '前端开发工程师',
+        children: [{
           title: '从H5网页开发到移动响应式开发',
           src: '#',
           instruction: 'test instruction',

@@ -223,15 +223,20 @@ body
 					padding-bottom 24px
 					cursor pointer
 					&:hover > .body
-						box-shadow 2px 2px 10px #ddd, 2px 0 10px #ddd inset
+						box-shadow 5px 5px 15px #ddd, -5px 0 15px #ddd
+					&:hover > .child-title
+						box-shadow 5px 5px 15px #ddd, -5px 0 15px #ddd
 					&:nth-of-type(5n)
 						padding-right 0
 					.child-title
+						color #fff
 						padding 12px
 						height 32px
 						line-height 32px
 						text-align left
-						color #fff
+						border-radius 6px 6px 0 0
+						transition box-shadow .3s
+						box-shadow 2px 2px 5px #ddd, -2px 0 10px #ddd
 						background linear-gradient(270deg, rgba(210,115,230,.7), #d273e6)
 					.body
 						height 200px
@@ -239,7 +244,17 @@ body
 						box-sizing border-box
 						background-color #fff
 						transition box-shadow .3s
-						box-shadow 2px 2px 2px #ddd, 2px 0 5px #ddd inset
+						box-shadow 2px 2px 2px #ddd, -2px 0 5px #ddd
 						.heading
+							padding 12px
 							font-weight 500
 							font-size 14px
+							text-align left
+						.instruction
+							color #999
+							padding 12px
+							text-align left
+						.diff
+							color #999
+							padding 12px
+							text-align left
