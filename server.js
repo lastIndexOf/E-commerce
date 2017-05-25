@@ -21,8 +21,10 @@ if (config.env === 'development') {
 	mongoose.set('debug', true)
 }
 
-mongoose.connect(config.db.url, () => {
-	console.log('connect to mongoDB success!')
+mongoose.connect(config.db.url, err => {
+	if (err) console.error(err)
+	else
+		console.log('connect to mongoDB success!')
 })
 
 require('./router/router.js')(router)

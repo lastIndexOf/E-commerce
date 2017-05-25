@@ -18,3 +18,7 @@ module.exports = class {
     return 'hello, world'
   }
 }
+
+
+// js里变量用let声明
+// js里常量用const声明
