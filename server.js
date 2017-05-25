@@ -8,6 +8,7 @@ const
 	logger     =  require('koa-logger'),
 	mongoose   =  require('mongoose')
 
+mongoose.Promise = Promise
 const config = require('./config.js')
 const app = new Koa()
 
@@ -22,7 +23,8 @@ if (config.env === 'development') {
 }
 
 mongoose.connect(config.db.url, err => {
-	if (err) console.error(err)
+	if (err)
+		console.error(err)
 	else
 		console.log('connect to mongoDB success!')
 })

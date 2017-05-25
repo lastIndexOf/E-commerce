@@ -1,6 +1,7 @@
 const
-  Index =  require('./controler/index')
-  User  =  require('./controler/user')
+  Index    =  require('./controler/index'),
+  User     =  require('./controler/user'),
+  Location =  require('./controler/location')
 
 module.exports = router => {
   /**
@@ -35,8 +36,6 @@ module.exports = router => {
   router.get('/admin/vedio', Index.adminVedioAction)
   router.get('/admin/other', Index.adminOtherAction)
 
-  //  错误404页面
-  router.get('*', Index.notFoundAction)
   /**
    *  User 接口
    */
@@ -56,4 +55,27 @@ module.exports = router => {
    */
 
 
+  /**
+  *   location 接口
+  */
+  router.put('/v1/api/location/province', Location.putProvince)
+  router.del('/v1/api/location/provinces', Location.delProvince)
+  router.post('/v1/api/location/provinces', Location.postProvince)
+  router.get('/v1/api/location/province/:id', Location.getProvince)
+  router.get('/v1/api/location/provinces', Location.getProvinces)
+
+  router.put('/v1/api/location/city', Location.putCity)
+  router.del('/v1/api/location/cities', Location.delCity)
+  router.post('/v1/api/location/cities', Location.postCity)
+  router.get('/v1/api/location/city/:id', Location.getCity)
+  router.get('/v1/api/location/cities', Location.getCities)
+
+  router.put('/v1/api/location/area', Location.putArea)
+  router.del('/v1/api/location/areas', Location.delArea)
+  router.post('/v1/api/location/areas', Location.postArea)
+  router.get('/v1/api/location/area/:id', Location.getArea)
+  router.get('/v1/api/location/areas', Location.getAreas)
+
+  //  错误404页面
+  router.get('*', Index.notFoundAction)
 }

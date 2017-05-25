@@ -1,16 +1,18 @@
-const
-  path =  require('path'),
-  fs   =  require('fs')
+const mongoose = require('mongoose')
+const City = require('./Models/city.js')
+const Province = require('./Models/province.js')
 
-const readdir = dir => new Promise((resolve, reject) => {
-  fs.readdir(dir, (err, dirs) => {
-    if (err) reject(err)
-    else {
-      resolve(dirs)
-    }
-  })
+mongoose.connect('mongodb://localhost:27017/commerce', err => {
+  if (err)
+    console.error(er)
+  else
+   console.log('connection sussecc!')
 })
 
-;(async () => {
-  let dirs = await readdir(path.join(__dirname, 'node_modules'))
-})()
+
+
+City.find({})
+  .populate('province', 'name _id')
+  .exec((err, datas) => {
+    console.log(datas)
+  })

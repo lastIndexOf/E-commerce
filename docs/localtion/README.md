@@ -1,4 +1,5 @@
 - 所有api均以/api/v1为前缀, 如`/v1/api/vedios`
+- 所有包含有ObjectId的文档, 查询时可额外传一个`populate:Boolean`, 若为`true`则返回所有字段及其关联字段
 
 -------------------------------------------------------------------
 #### put    /province  增加一个省份信息
@@ -6,6 +7,19 @@
 - name `String` => 增加的省份名
 
 若增加成功， 则返回状态码 `201`
+
+#### delete      /provinces  删除省份信息
+接受参数
+- ids `String` => 格式 ('id1+id2+id3+...') 想要删除的省份ids
+
+若删除成功， 返回状态码`204`
+
+#### post    /provinces 修改省份信息
+接受参数
+- id `String` => 修改省份对应的id
+- update `JSON` => 要修改的字段
+
+若修改成功返回状态码 `201`
 
 #### get   /provinces 查询所有省份信息
 接受get参数
@@ -26,18 +40,6 @@ return {
   ]
 }
 ```
-#### delete      /provinces  删除省份信息
-接受参数
-- ids `String` => 格式 ('id1+id2+id3+...') 想要删除的省份ids
-
-若删除成功， 返回状态码`204`
-
-#### post    /provinces 修改省份信息
-接受参数
-- id `String` => 修改省份对应的id
-- update `JSON` => 要修改的字段
-
-若修改成功返回状态码 `201`
 
 #### get  /province/:id 该id所属省份信息
 

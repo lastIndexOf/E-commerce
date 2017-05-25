@@ -308,12 +308,12 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target1-add-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">省份名称</label>
+              <label for="name" class="col-sm-2 control-label">省份名称</label>
               <div class="col-sm-10">
                 <input type="email"
                   class="form-control"
-                  name="Name"
-                  placeholder="Name">
+                  name="name"
+                  placeholder="name">
               </div>
             </div>
           </form>
@@ -338,19 +338,19 @@
             <div class="form-group">
               <label for="Name" class="col-sm-2 control-label">所属省份</label>
               <div class="col-sm-10">
-                <select name="ProvinceId" class="form-control">
+                <select name="province" class="form-control">
 
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="Phone"
+              <label for="name"
                 class="col-sm-2 control-label">城市名称</label>
               <div class="col-sm-10">
                 <input type="text"
                    class="form-control"
-                   name="Name"
-                   placeholder="Name">
+                   name="name"
+                   placeholder="name">
               </div>
             </div>
           </form>
@@ -373,21 +373,21 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target3-add-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">所属城市</label>
+              <label for="city" class="col-sm-2 control-label">所属城市</label>
               <div class="col-sm-10">
-                <select name="CityId" class="form-control">
+                <select name="city" class="form-control">
 
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="Phone"
+              <label for="name"
                 class="col-sm-2 control-label">地区名称</label>
               <div class="col-sm-10">
                 <input type="text"
                    class="form-control"
-                   name="Name"
-                   placeholder="Name">
+                   name="name"
+                   placeholder="name">
               </div>
             </div>
           </form>
@@ -412,12 +412,12 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target1-edit-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">省份名称</label>
+              <label for="name" class="col-sm-2 control-label">省份名称</label>
               <div class="col-sm-10">
                 <input type="text"
                   class="form-control"
-                  name="Name"
-                  placeholder="Name">
+                  name="name"
+                  placeholder="name">
               </div>
             </div>
           </form>
@@ -440,21 +440,21 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target2-edit-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">所属省份</label>
+              <label for="province" class="col-sm-2 control-label">所属省份</label>
               <div class="col-sm-10">
-                <select name="ProvinceId" class="form-control">
+                <select name="province" class="form-control">
 
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="Phone"
+              <label for="name"
                 class="col-sm-2 control-label">城市名称</label>
               <div class="col-sm-10">
                 <input type="text"
                    class="form-control"
-                   name="Name"
-                   placeholder="Name">
+                   name="name"
+                   placeholder="name">
               </div>
             </div>
           </form>
@@ -477,21 +477,21 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target3-edit-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">所属城市</label>
+              <label for="city" class="col-sm-2 control-label">所属城市</label>
               <div class="col-sm-10">
-                <select name="CityId" class="form-control">
+                <select name="city" class="form-control">
 
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="Phone"
+              <label for="name"
                 class="col-sm-2 control-label">地区名称</label>
               <div class="col-sm-10">
                 <input type="text"
                    class="form-control"
-                   name="Name"
-                   placeholder="Name">
+                   name="name"
+                   placeholder="name">
               </div>
             </div>
           </form>
@@ -524,7 +524,7 @@
               <input
                 class="childbox"
                 type="checkbox"
-                value="<%= ResultList[i].Id %>">选择
+                value="<%= ResultList[i]._id %>">选择
             </label>
           </div>
         </th>
@@ -543,7 +543,7 @@
         <% } %>
         <td>
           <button class="btn btn-primary"
-            data-id="<%= ResultList[i].Id %>"
+            data-id="<%= ResultList[i]._id %>"
             data-type="<%= type %>"
             data-toggle="modal"
             data-target="#editDialog<%= type %>"
@@ -552,7 +552,7 @@
             editDate(editType, editId)">编辑</button>
           &nbsp;&nbsp;
           <button class="btn btn-danger"
-            data-id="<%= ResultList[i].Id %>"
+            data-id="<%= ResultList[i]._id %>"
             data-type="<%= type %>"
             data-toggle="modal"
             data-target="#myModal"

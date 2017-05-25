@@ -29,9 +29,11 @@ areaSchema.pre('save', function (next) {
 
 		this.meta.updateAt = this.meta.createdAt = new Date()
 	} else {
-		
+
 		this.meta.updateAt = new Date()
 	}
+
+	next()
 })
 
 areaSchema.methods = {}
