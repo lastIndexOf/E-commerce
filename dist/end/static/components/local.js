@@ -65,10 +65,10 @@ var editType = ''
       var addForm = $('#target1-add-form')
       var form = addForm.get(0).elements
       $.ajax({
-        type: 'POST',
-        url: '/teenlong/src/v1/place/province.php',
+        type: 'PUT',
+        url: '/v1/api/location/province',
         data: {
-          Name: form.Name.value
+          name: form.name.value
         }
       })
       .done(function (data) {
@@ -91,11 +91,11 @@ var editType = ''
       var addForm = $('#target2-add-form')
       var form = addForm.get(0).elements
       $.ajax({
-        type: 'POST',
-        url: '/teenlong/src/v1/place/city.php',
+        type: 'PUT',
+        url: '/v1/api/location/city',
         data: {
-          ProvinceId: form.ProvinceId.value,
-          Name: form.Name.value
+          province: form.province.value,
+          name: form.name.value
         }
       })
       .done(function (data) {
@@ -118,11 +118,11 @@ var editType = ''
       var addForm = $('#target3-add-form')
       var form = addForm.get(0).elements
       $.ajax({
-        type: 'POST',
-        url: '/teenlong/src/v1/place/district.php',
+        type: 'PUT',
+        url: '/v1/api/location/area',
         data: {
-          CityId: form.CityId.value,
-          Name: form.Name.value
+          city: form.city.value,
+          name: form.name.value
         }
       })
       .done(function (data) {
@@ -146,12 +146,11 @@ var editType = ''
       var editForm = $('#target1-edit-form')
       var form = editForm.get(0).elements
       $.ajax({
-        type: 'PUT',
-        url: '/teenlong/src/v1/place/province.php',
+        type: 'POST',
+        url: '/v1/api/location/provinces',
         data: {
-          Type: 0,
-          Id: editId,
-          Update: {
+          id: editId,
+          update: {
             Name: form.Name.value
           }
         }
@@ -172,14 +171,13 @@ var editType = ''
       var editForm = $('#target2-edit-form')
       var form = editForm.get(0).elements
       $.ajax({
-        type: 'PUT',
-        url: '/teenlong/src/v1/place/city.php',
+        type: 'POST',
+        url: '/v1/api/location/cities',
         data: {
-          Type: 0,
-          Id: editId,
-          Update: {
-            Name: form.Name.value,
-            ProvinceId: form.ProvinceId.value
+          id: editId,
+          update: {
+            name: form.name.value,
+            province: form.province.value
           }
         }
       })
@@ -199,14 +197,13 @@ var editType = ''
       var editForm = $('#target3-edit-form')
       var form = editForm.get(0).elements
       $.ajax({
-        type: 'PUT',
-        url: '/teenlong/src/v1/place/district.php',
+        type: 'POST',
+        url: '/v1/api/location/areas',
         data: {
-          Type: 0,
-          Id: editId,
-          Update: {
-            Name: form.Name.value,
-            CityId: form.CityId.value
+          id: editId,
+          update: {
+            name: form.name.value,
+            city: form.city.value
           }
         }
       })
@@ -271,22 +268,18 @@ var editType = ''
   function ajaxToDate(type) {
     switch (type) {
       case 1:
-        $.get('/teenlong/src/v1/place/province.php', {
-          Type: 0,
-          Keys: 'Id+Name',
-          Page: page1,
-          PageSize: 10,
-          Search: {
-            Id: ''
-          }
+        $.get('/v1/api/location/provinces', {
+          keys: '_id+name',
+          page: page1,
+          limit: 10
         })
         .done(function (data) {
-          data = JSON.parse(data)
+          // data = JSON.parse(data)
           data.LEN = 2
           data.type = type
-          data.ResultList.map(function (item) {
-            delete item.Citys
-          })
+          // data.ResultList.map(function (item) {
+          //   delete item.Citys
+          // })
           var tpl = $('#target1-table-template').html()
           var tmp = ejs.render(tpl, data)
           $('#target1-body').html(tmp)
@@ -299,21 +292,17 @@ var editType = ''
         })
         break
       case 2:
-        $.get('/teenlong/src/v1/place/city.php', {
-          Type: 0,
-          Keys: 'Id+Name+Province',
-          Page: page2,
-          PageSize: 10,
-          Search: {
-            Id: ''
-          }
+        $.get('/v1/api/location/cities', {
+          keys: '_id+name+province',
+          page: page2,
+          limit: 10,
+          populate: true
         })
         .done(function (data) {
-          data = JSON.parse(data)
           data.LEN = 2
           data.type = type
           data.ResultList.map(function (item) {
-            delete item.Citys
+            item.province = item.province.name
           })
           var tpl = $('#target1-table-template').html()
           var tmp = ejs.render(tpl, data)
@@ -327,21 +316,17 @@ var editType = ''
         })
         break
       case 3:
-        $.get('/teenlong/src/v1/place/district.php', {
-          Type: 0,
-          Keys: 'Id+Name+City',
-          Page: page3,
-          PageSize: 10,
-          Search: {
-            Id: ''
-          }
+        $.get('/v1/api/location/areas', {
+          keys: '_id+name+city',
+          page: page3,
+          limit: 10,
+          populate: true
         })
         .done(function (data) {
-          data = JSON.parse(data)
           data.LEN = 3
           data.type = type
           data.ResultList.map(function (item) {
-            delete item.Citys
+            item.city = item.city.name
           })
           var tpl = $('#target1-table-template').html()
           var tmp = ejs.render(tpl, data)
@@ -397,33 +382,31 @@ var editType = ''
           Btns.find('.btn').hide().eq(1).show().text(1).end().eq(2).show().text(2)
         }
         else if (pages === 3) {
-          Btns
-            .find('.btn')
-            .hide()
-            .eq(1)
-            .show()
-            .text(1)
-            .end()
-            .eq(2)
-            .show()
-            .text(2)
-            .end()
-            .eq(3)
-            .show()
-            .text(3)
+          Btns.find('.btn').hide()
+            .eq(1).show().text(1)
+            .end().eq(2).show().text(2)
+            .end().eq(3).show().text(3)
         }
         else {
-          Btns
-            .find('.btn')
-            .show()
-            .eq(3)
-            .text(page1 === pages ? page1 : (page1 === 1 ? page1 + 2 : page1 + 1))
-            .end()
-            .eq(2)
-            .text(page1 === pages ? page1 - 1 : (page1 === 1 ? page1 + 1 : page1))
-            .end()
-            .eq(1)
-            .text(page1 === pages ? page1 - 2 : (page1 === 1 ? page1 : page1 - 1))
+          Btns.find('.btn').show()
+            .eq(3).text(
+              page1 === pages
+                ? page1
+                : page1 === 1
+                  ? page1 + 2
+                  : page1 + 1)
+            .end().eq(2).text(
+              page1 === pages
+                ? page1 - 1
+                : page1 === 1
+                  ? page1 + 1
+                  : page1)
+            .end().eq(1).text(
+              page1 === pages
+                ? page1 - 2
+                : page1 === 1
+                  ? page1
+                  : page1 - 1)
         }
 
         break
@@ -435,33 +418,31 @@ var editType = ''
           Btns.find('.btn').hide().eq(1).show().text(1).end().eq(2).show().text(2)
         }
         else if (pages === 3) {
-          Btns
-            .find('.btn')
-            .hide()
-            .eq(1)
-            .show()
-            .text(1)
-            .end()
-            .eq(2)
-            .show()
-            .text(2)
-            .end()
-            .eq(3)
-            .show()
-            .text(3)
+          Btns.find('.btn').hide()
+            .eq(1).show().text(1)
+            .end().eq(2).show().text(2)
+            .end().eq(3).show().text(3)
         }
         else {
-          Btns
-            .find('.btn')
-            .show()
-            .eq(3)
-            .text(page2 === pages ? page2 : (page2 === 1 ? page2 + 2 : page2 + 1))
-            .end()
-            .eq(2)
-            .text(page2 === pages ? page2 - 1 : (page2 === 1 ? page2 + 2 : page2 + 1))
-            .end()
-            .eq(1)
-            .text(page2 === pages ? page2 - 2 : (page2 === 1 ? page2 + 2 : page2 + 1))
+          Btns.find('.btn').show()
+            .eq(3).text(
+              page2 === pages
+                ? page2
+                : page2 === 1
+                  ? page2 + 2
+                  : page2 + 1)
+            .end().eq(2).text(
+              page2 === pages
+                ? page2 - 1
+                : page2 === 1
+                  ? page2 + 2
+                  : page2 + 1)
+            .end().eq(1).text(
+              page2 === pages
+                ? page2 - 2
+                : page2 === 1
+                  ? page2 + 2
+                  : page2 + 1)
         }
 
         break
@@ -473,33 +454,31 @@ var editType = ''
           Btns.find('.btn').hide().eq(1).show().text(1).end().eq(2).show().text(2)
         }
         else if (pages === 3) {
-          Btns
-            .find('.btn')
-            .hide()
-            .eq(1)
-            .show()
-            .text(1)
-            .end()
-            .eq(2)
-            .show()
-            .text(2)
-            .end()
-            .eq(3)
-            .show()
-            .text(3)
+          Btns.find('.btn').hide()
+            .eq(1).show().text(1)
+            .end().eq(2).show().text(2)
+            .end().eq(3).show().text(3)
         }
         else {
-          Btns
-            .find('.btn')
-            .show()
-            .eq(3)
-            .text(page3 === pages ? page3 : (page3 === 1 ? page3 + 2 : page3 + 1))
-            .end()
-            .eq(2)
-            .text(page3 === pages ? page3 - 1 : (page3 === 1 ? page3 + 2 : page3 + 1))
-            .end()
-            .eq(1)
-            .text(page3 === pages ? page3 - 2 : (page3 === 1 ? page3 + 2 : page3 + 1))
+          Btns.find('.btn').show()
+            .eq(3).text(
+              page3 === pages
+                ? page3
+                : page3 === 1
+                  ? page3 + 2
+                  : page3 + 1)
+            .end().eq(2).text(
+              page3 === pages
+                ? page3 - 1
+                : page3 === 1
+                  ? page3 + 2
+                  : page3 + 1)
+            .end().eq(1).text(
+              page3 === pages
+                ? page3 - 2
+                : page3 === 1
+                  ? page3 + 2
+                  : page3 + 1)
         }
 
         break
@@ -508,42 +487,37 @@ var editType = ''
 
   function _initSelectKeys() {
     // add one
-    $.get('/teenlong/src/v1/place/province.php', {
-      Type: 0,
-      Keys: 'Id+Name',
-      Search: {
-        Id: ''
-      }
+    $.get('/v1/api/location/provinces', {
+      keys: '_id+name',
+      limit: 99999,
+      page: 1
     })
     .done(function (data) {
-      data = JSON.parse(data)
       var tmp = [
         '<% for (var i = 0, len = ResultList.length; i < len; i++) { %>',
-        '<option value="<%= ResultList[i].Id %>"><%= ResultList[i].Name %></option>',
+        '<option value="<%= ResultList[i]._id%>"><%= ResultList[i].name %></option>',
         '<% } %>'
       ].join('')
       var tpl = ejs.render(tmp, data)
-      $('[name="ProvinceId"]')
+      $('[name="province"]')
         .html(tpl)
     })
 
     // add two
-    $.get('/teenlong/src/v1/place/city.php', {
-      Type: 0,
-      Keys: 'Id+Name+Province',
-      Search: {
-        Id: ''
-      }
+    $.get('/v1/api/location/cities', {
+      keys: '_id+name+province',
+      limit: 99999,
+      page: 1,
+      populate: true
     })
     .done(function (data) {
-      data = JSON.parse(data)
       var tmp = [
         '<% for (var i = 0, len = ResultList.length; i < len; i++) { %>',
-        '<option value="<%= ResultList[i].Id %>"><%= ResultList[i].Name %></option>',
+        '<option value="<%= ResultList[i]._id %>"><%= ResultList[i].name %></option>',
         '<% } %>'
       ].join('')
       var tpl = ejs.render(tmp, data)
-      $('[name="CityId"]')
+      $('[name="city"]')
         .html(tpl)
     })
   }
@@ -552,13 +526,10 @@ var editType = ''
     switch (removeType) {
       case 1:
         $.ajax({
-          url: '/teenlong/src/v1/place/province.php',
+          url: '/v1/api/location/provinces',
           type: 'DELETE',
           data: {
-            Type: 0,
-            Search: {
-              Id: removeId
-            }
+            ids: removeId
           }
         })
         .done(function (data) {
@@ -576,13 +547,10 @@ var editType = ''
         break
       case 2:
         $.ajax({
-          url: '/teenlong/src/v1/place/city.php',
+          url: '/v1/api/location/cities',
           type: 'DELETE',
           data: {
-            Type: 0,
-            Search: {
-              Id: removeId
-            }
+            ids: removeId
           }
         })
         .done(function (data) {
@@ -600,13 +568,10 @@ var editType = ''
         break
       case 3:
         $.ajax({
-          url: '/teenlong/src/v1/place/district.php',
+          url: '/v1/api/location/areas',
           type: 'DELETE',
           data: {
-            Type: 0,
-            Search: {
-              Id: removeId
-            }
+            ids: removeId
           }
         })
         .done(function (data) {
@@ -629,15 +594,9 @@ var editType = ''
     switch(type) {
       case 1:
         var editDialog = $('#editDialog1')
-        $.get('/teenlong/src/v1/place/province.php', {
-          Type: 0,
-          Keys: '',
-          Search: {
-            Id: id
-          }
-        })
+        $.get('/v1/api/location/province/' + id)
         .done(function (data) {
-          data = JSON.parse(data)
+          console.log(data.ResultList[0])
           var forms = $('#target1-edit-form')
           for (var key in data.ResultList[0]) {
             var keyword = forms.get(0).elements[key]
@@ -652,15 +611,8 @@ var editType = ''
         break
       case 2:
         var editDialog = $('#editDialog2')
-        $.get('/teenlong/src/v1/place/city.php', {
-          Type: 0,
-          Keys: '',
-          Search: {
-            Id: id
-          }
-        })
+        $.get('/v1/api/location/city/' + id)
         .done(function (data) {
-          data = JSON.parse(data)
           var forms = $('#target2-edit-form')
           for (var key in data.ResultList[0]) {
             var keyword = forms.get(0).elements[key]
@@ -676,15 +628,8 @@ var editType = ''
         break
       case 3:
         var editDialog = $('#editDialog3')
-        $.get('/teenlong/src/v1/place/district.php', {
-          Type: 0,
-          Keys: '',
-          Search: {
-            Id: id
-          }
-        })
+        $.get('/v1/api/location/area/' + id)
         .done(function (data) {
-          data = JSON.parse(data)
           var forms = $('#target3-edit-form')
           for (var key in data.ResultList[0]) {
             var keyword = forms.get(0).elements[key]

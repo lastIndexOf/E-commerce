@@ -1,5 +1,6 @@
 import Vue from 'vue/dist/vue.js'
 import ScrollReveal from 'scrollreveal'
+import swal from 'sweetalert2'
 
 window.sr = ScrollReveal({ reset: true })
 
@@ -202,6 +203,9 @@ new Vue({
   methods: {
     test() {
       console.log(1)
+    },
+    payFor() {
+      swal('', '请加QQ2080437116, :)', 'success')
     }
   },
   filters: {

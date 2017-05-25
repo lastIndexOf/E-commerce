@@ -49,6 +49,8 @@ masterSchema.pre('save', function (next) {
 	} else {
 		this.meta.updateAt = new Date()
 	}
+
+	next()
 })
 
 masterSchema.methods = {}

@@ -8,6 +8,10 @@ var _scrollreveal = require('scrollreveal');
 
 var _scrollreveal2 = _interopRequireDefault(_scrollreveal);
 
+var _sweetalert = require('sweetalert2');
+
+var _sweetalert2 = _interopRequireDefault(_sweetalert);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 window.sr = (0, _scrollreveal2.default)({ reset: true });
@@ -167,6 +171,9 @@ new _vue2.default({
   methods: {
     test: function test() {
       console.log(1);
+    },
+    payFor: function payFor() {
+      (0, _sweetalert2.default)('', '请加QQ2080437116, :)', 'success');
     }
   },
   filters: {
