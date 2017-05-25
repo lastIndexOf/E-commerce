@@ -17,3 +17,5 @@
 [管理员](https://github.com/lastIndexOf/E-commerce/tree/master/docs/admin)
 
 [地区](https://github.com/lastIndexOf/E-commerce/tree/master/docs/localtion)
+
+[类型](https://github.com/lastIndexOf/E-commerce/tree/master/docs/type)
