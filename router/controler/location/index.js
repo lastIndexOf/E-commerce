@@ -175,8 +175,9 @@ module.exports = class Location extends BaseContructor {
           let data = Province
             .find({})
             .select(keys)
-            .limit(query.limit)
+            .limit(query.limit - 0)
             .skip(query.page - 1)
+
           let count = Province.count()
 
           let datas = await Promise.all([data, count])
@@ -186,7 +187,7 @@ module.exports = class Location extends BaseContructor {
             ResultList: datas[0]
           }
         } catch(e) {
-          return ctx.body = {
+          return ctx.body = { 
             Error: e.message
           }
         }
@@ -345,13 +346,13 @@ module.exports = class Location extends BaseContructor {
           if (query.populate) {
             datas = await City
               .find({})
-              .limit(query.limit)
+              .limit(query.limit - 0)
               .skip(query.page)
               .populate('province', 'name _id')
           } else {
             datas = await City
               .find({})
-              .limit(query.limit)
+              .limit(query.limit - 0)
               .skip(query.page)
           }
 
@@ -374,13 +375,13 @@ module.exports = class Location extends BaseContructor {
               .find({})
               .populate('province', 'name _id')
               .select(keys)
-              .limit(query.limit)
+              .limit(query.limit - 0)
               .skip(query.page - 1)
           } else {
             data = City
               .find({})
               .select(keys)
-              .limit(query.limit)
+              .limit(query.limit - 0)
               .skip(query.page - 1)
           }
 
@@ -553,13 +554,13 @@ module.exports = class Location extends BaseContructor {
           if (query.populate) {
             datas = await Area
               .find({})
-              .limit(query.limit)
+              .limit(query.limit - 0)
               .skip(query.page)
               .populate('city', '_id name')
           } else {
             datas = await Area
               .find({})
-              .limit(query.limit)
+              .limit(query.limit - 0)
               .skip(query.page)
           }
 
@@ -581,14 +582,14 @@ module.exports = class Location extends BaseContructor {
             data = Area
               .find({})
               .select(keys)
-              .limit(query.limit)
+              .limit(query.limit - 0)
               .skip(query.page - 1)
               .populate('city', '_id name')
           } else {
             data = Area
               .find({})
               .select(keys)
-              .limit(query.limit)
+              .limit(query.limit - 0)
               .skip(query.page - 1)
           }
 
