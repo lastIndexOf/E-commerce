@@ -187,7 +187,7 @@ module.exports = class Location extends BaseContructor {
             ResultList: datas[0]
           }
         } catch(e) {
-          return ctx.body = { 
+          return ctx.body = {
             Error: e.message
           }
         }
