@@ -69,7 +69,7 @@ Schema: `user`
 ```
 _id:ObjectId => id
 password:String => bcrypt加密后的密码串
-username:String => 昵称
+username:String => 该用户用户名
 avatar:String => 头像url
 name:String => 姓名
 job:String => 工作岗位
@@ -89,7 +89,7 @@ Schema: `master`
 ```
 _id:ObjectId => id
 password:String => bcrypt加密后的密码串
-username:String => 昵称
+username:String => 该用户用户名
 avatar:String => 头像url
 name:String => 姓名
 job:String => 工作岗位
@@ -105,7 +105,7 @@ Schema: `admin`
 _id:ObjectId => id
 name:String => 姓名
 password:String => bcrypt加密后的密码串
-username:String => 昵称
+username:String => 该用户用户名
 gender:Number => 性别(0|男|1女|2保密)
 role:number(50) => 权限(默认0， 超级管理员>=50)
 ```
