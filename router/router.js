@@ -1,6 +1,7 @@
 const
   Index    =  require('./controler/index'),
   User     =  require('./controler/user'),
+  Vedio     =  require('./controler/video'),
   Location =  require('./controler/location')
 
 module.exports = router => {
@@ -40,23 +41,34 @@ module.exports = router => {
    *  User 接口
    */
 
+
   /**
    *  Admin 接口
    */
 
 
   /**
-   *  Video 接口
+   *  master 接口
    */
 
 
   /**
-   *  admin 接口
+   *  vedio 接口
    */
+   router.put('/v1/api/vedio/vedio', Vedio.putVedio)
+   router.del('/v1/api/vedio/vedios', Vedio.delVedio)
+   router.post('/v1/api/vedio/vedios', Vedio.postVedio)
+   router.get('/v1/api/vedio/vedio/:id', Vedio.getVedio)
+   router.get('/v1/api/vedio/vedios', Vedio.getVedios)
 
+   router.put('/v1/api/vedio/child', Vedio.putChild)
+   router.del('/v1/api/vedio/children', Vedio.delChild)
+   router.post('/v1/api/vedio/children', Vedio.postChild)
+   router.get('/v1/api/vedio/child/:id', Vedio.getChild)
+   router.get('/v1/api/vedio/children', Vedio.getChildren)
 
-  /**
-  *   location 接口
+ /**
+  *  location 接口
   */
   router.put('/v1/api/location/province', Location.putProvince)
   router.del('/v1/api/location/provinces', Location.delProvince)

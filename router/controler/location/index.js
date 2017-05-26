@@ -135,7 +135,7 @@ module.exports = class Location extends BaseContructor {
         try {
           let datas = await Province
             .find({ _id: { $in: ids } })
-            .populate(keys)
+            .select(keys)
 
           return ctx.body = {
             Total: datas.length,
@@ -156,8 +156,8 @@ module.exports = class Location extends BaseContructor {
         try {
           let datas = await Province
             .find({})
-            .limit(query.limit)
-            .skip(query.page)
+            .limit(query.limit - 0)
+            .skip(query.page - 1)
 
           return ctx.body = {
             Total: datas.length,
@@ -323,7 +323,7 @@ module.exports = class Location extends BaseContructor {
         try {
           let datas = await Province
             .find({ _id: { $in: ids } })
-            .populate(keys)
+            .select(keys)
 
           return ctx.body = {
             Total: datas.length,
@@ -347,13 +347,13 @@ module.exports = class Location extends BaseContructor {
             datas = await City
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page)
+              .skip(query.page - 1)
               .populate('province', 'name _id')
           } else {
             datas = await City
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page)
+              .skip(query.page - 1)
           }
 
           return ctx.body = {
@@ -531,7 +531,7 @@ module.exports = class Location extends BaseContructor {
         try {
           let datas = await Province
             .find({ _id: { $in: ids } })
-            .populate(keys)
+            .select(keys)
 
           return ctx.body = {
             Total: datas.length,
@@ -555,7 +555,7 @@ module.exports = class Location extends BaseContructor {
             datas = await Area
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page)
+              .skip(query.page - 1)
               .populate('city', '_id name')
           } else {
             datas = await Area
