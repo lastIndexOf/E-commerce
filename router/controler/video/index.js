@@ -87,33 +87,76 @@ module.exports = class Location extends BaseContructor {
     const query = ctx.request.query
 
     if (!query.keys) {
-      try {
-        const data = await Vedio.findById(id)
+      if (query.populate) {
+        try {
+          const data = await Vedio
+            .findById(id)
+            .populate('author')
+            .populate('type')
+            .populate('followers')
+            .populate('children')
+            .populate('comment')
 
-        return ctx.body = {
-          Total: 1,
-          ResultList: [ data ]
+          return ctx.body = {
+            Total: 1,
+            ResultList: [ data ]
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
         }
-      } catch(e) {
-        return ctx.body = {
-          Error: e.message
+      } else {
+        try {
+          const data = await Vedio.findById(id)
+
+          return ctx.body = {
+            Total: 1,
+            ResultList: [ data ]
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
         }
       }
     } else {
       const keys = query.keys.split('+').join(' ')
 
-      try {
-        const data = await Vedio
-          .find({ _id: id })
-          .select(keys)
+      if (query.populate) {
+        try {
+          const data = await Vedio
+            .find({ _id: id })
+            .populate('author')
+            .populate('type')
+            .populate('followers')
+            .populate('children')
+            .populate('comment')
+            .select(keys)
 
-        return ctx.body = {
-          Total: 1,
-          ResultList: [ data ]
+          return ctx.body = {
+            Total: 1,
+            ResultList: data
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
         }
-      } catch(e) {
-        return ctx.body = {
-          Error: e.message
+      } else {
+        try {
+          const data = await Vedio
+            .find({ _id: id })
+            .select(keys)
+
+          return ctx.body = {
+            Total: 1,
+            ResultList: data
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
         }
       }
     }
@@ -137,8 +180,10 @@ module.exports = class Location extends BaseContructor {
               .populate('children')
               .populate('comment')
 
+            const count = await Vedio.count()
+
             return ctx.body = {
-              Total: datas.length,
+              Total: count,
               ResultList: datas
             }
           } catch(e) {
@@ -151,8 +196,10 @@ module.exports = class Location extends BaseContructor {
             let datas = await Vedio
               .find({ _id: { $in: ids } })
 
+            const count = await Vedio.count()
+
             return ctx.body = {
-              Total: datas.length,
+              Total: count,
               ResultList: datas
             }
           } catch(e) {
@@ -175,8 +222,10 @@ module.exports = class Location extends BaseContructor {
               .populate('comment')
               .select(keys)
 
+            const count = await Vedio.count()
+
             return ctx.body = {
-              Total: datas.length,
+              Total: count,
               ResultList: datas
             }
           } catch(e) {
@@ -190,8 +239,10 @@ module.exports = class Location extends BaseContructor {
               .find({ _id: { $in: ids } })
               .select(keys)
 
+            const count = await Vedio.count()
+
             return ctx.body = {
-              Total: datas.length,
+              Total: count,
               ResultList: datas
             }
           } catch(e) {
@@ -219,8 +270,10 @@ module.exports = class Location extends BaseContructor {
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
+            const count = await Vedio.count()
+
             return ctx.body = {
-              Total: datas.length,
+              Total: count,
               ResultList: datas
             }
           } catch(e) {
@@ -235,8 +288,10 @@ module.exports = class Location extends BaseContructor {
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
+            const count = await Vedio.count()
+
             return ctx.body = {
-              Total: datas.length,
+              Total: count,
               ResultList: datas
             }
           } catch(e) {
@@ -261,7 +316,7 @@ module.exports = class Location extends BaseContructor {
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            let count = Province.count()
+            let count = Vedio.count()
 
             let datas = await Promise.all([data, count])
 
@@ -304,15 +359,23 @@ module.exports = class Location extends BaseContructor {
   static async putChild(ctx) {
     const body = ctx.request.body
 
-    if (!body.name)
-      return ctx.body = {
-        Error: '请求格式错误'
-      }
+    const requiredKeys = [
+      'parent',
+      'title',
+      'src'
+    ]
 
-    const newCity = new City(body)
+    for (let key of requiredKeys) {
+      if (!(key in body))
+        return ctx.body = {
+          Error: '请求格式错误'
+        }
+    }
+
+    const newChild = new VedioChildren(body)
 
     try {
-      const Id = await newCity.save()
+      const Id = await newChild.save()
       ctx.status = 201
       return ctx.body = { Id }
     } catch(e) {
@@ -332,7 +395,7 @@ module.exports = class Location extends BaseContructor {
 
     const ids = body.ids.split('+')
     try {
-      await City.remove({ _id: { $in: ids } })
+      await VedioChildren.remove({ _id: { $in: ids } })
 
       return ctx.status = 204
     } catch(e) {

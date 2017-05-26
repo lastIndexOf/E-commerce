@@ -99,7 +99,7 @@ module.exports = class Location extends BaseContructor {
 
         return ctx.body = {
           Total: 1,
-          ResultList: [ data ]
+          ResultList: data
         }
       } catch(e) {
         return ctx.body = {
@@ -287,7 +287,7 @@ module.exports = class Location extends BaseContructor {
 
         return ctx.body = {
           Total: 1,
-          ResultList: [ data ]
+          ResultList: data
         }
       } catch(e) {
         return ctx.body = {

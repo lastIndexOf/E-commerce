@@ -52,7 +52,7 @@ return {
 #### get  /vedio/:id 该id大视频信息
 
 接受get参数
-- key `String`('key1+key2+key3+...')
+- keys `String`('key1+key2+key3+...')
 
 ```
 return {
@@ -110,7 +110,7 @@ return {
 #### get  /child/:id 该id大视频信息
 
 接受get参数
-- key `String`('key1+key2+key3+...')
+- keys `String`('key1+key2+key3+...')
 
 ```
 return {
