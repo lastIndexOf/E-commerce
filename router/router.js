@@ -3,6 +3,7 @@ const
   User     =  require('./controler/user'),
   Vedio    =  require('./controler/video'),
   Type     =  require('./controler/type'),
+  Comment  =  require('./controler/comment'),
   Location =  require('./controler/location')
 
 module.exports = router => {
@@ -38,44 +39,78 @@ module.exports = router => {
   router.get('/admin/vedio', Index.adminVedioAction)
   router.get('/admin/other', Index.adminOtherAction)
 
+
+
+  /**
+   *  功能性接口(登陆登出注册等)
+   */
+
+
+
   /**
    *  User 接口
    */
+  router.put('/v1/api/user/user', User.putUser)
+  router.del('/v1/api/user/users', User.delUser)
+  router.post('/v1/api/user/users', User.postUser)
+  router.get('/v1/api/user/user/:id', User.getUser)
+  router.get('/v1/api/user/users', User.getUsers)
 
 
   /**
    *  Admin 接口
    */
 
+   // !!!!暂不予开放
+  router.put('/v1/api/user/admin', User.putAdmin)
+  router.del('/v1/api/user/admins', User.delAdmin)
+  router.post('/v1/api/user/admins', User.postAdmin)
+  router.get('/v1/api/user/admin/:id', User.getAdmin)
+  router.get('/v1/api/user/admins', User.getAdmins)
+
 
   /**
    *  master 接口
    */
+  router.put('/v1/api/user/master', User.putMaster)
+  router.del('/v1/api/user/masters', User.delMaster)
+  router.post('/v1/api/user/masters', User.postMaster)
+  router.get('/v1/api/user/master/:id', User.getMaster)
+  router.get('/v1/api/user/masters', User.getMasters)
 
+
+   /**
+   *  comment 接口
+   */
+  router.put('/v1/api/comment/comment', Comment.putComment)
+  router.del('/v1/api/comment/comments', Comment.delComment)
+  router.post('/v1/api/comment/comments', Comment.postComment)
+  router.get('/v1/api/comment/comment/:id', Comment.getComment)
+  router.get('/v1/api/comment/comments', Comment.getComments)
 
    /**
    *  type 接口
    */
-   router.put('/v1/api/type/type', Type.putType)
-   router.del('/v1/api/type/types', Type.delType)
-   router.post('/v1/api/type/types', Type.postType)
-   router.get('/v1/api/type/type/:id', Type.getType)
-   router.get('/v1/api/type/types', Type.getTypes)
+  router.put('/v1/api/type/type', Type.putType)
+  router.del('/v1/api/type/types', Type.delType)
+  router.post('/v1/api/type/types', Type.postType)
+  router.get('/v1/api/type/type/:id', Type.getType)
+  router.get('/v1/api/type/types', Type.getTypes)
 
   /**
    *  vedio 接口
    */
-   router.put('/v1/api/vedio/vedio', Vedio.putVedio)
-   router.del('/v1/api/vedio/vedios', Vedio.delVedio)
-   router.post('/v1/api/vedio/vedios', Vedio.postVedio)
-   router.get('/v1/api/vedio/vedio/:id', Vedio.getVedio)
-   router.get('/v1/api/vedio/vedios', Vedio.getVedios)
+  router.put('/v1/api/vedio/vedio', Vedio.putVedio)
+  router.del('/v1/api/vedio/vedios', Vedio.delVedio)
+  router.post('/v1/api/vedio/vedios', Vedio.postVedio)
+  router.get('/v1/api/vedio/vedio/:id', Vedio.getVedio)
+  router.get('/v1/api/vedio/vedios', Vedio.getVedios)
 
-   router.put('/v1/api/vedio/child', Vedio.putChild)
-   router.del('/v1/api/vedio/children', Vedio.delChild)
-   router.post('/v1/api/vedio/children', Vedio.postChild)
-   router.get('/v1/api/vedio/child/:id', Vedio.getChild)
-   router.get('/v1/api/vedio/children', Vedio.getChildren)
+  router.put('/v1/api/vedio/child', Vedio.putChild)
+  router.del('/v1/api/vedio/children', Vedio.delChild)
+  router.post('/v1/api/vedio/children', Vedio.postChild)
+  router.get('/v1/api/vedio/child/:id', Vedio.getChild)
+  router.get('/v1/api/vedio/children', Vedio.getChildren)
 
  /**
   *  location 接口

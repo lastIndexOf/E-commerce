@@ -80,7 +80,7 @@ module.exports = class Location extends BaseContructor {
       Object.assign(doc, body.update)
 
       await Promise.all([
-        doc.save()
+        doc.save(),
         Type.update({ _id: { $in: doc.type } }, { $addToSet: { vedios: body.id } })
       ])
 
@@ -315,7 +315,7 @@ module.exports = class Location extends BaseContructor {
 
         if (query.populate) {
           try {
-            let data = Province
+            let data = Vedio
               .find({})
               .select(keys)
               .populate('author')
@@ -341,13 +341,13 @@ module.exports = class Location extends BaseContructor {
           }
         } else {
           try {
-            let data = Province
+            let data = Vedio
               .find({})
               .select(keys)
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            let count = Province.count()
+            let count = Vedio.count()
 
             let datas = await Promise.all([data, count])
 
@@ -406,8 +406,8 @@ module.exports = class Location extends BaseContructor {
     const ids = body.ids.split('+')
     try {
       await Promise.all([
-        Vedio.update({ children: { $in: ids } }, { $pull: { children: { $in: ids } } })
-        Comment.update({ vediochildren: { $in: ids } }, { $pull: { vediochildren: { $in: ids } } })
+        Vedio.update({ children: { $in: ids } }, { $pull: { children: { $in: ids } } }),
+        Comment.update({ vediochildren: { $in: ids } }, { $pull: { vediochildren: { $in: ids } } }),
         VedioChildren.remove({ _id: { $in: ids } })
       ])
 

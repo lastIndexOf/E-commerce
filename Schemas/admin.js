@@ -1,6 +1,9 @@
 const
 	mongoose  =  require('mongoose'),
+	bcrypt    =  require('bcrypt'),
 	Schema    =  mongoose.Schema
+
+const SALT_SAFE = 10
 
 
 let adminSchema = new Schema({
@@ -37,7 +40,19 @@ adminSchema.pre('save', function (next) {
 		this.meta.updateAt = new Date()
 	}
 
-	next()
+	bcrypt.genSalt(SALT_SAFE, (err, salt) => {
+    if (err) 
+      return next(err)
+
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) 
+        return next(err)
+
+      this.password = hash
+      
+      next()
+    })
+  })
 })
 
 adminSchema.methods = {}

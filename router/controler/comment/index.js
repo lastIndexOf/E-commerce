@@ -1,16 +1,18 @@
 const
   { send }        =  require('../../utils'),
-  Type            =  require('../../../Models/type.js'),
+  VedioChild      =  require('../../../Models/vediochildren.js'),
   Vedio           =  require('../../../Models/vedio.js'),
+  Comment         =  require('../../../Models/comment.js'),
   BaseContructor  =  require('./base.js')
 
-module.exports = class Type extends BaseContructor {
+module.exports = class Comment extends BaseContructor {
   // Type
-  static async putType(ctx) {
+  static async putComment(ctx) {
     const body = ctx.request.body
 
     const requiredKeys = [
-      'name'
+      'from',
+      'content'
     ]
 
     for (let key of requiredKeys) {
@@ -20,10 +22,17 @@ module.exports = class Type extends BaseContructor {
         }
     }
 
-    const newType = new Type(body)
+    const newComment= new Comment(body)
 
     try {
-      const Id = await newType.save()
+      const Id = await newComment.save()
+
+      if (body.vedio) {
+        await Vedio.update({ _id: body.vedio }, { $addToSet: { comment: Id._id } })
+      } else if (body.vediochildren){
+        await VedioChild.update({ _id: body.vediochildren }, { $addToSet: { comment: Id._id } })
+      }
+
       ctx.status = 201
       return ctx.body = { Id }
     } catch(e) {
@@ -33,7 +42,7 @@ module.exports = class Type extends BaseContructor {
     }
   }
 
-  static async delType(ctx) {
+  static async delComment(ctx) {
     const body = ctx.request.body
 
     if (!body.ids)
@@ -45,8 +54,9 @@ module.exports = class Type extends BaseContructor {
 
     try {
       await Promise.all([
-        Type.remove({ _id: { $in: ids } }),
-        Vedio.update({ type: { $in: ids } }, { $pull: { type: { $in: ids } } })
+        Comment.remove({ _id: { $in: ids } }),
+        Vedio.update({ comment: { $in: ids } }, { $pull: { comment: { $in: ids } } }),
+        VedioChild.update({ comment: { $in: ids } }, { $pull: { comment: { $in: ids } } })
       ])
 
       return ctx.status = 204
@@ -57,7 +67,7 @@ module.exports = class Type extends BaseContructor {
     }
   }
 
-  static async postType(ctx) {
+  static async postComment(ctx) {
     const body = ctx.request.body
 
     if (!body.id || !body.update)
@@ -80,16 +90,17 @@ module.exports = class Type extends BaseContructor {
     }
   }
 
-  static async getType(ctx) {
+  static async getComment(ctx) {
     const id = ctx.params.id
     const query = ctx.request.query
 
     if (!query.keys) {
       if (query.populate) {
         try {
-          const data = await Type
+          const data = await Comment
             .findById(id)
-            .populate('vedios')
+            .populate('vedio')
+            .populate('vediochildren')
 
           return ctx.body = {
             Total: 1,
@@ -102,7 +113,7 @@ module.exports = class Type extends BaseContructor {
         }
       } else {
         try {
-          const data = await Type.findById(id)
+          const data = await Comment.findById(id)
 
           return ctx.body = {
             Total: 1,
@@ -119,9 +130,10 @@ module.exports = class Type extends BaseContructor {
 
       if (query.populate) {
         try {
-          const data = await Type
+          const data = await Comment
             .find({ _id: id })
-            .populate('vedios')
+            .populate('vedio')
+            .populate('vediochildren')
             .select(keys)
 
           return ctx.body = {
@@ -135,7 +147,7 @@ module.exports = class Type extends BaseContructor {
         }
       } else {
         try {
-          const data = await Type
+          const data = await Comment
             .find({ _id: id })
             .select(keys)
 
@@ -153,7 +165,7 @@ module.exports = class Type extends BaseContructor {
 
   }
 
-  static async getTypes(ctx) {
+  static async getComments(ctx) {
     const query = ctx.request.query
 
     if (query.ids) {
@@ -162,11 +174,12 @@ module.exports = class Type extends BaseContructor {
       if (!query.keys) {
         if (query.populate) {
           try {
-            let datas = await Type
+            let datas = await Comment
               .find({ _id: { $in: ids } })
-              .populate('vedios')
+              .populate('vedio')
+              .populate('vediochildren')
 
-            const count = await Type.count()
+            const count = await Comment.count()
 
             return ctx.body = {
               Total: count,
@@ -179,10 +192,10 @@ module.exports = class Type extends BaseContructor {
           }
         } else {
           try {
-            let datas = await Type
+            let datas = await Comment
               .find({ _id: { $in: ids } })
 
-            const count = await Type.count()
+            const count = await Comment.count()
 
             return ctx.body = {
               Total: count,
@@ -199,12 +212,13 @@ module.exports = class Type extends BaseContructor {
 
         if (query.populate) {
           try {
-            let datas = await Type
+            let datas = await Comment
               .find({ _id: { $in: ids } })
-              .populate('vedios')
+              .populate('vedio')
+              .populate('vediochildren')
               .select(keys)
 
-            const count = await Type.count()
+            const count = await Comment.count()
 
             return ctx.body = {
               Total: count,
@@ -217,11 +231,11 @@ module.exports = class Type extends BaseContructor {
           }
         } else {
           try {
-            let datas = await Type
+            let datas = await Comment
               .find({ _id: { $in: ids } })
               .select(keys)
 
-            const count = await Type.count()
+            const count = await Comment.count()
 
             return ctx.body = {
               Total: count,
@@ -242,13 +256,14 @@ module.exports = class Type extends BaseContructor {
       if (!query.keys) {
         if (query.populate) {
           try {
-            let datas = await Type
+            let datas = await Comment
               .find({})
-              .populate('vedios')
+              .populate('vedio')
+              .populate('vediochildren')
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            const count = await Type.count()
+            const count = await Comment.count()
 
             return ctx.body = {
               Total: count,
@@ -261,12 +276,12 @@ module.exports = class Type extends BaseContructor {
           }
         } else {
           try {
-            let datas = await Type
+            let datas = await Comment
               .find({})
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            const count = await Type.count()
+            const count = await Comment.count()
 
             return ctx.body = {
               Total: count,
@@ -283,14 +298,15 @@ module.exports = class Type extends BaseContructor {
 
         if (query.populate) {
           try {
-            let data = Type
+            let data = Comment
               .find({})
               .select(keys)
-              .populate('vedios')
+              .populate('vedio')
+              .populate('vediochildren')
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            let count = Type.count()
+            let count = Comment.count()
 
             let datas = await Promise.all([data, count])
 
@@ -305,13 +321,13 @@ module.exports = class Type extends BaseContructor {
           }
         } else {
           try {
-            let data = Type
+            let data = Comment
               .find({})
               .select(keys)
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            let count = Type.count()
+            let count = Comment.count()
 
             let datas = await Promise.all([data, count])
 

@@ -3,20 +3,19 @@ const
   User            =  require('../../../Models/user.js'),
   Master          =  require('../../../Models/master.js'),
   Admin           =  require('../../../Models/admin.js'),
+  Vedio           =  require('../../../Models/vedio.js'),
   BaseContructor  =  require('./base.js')
 
 module.exports = class User extends BaseContructor {
   // User
-  static async putVedio(ctx) {
+  static async putUser(ctx) {
     const body = ctx.request.body
 
     const requiredKeys = [
-      'title',
-      'avatar',
-      'author',
-      'type',
-      'summary',
-      'diffculty'
+      'username',
+      'email',
+      'password',
+      'gender'
     ]
 
     for (let key of requiredKeys) {
@@ -26,10 +25,10 @@ module.exports = class User extends BaseContructor {
         }
     }
 
-    const newVedio = new Vedio(body)
+    const newUser = new User(body)
 
     try {
-      const Id = await newVedio.save()
+      const Id = await newUser.save()
       ctx.status = 201
       return ctx.body = { Id }
     } catch(e) {
@@ -39,28 +38,13 @@ module.exports = class User extends BaseContructor {
     }
   }
 
-  static async delVedio(ctx) {
-    const body = ctx.request.body
-
-    if (!body.ids)
-      return ctx.body = {
-        Error: '请求格式错误'
-      }
-
-    const ids = body.ids.split('+')
-
-    try {
-      await Vedio.remove({ _id: { $in: ids } })
-
-      return ctx.status = 204
-    } catch(e) {
-      return ctx.body = {
-        Error: e.message
-      }
+  static async delUser(ctx) {
+    ctx.body = {
+      Error: '不允许删除用户'
     }
   }
 
-  static async postVedio(ctx) {
+  static async postUser(ctx) {
     const body = ctx.request.body
 
     if (!body.id || !body.update)
@@ -69,7 +53,7 @@ module.exports = class User extends BaseContructor {
       }
 
     try {
-      let doc = await Vedio.findById({ _id: body.id })
+      let doc = await User.findById({ _id: body.id })
 
       Object.assign(doc, body.update)
 
@@ -83,20 +67,18 @@ module.exports = class User extends BaseContructor {
     }
   }
 
-  static async getVedio(ctx) {
+  static async getUser(ctx) {
     const id = ctx.params.id
     const query = ctx.request.query
 
     if (!query.keys) {
       if (query.populate) {
         try {
-          const data = await Vedio
+          const data = await User
             .findById(id)
-            .populate('author')
-            .populate('type')
-            .populate('followers')
-            .populate('children')
-            .populate('comment')
+            .populate('area')
+            .populate('shopchar')
+            .populate('ownedvedios')
 
           return ctx.body = {
             Total: 1,
@@ -109,7 +91,7 @@ module.exports = class User extends BaseContructor {
         }
       } else {
         try {
-          const data = await Vedio.findById(id)
+          const data = await User.findById(id)
 
           return ctx.body = {
             Total: 1,
@@ -126,13 +108,11 @@ module.exports = class User extends BaseContructor {
 
       if (query.populate) {
         try {
-          const data = await Vedio
+          const data = await User
             .find({ _id: id })
-            .populate('author')
-            .populate('type')
-            .populate('followers')
-            .populate('children')
-            .populate('comment')
+            .populate('area')
+            .populate('shopchar')
+            .populate('ownedvedios')
             .select(keys)
 
           return ctx.body = {
@@ -146,7 +126,7 @@ module.exports = class User extends BaseContructor {
         }
       } else {
         try {
-          const data = await Vedio
+          const data = await User
             .find({ _id: id })
             .select(keys)
 
@@ -164,7 +144,7 @@ module.exports = class User extends BaseContructor {
 
   }
 
-  static async getVedios(ctx) {
+  static async getUsers(ctx) {
     const query = ctx.request.query
 
     if (query.ids) {
@@ -173,15 +153,13 @@ module.exports = class User extends BaseContructor {
       if (!query.keys) {
         if (query.populate) {
           try {
-            let datas = await Vedio
+            let datas = await User
               .find({ _id: { $in: ids } })
-              .populate('author')
-              .populate('type')
-              .populate('followers')
-              .populate('children')
-              .populate('comment')
+              .populate('area')
+              .populate('shopchar')
+              .populate('ownedvedios')
 
-            const count = await Vedio.count()
+            const count = await User.count()
 
             return ctx.body = {
               Total: count,
@@ -194,10 +172,10 @@ module.exports = class User extends BaseContructor {
           }
         } else {
           try {
-            let datas = await Vedio
+            let datas = await User
               .find({ _id: { $in: ids } })
 
-            const count = await Vedio.count()
+            const count = await User.count()
 
             return ctx.body = {
               Total: count,
@@ -214,16 +192,14 @@ module.exports = class User extends BaseContructor {
 
         if (query.populate) {
           try {
-            let datas = await Vedio
+            let datas = await User
               .find({ _id: { $in: ids } })
-              .populate('author')
-              .populate('type')
-              .populate('followers')
-              .populate('children')
-              .populate('comment')
+              .populate('area')
+              .populate('shopchar')
+              .populate('ownedvedios')
               .select(keys)
 
-            const count = await Vedio.count()
+            const count = await User.count()
 
             return ctx.body = {
               Total: count,
@@ -236,11 +212,11 @@ module.exports = class User extends BaseContructor {
           }
         } else {
           try {
-            let datas = await Vedio
+            let datas = await User
               .find({ _id: { $in: ids } })
               .select(keys)
 
-            const count = await Vedio.count()
+            const count = await User.count()
 
             return ctx.body = {
               Total: count,
@@ -261,17 +237,15 @@ module.exports = class User extends BaseContructor {
       if (!query.keys) {
         if (query.populate) {
           try {
-            let datas = await Vedio
+            let datas = await User
               .find({})
-              .populate('author')
-              .populate('type')
-              .populate('followers')
-              .populate('children')
-              .populate('comment')
+              .populate('area')
+              .populate('shopchar')
+              .populate('ownedvedios')
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            const count = await Vedio.count()
+            const count = await User.count()
 
             return ctx.body = {
               Total: count,
@@ -284,12 +258,12 @@ module.exports = class User extends BaseContructor {
           }
         } else {
           try {
-            let datas = await Vedio
+            let datas = await User
               .find({})
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            const count = await Vedio.count()
+            const count = await User.count()
 
             return ctx.body = {
               Total: count,
@@ -306,18 +280,16 @@ module.exports = class User extends BaseContructor {
 
         if (query.populate) {
           try {
-            let data = Province
+            let data = User
               .find({})
               .select(keys)
-              .populate('author')
-              .populate('type')
-              .populate('followers')
-              .populate('children')
-              .populate('comment')
+              .populate('area')
+              .populate('shopchar')
+              .populate('ownedvedios')
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            let count = Vedio.count()
+            let count = User.count()
 
             let datas = await Promise.all([data, count])
 
@@ -332,13 +304,13 @@ module.exports = class User extends BaseContructor {
           }
         } else {
           try {
-            let data = Province
+            let data = User
               .find({})
               .select(keys)
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
-            let count = Province.count()
+            let count = User.count()
 
             let datas = await Promise.all([data, count])
 
@@ -357,7 +329,288 @@ module.exports = class User extends BaseContructor {
   }
 
   // Master
-  static async putChild(ctx) {
+  static async putMaster(ctx) {
+    const body = ctx.request.body
+
+    const requiredKeys = [
+      'username',
+      'password',
+      'gender'
+    ]
+
+    for (let key of requiredKeys) {
+      if (!(key in body))
+        return ctx.body = {
+          Error: '请求格式错误'
+        }
+    }
+
+    const newMaster = new Master(body)
+
+    try {
+      const Id = await newMaster.save()
+      ctx.status = 201
+      return ctx.body = { Id }
+    } catch(e) {
+      return ctx.body = {
+        Error: e.message
+      }
+    }
+  }
+
+  static async delMaster(ctx) {
+    ctx.body = {
+      Error: '不允许删除高级用户信息'
+    }
+  }
+
+  static async postMaster(ctx) {
+    const body = ctx.request.body
+
+    if (!body.id || !body.update)
+      return ctx.body = {
+        Error: '请求格式错误'
+      }
+
+    try {
+      let doc = await Master.findById({ _id: body.id })
+
+      Object.assign(doc, body.update)
+
+      await doc.save()
+
+      return ctx.status = 201
+    } catch(e) {
+      return ctx.body = {
+        Error: e.message
+      }
+    }
+  }
+
+  static async getMaster(ctx) {
+    const id = ctx.params.id
+    const query = ctx.request.query
+
+    if (!query.keys) {
+      if (query.populate) {
+        try {
+          const data = await Master
+            .findById(id)
+            .populate('own')
+
+          return ctx.body = {
+            Total: 1,
+            ResultList: [ data ]
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
+        }
+      } else {
+        try {
+          const data = await Master.findById(id)
+
+          return ctx.body = {
+            Total: 1,
+            ResultList: [ data ]
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
+        }
+      }
+    } else {
+      const keys = query.keys.split('+').join(' ')
+
+      if (query.populate) {
+        try {
+          const data = await Master
+            .find({ _id: id })
+            .populate('own')
+            .select(keys)
+
+          return ctx.body = {
+            Total: 1,
+            ResultList: data
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
+        }
+      } else {
+        try {
+          const data = await Master
+            .find({ _id: id })
+            .select(keys)
+
+          return ctx.body = {
+            Total: 1,
+            ResultList: data
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
+        }
+      }
+    }
+
+  }
+
+  static async getMasters(ctx) {
+    const query = ctx.request.query
+
+    if (query.ids) {
+      const ids = query.ids.split('+')
+
+      if (!query.keys) {
+        if (query.populate) {
+          try {
+            let datas = await Master
+              .find({ _id: { $in: ids } })
+              .populate('own')
+
+            const count = await Master.count()
+
+            return ctx.body = {
+              Total: count,
+              ResultList: datas
+            }
+          } catch(e) {
+            return ctx.body = {
+              Error: e.message
+            }
+          }
+        } else {
+          try {
+            let datas = await Master.find({ _id: { $in: ids } })
+
+            const count = await Master.count()
+
+            return ctx.body = {
+              Total: count,
+              ResultList: datas
+            }
+          } catch(e) {
+            return ctx.body = {
+              Error: e.message
+            }
+          }
+        }
+      } else {
+        const keys = query.keys.split('+').join(' ')
+
+        if (query.populate) {
+          try {
+            let datas = await Master
+              .find({ _id: { $in: ids } })
+              .populate('own')
+              .select(keys)
+
+            const count = Master.count()
+
+            return ctx.body = {
+              Total: count,
+              ResultList: datas
+            }
+          } catch(e) {
+            return ctx.body = {
+              Error: e.message
+            }
+          }
+        } else {
+          try {
+            let datas = await Master
+              .find({ _id: { $in: ids } })
+              .select(keys)
+
+            const count = await Master.count()
+
+            return ctx.body = {
+              Total: count,
+              ResultList: datas
+            }
+          } catch(e) {
+            return ctx.body = {
+              Error: e.message
+            }
+          }
+        }
+      }
+    } else if (!query.limit || !query.page) {
+      return ctx.body = {
+        Error: '请求格式错误'
+      }
+    } else {
+      if (!query.keys) {
+        try {
+          let datas
+          if (query.populate) {
+            datas = await Master
+              .find({})
+              .limit(query.limit - 0)
+              .skip(query.page - 1)
+              .populate('own')
+          } else {
+            datas = await Master
+              .find({})
+              .limit(query.limit - 0)
+              .skip(query.page - 1)
+          }
+
+          const count = await Master.count()
+
+          return ctx.body = {
+            Total: count,
+            ResultList: datas
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
+        }
+      } else {
+        const keys = query.keys.split('+').join(' ')
+
+        try {
+          let data
+          if (query.populate) {
+            data = Master
+              .find({})
+              .populate('own')
+              .select(keys)
+              .limit(query.limit - 0)
+              .skip(query.page - 1)
+          } else {
+            data = Master
+              .find({})
+              .select(keys)
+              .limit(query.limit - 0)
+              .skip(query.page - 1)
+          }
+
+          let count = await Master.count()
+
+          let datas = await Promise.all([data, count])
+
+          return ctx.body = {
+            Total: datas[1],
+            ResultList: datas[0]
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
+        }
+      }
+    }
+  }
+
+  // Admin
+  static async putAdmin(ctx) {
     const body = ctx.request.body
 
     const requiredKeys = [
@@ -386,7 +639,7 @@ module.exports = class User extends BaseContructor {
     }
   }
 
-  static async delChild(ctx) {
+  static async delAdmin(ctx) {
     const body = ctx.request.body
 
     if (!body.ids)
@@ -406,7 +659,7 @@ module.exports = class User extends BaseContructor {
     }
   }
 
-  static async postChild(ctx) {
+  static async postAdmin(ctx) {
     const body = ctx.request.body
 
     if (!body.id || !body.update)
@@ -429,7 +682,7 @@ module.exports = class User extends BaseContructor {
     }
   }
 
-  static async getChild(ctx) {
+  static async getAdmin(ctx) {
     const id = ctx.params.id
     const query = ctx.request.query
 
@@ -504,7 +757,7 @@ module.exports = class User extends BaseContructor {
 
   }
 
-  static async getChildren(ctx) {
+  static async getAdmins(ctx) {
     const query = ctx.request.query
 
     if (query.ids) {
