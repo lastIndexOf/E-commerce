@@ -5,7 +5,7 @@ const
 
 let typeSchema = new Schema({
   name: {
-    Type: String,
+    type: String,
     required: true
   },
   vedios: [{
@@ -13,15 +13,15 @@ let typeSchema = new Schema({
     ref: 'Vedio'
   }],
   meta: {
-		createdAt: {
-			type: Date,
-			default: new Date()
-		},
-		updateAt: {
-			type: Date,
-			default: new Date()
-		}
+	createdAt: {
+		type: Date,
+		default: new Date()
+	},
+	updateAt: {
+		type: Date,
+		default: new Date()
 	}
+  }
 })
 
 typeSchema.pre('save', function (next) {

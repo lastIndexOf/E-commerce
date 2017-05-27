@@ -1,5 +1,7 @@
 const
   { send }        =  require('../../utils'),
+  Type            =  require('../../../Models/type.js'),
+  Comment         =  require('../../../Models/comment.js'),
   Vedio           =  require('../../../Models/vedio.js'),
   VedioChildren   =  require('../../../Models/vediochildren'),
   BaseContructor  =  require('./base.js')
@@ -49,7 +51,12 @@ module.exports = class Location extends BaseContructor {
     const ids = body.ids.split('+')
 
     try {
-      await Vedio.remove({ _id: { $in: ids } })
+      const datas = await Promise.all([
+        Type.update({ vedios: { $in: ids } }, { $pull: { vedios: { $in: ids } } }),
+        Comment.remove({ vedio: { $in: ids } }),
+        VedioChildren.remove({ parent: { $in: ids } }),
+        Vedio.remove({ _id: { $in: ids } })
+      ])
 
       return ctx.status = 204
     } catch(e) {
@@ -72,7 +79,10 @@ module.exports = class Location extends BaseContructor {
 
       Object.assign(doc, body.update)
 
-      await doc.save()
+      await Promise.all([
+        doc.save()
+        Type.update({ _id: { $in: doc.type } }, { $addToSet: { vedios: body.id } })
+      ])
 
       return ctx.status = 201
     } catch(e) {
@@ -395,7 +405,11 @@ module.exports = class Location extends BaseContructor {
 
     const ids = body.ids.split('+')
     try {
-      await VedioChildren.remove({ _id: { $in: ids } })
+      await Promise.all([
+        Vedio.update({ children: { $in: ids } }, { $pull: { children: { $in: ids } } })
+        Comment.update({ vediochildren: { $in: ids } }, { $pull: { vediochildren: { $in: ids } } })
+        VedioChildren.remove({ _id: { $in: ids } })
+      ])
 
       return ctx.status = 204
     } catch(e) {
@@ -414,7 +428,7 @@ module.exports = class Location extends BaseContructor {
       }
 
     try {
-      let doc = await City.findById({ _id: body.id })
+      let doc = await VedioChildren.findById({ _id: body.id })
 
       Object.assign(doc, body.update)
 
@@ -433,33 +447,70 @@ module.exports = class Location extends BaseContructor {
     const query = ctx.request.query
 
     if (!query.keys) {
-      try {
-        const data = await City.findById(id)
+      if (query.populate) {
+        try {
+          const data = await City
+            .findById(id)
+            .populate('parent')
+            .populate('comment')
 
-        return ctx.body = {
-          Total: 1,
-          ResultList: [ data ]
+          return ctx.body = {
+            Total: 1,
+            ResultList: [ data ]
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
         }
-      } catch(e) {
-        return ctx.body = {
-          Error: e.message
+      } else {
+        try {
+          const data = await City.findById(id)
+
+          return ctx.body = {
+            Total: 1,
+            ResultList: [ data ]
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
         }
       }
     } else {
       const keys = query.keys.split('+').join(' ')
 
-      try {
-        const data = await City
-          .find({ _id: id })
-          .select(keys)
+      if (query.populate) {
+        try {
+          const data = await City
+            .find({ _id: id })
+            .populate('parent')
+            .populate('comment')
+            .select(keys)
 
-        return ctx.body = {
-          Total: 1,
-          ResultList: [ data ]
+          return ctx.body = {
+            Total: 1,
+            ResultList: data
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
         }
-      } catch(e) {
-        return ctx.body = {
-          Error: e.message
+      } else {
+        try {
+          const data = await City
+            .find({ _id: id })
+            .select(keys)
+
+          return ctx.body = {
+            Total: 1,
+            ResultList: data
+          }
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
         }
       }
     }
@@ -473,33 +524,70 @@ module.exports = class Location extends BaseContructor {
       const ids = query.ids.split('+')
 
       if (!query.keys) {
-        try {
-          let datas = await Province.find({ _id: { $in: ids } })
+        if (query.populate) {
+          try {
+            let datas = await VedioChildren
+              .find({ _id: { $in: ids } })
+              .populate('parent')
+              .populate('comment')
 
-          return ctx.body = {
-            Total: datas.length,
-            ResultList: datas
+            return ctx.body = {
+              Total: datas.length,
+              ResultList: datas
+            }
+          } catch(e) {
+            return ctx.body = {
+              Error: e.message
+            }
           }
-        } catch(e) {
-          return ctx.body = {
-            Error: e.message
+        } else {
+          try {
+            let datas = await VedioChildren.find({ _id: { $in: ids } })
+
+            return ctx.body = {
+              Total: datas.length,
+              ResultList: datas
+            }
+          } catch(e) {
+            return ctx.body = {
+              Error: e.message
+            }
           }
         }
       } else {
         const keys = query.keys.split('+').join(' ')
 
-        try {
-          let datas = await Province
-            .find({ _id: { $in: ids } })
-            .populate(keys)
+        if (query.populate) {
+          try {
+            let datas = await VedioChildren
+              .find({ _id: { $in: ids } })
+              .populate('parent')
+              .populate('comment')
+              .select(keys)
 
-          return ctx.body = {
-            Total: datas.length,
-            ResultList: datas
+            return ctx.body = {
+              Total: datas.length,
+              ResultList: datas
+            }
+          } catch(e) {
+            return ctx.body = {
+              Error: e.message
+            }
           }
-        } catch(e) {
-          return ctx.body = {
-            Error: e.message
+        } else {
+          try {
+            let datas = await VedioChildren
+              .find({ _id: { $in: ids } })
+              .select(keys)
+
+            return ctx.body = {
+              Total: datas.length,
+              ResultList: datas
+            }
+          } catch(e) {
+            return ctx.body = {
+              Error: e.message
+            }
           }
         }
       }
@@ -512,20 +600,23 @@ module.exports = class Location extends BaseContructor {
         try {
           let datas
           if (query.populate) {
-            datas = await City
+            datas = await VedioChildren
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page)
-              .populate('province', 'name _id')
+              .skip(query.page - 1)
+              .populate('parent')
+              .populate('comment')
           } else {
-            datas = await City
+            datas = await VedioChildren
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page)
+              .skip(query.page - 1)
           }
 
+          const count = await VedioChildren.count()
+
           return ctx.body = {
-            Total: datas.length,
+            Total: count,
             ResultList: datas
           }
         } catch(e) {
@@ -539,21 +630,22 @@ module.exports = class Location extends BaseContructor {
         try {
           let data
           if (query.populate) {
-            data = City
+            data = VedioChildren
               .find({})
-              .populate('province', 'name _id')
+              .populate('parent')
+              .populate('comment')
               .select(keys)
               .limit(query.limit - 0)
               .skip(query.page - 1)
           } else {
-            data = City
+            data = VedioChildren
               .find({})
               .select(keys)
               .limit(query.limit - 0)
               .skip(query.page - 1)
           }
 
-          let count = City.count()
+          let count = await VedioChildren.count()
 
           let datas = await Promise.all([data, count])
 

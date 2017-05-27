@@ -1,7 +1,8 @@
 const
   Index    =  require('./controler/index'),
   User     =  require('./controler/user'),
-  Vedio     =  require('./controler/video'),
+  Vedio    =  require('./controler/video'),
+  Type     =  require('./controler/type'),
   Location =  require('./controler/location')
 
 module.exports = router => {
@@ -51,6 +52,15 @@ module.exports = router => {
    *  master 接口
    */
 
+
+   /**
+   *  type 接口
+   */
+   router.put('/v1/api/type/type', Type.putType)
+   router.del('/v1/api/type/types', Type.delType)
+   router.post('/v1/api/type/types', Type.postType)
+   router.get('/v1/api/type/type/:id', Type.getType)
+   router.get('/v1/api/type/types', Type.getTypes)
 
   /**
    *  vedio 接口

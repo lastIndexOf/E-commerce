@@ -151,7 +151,7 @@ var editType = ''
         data: {
           id: editId,
           update: {
-            Name: form.Name.value
+            name: form.name.value
           }
         }
       })
