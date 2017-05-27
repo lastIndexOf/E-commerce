@@ -6,7 +6,7 @@ const
   Vedio           =  require('../../../Models/vedio.js'),
   BaseContructor  =  require('./base.js')
 
-module.exports = class User extends BaseContructor {
+module.exports = class UserClass extends BaseContructor {
   // User
   static async putUser(ctx) {
     const body = ctx.request.body

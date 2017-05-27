@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Admin = require('./Models/admin.js')
 
-mongoose.connect('mongodb://localhost:27017/TestMongo', err => {
+mongoose.connect('mongodb://localhost:27017/commerce', err => {
   if (err)
     console.error(er)
   else
@@ -51,7 +51,7 @@ new Admin({
 // // 		if (err)
 // // 			console.error(err)
 // // 	})
-	
+
 // // })
 
 

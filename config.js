@@ -14,5 +14,13 @@ module.exports = {
 		password: '',
 		port: 27017,
 		url: 'mongodb://localhost:27017/commerce'
+	},
+	keys: ['this is secret'],
+	session: {
+		key: 'koa:sess',
+		maxAge: 1800000,
+		overwrite: true,
+		httpOnly: true,
+		signed: true
 	}
 }

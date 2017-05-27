@@ -4,7 +4,8 @@ const
   Vedio    =  require('./controler/video'),
   Type     =  require('./controler/type'),
   Comment  =  require('./controler/comment'),
-  Location =  require('./controler/location')
+  Location =  require('./controler/location'),
+  Func     =  require('./controler/func')
 
 module.exports = router => {
   /**
@@ -12,9 +13,9 @@ module.exports = router => {
    * 201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。
    * 202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）
    * 204 NO CONTENT - [DELETE]：用户删除数据成功。
-   * 301：永久重定向。
-   * 302：临时重定定向。
-   * 304：文件未更新, 用户使用缓存。
+   * 301 永久重定向。
+   * 302 临时重定定向。
+   * 304 文件未更新, 用户使用缓存。
    * 400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。
    * 401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。
    * 403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。
@@ -44,7 +45,9 @@ module.exports = router => {
   /**
    *  功能性接口(登陆登出注册等)
    */
-
+  router.get('/v1/api/user/personal', Func.getPersonal)
+  router.post('/v1/api/user/login', Func.login)
+  router.get('/v1/api/user/logout/:id', Func.logout)
 
 
   /**
@@ -56,6 +59,14 @@ module.exports = router => {
   router.get('/v1/api/user/user/:id', User.getUser)
   router.get('/v1/api/user/users', User.getUsers)
 
+  /**
+  *  master 接口
+  */
+  router.put('/v1/api/user/master', User.putMaster)
+  router.del('/v1/api/user/masters', User.delMaster)
+  router.post('/v1/api/user/masters', User.postMaster)
+  router.get('/v1/api/user/master/:id', User.getMaster)
+  router.get('/v1/api/user/masters', User.getMasters)
 
   /**
    *  Admin 接口
@@ -67,17 +78,6 @@ module.exports = router => {
   router.post('/v1/api/user/admins', User.postAdmin)
   router.get('/v1/api/user/admin/:id', User.getAdmin)
   router.get('/v1/api/user/admins', User.getAdmins)
-
-
-  /**
-   *  master 接口
-   */
-  router.put('/v1/api/user/master', User.putMaster)
-  router.del('/v1/api/user/masters', User.delMaster)
-  router.post('/v1/api/user/masters', User.postMaster)
-  router.get('/v1/api/user/master/:id', User.getMaster)
-  router.get('/v1/api/user/masters', User.getMasters)
-
 
    /**
    *  comment 接口

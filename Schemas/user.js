@@ -80,7 +80,17 @@ userSchema.pre('save', function (next) {
 	
 })
 
-userSchema.methods = {}
+userSchema.methods = {
+  compareMatch(_password, cb) {
+    bcrypt.compare(_password, this.password, (err, isMatch) => {
+      if (err)
+        return cb(err)
+      
+      return cb(null, isMatch)
+    })
+  }
+}
+
 userSchema.statics = {}
 
 module.exports = userSchema

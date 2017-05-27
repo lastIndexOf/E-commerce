@@ -37,9 +37,36 @@
           <i class="iconfont icon-gouwuche"></i>
           <span class="title">购物车</span>
         </div>
-        <div class="sign">
-          <span class="signin">登录</span>
-          <span class="signup">注册</span>
+        <div class="sign" v-if="!isSingnedin">
+          <span class="signin"
+            @click="signin">登录</span>
+          <span class="signup"
+            @click="signup">注册</span>
+        </div>
+        <div class="sign loging" v-if="isSingnedin">
+          <div class="personal-wrapper">
+            <img :src="_user.avatar" width="40" height="40">
+          </div>
+          <div class="information-wrapper">
+            <div class="first">
+              <div class="left-wrapper">
+                <img :src="_user.avatar" width="75" height="75">
+              </div>
+              <div class="right-wrapper">
+                <h3 class="name">{{ _user.username }}</h3>  
+              </div>              
+            </div>
+            <div class="second">
+              <div class="block-wrapper">
+                <a href="#" class="shopcar">我的课程</a>
+                <a href="#" class="shopcar">我的订单</a>
+                <a href="#" class="shopcar">个人设置</a>
+              </div>
+            </div>
+            <div class="signout">
+              <a :href="'/v1/api/user/logout/'+_user._id" class="out">安全退出</a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -131,22 +158,29 @@
     </section>
 
     <footer class="footer">
-      
+
       <div class="footer-wrapper">
         <div class="first-line">
           <a href="https://github.com/lastIndexOf" class="github">
-            <i class="iconfont"></i>
+            <i class="iconfont icon-github"></i>
           </a>
         </div>
         <div class="second-line">
           <a href="https://github.com/lastIndexOf/E-commerce.git" class="about-us">文档链接</a>
-          <a href="#" class="about-us">关于我们</a>
+          <a href="javascript:;"
+            class="about-us"
+            @click="aboutUs">关于我们</a>
         </div>
         <div class="last-line">
-          made by 郑凡恺， 冯博， 章焕
+          @made by 郑凡恺， 冯博， 章焕
         </div>
       </div>
     </footer>
+    <div class="to-top"
+      v-show="isShow"
+      @click="toTop">
+      <i class="iconfont icon-fanhuidingbu"></i>
+    </div>
   </div>
 
   <script src="/static/js/bundles/home.js"></script>

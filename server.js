@@ -1,6 +1,6 @@
 const
 	Koa        =  require('koa'),
-  session    =  require('koa-session2'),
+  session    =  require('koa-session'),
   renderer   =  require('koa-views'),
 	bodyParser =  require('koa-bodyparser'),
   Router     =  require('koa-router'),
@@ -31,10 +31,13 @@ mongoose.connect(config.db.url, err => {
 
 require('./router/router.js')(router)
 
+app.keys = config.keys
+
 app
 	.use(logger())
 	.use(static('/static', './dist'))
 	.use(render)
+	.use(session(config.session, app))
 	.use(bodyParser())
 	.use(router.routes())
 	.use(router.allowedMethods())
