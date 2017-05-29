@@ -10,13 +10,17 @@ new Vue({
     return {
       scrollTop: 0,
       isSingnedin: false,
+      currentPoint: 0,
       _user: {},
       data: {
         types: ['前端开发', '后端开发', '移动开发', '数据库', '云计算&大数据', '运维&计算', 'UI设计']
       },
       tabs: [
-        {},
-        {}
+        '/static/images/bgs/01.jpg',
+        'http://img.mukewang.com/5927d3d60001df7312000460.jpg',
+        'http://img.mukewang.com/5927a131000173ba12000460.jpg',
+        'http://img.mukewang.com/5922c53400011a8f12000460.jpg',
+        'http://img.mukewang.com/59199516000174f312000460.jpg'
       ],
       navBottom: [
         '/static/images/path_1.png',
@@ -217,8 +221,8 @@ new Vue({
     }
   },
   methods: {
-    test() {
-      console.log(1)
+    changePoint(index) {
+      this.currentPoint = index  
     },
     payFor() {
       swal('', '请加QQ2080437116, :)', 'success')
@@ -286,6 +290,22 @@ new Vue({
       }
 
       return true
+    },
+    toLeft() {
+      if (this.currentPoint === 0) {
+        this.currentPoint = this.tabs.length - 1
+      } else {
+        this.currentPoint--
+      }
+    },
+    toRight() {
+      const length = this.tabs.length
+
+      if (this.currentPoint === length - 1) {
+        this.currentPoint = 0
+      } else {
+        this.currentPoint++
+      }
     },
     signup() {
       const self = this
@@ -420,5 +440,15 @@ new Vue({
           }
         }
       })
+
+    this._timer = setInterval(() => {
+      const length = this.tabs.length
+      
+      if (this.currentPoint === length - 1) {
+        this.currentPoint = 0
+      } else {
+        this.currentPoint++
+      }
+    }, 6000)
   }
 }).$mount('#root')

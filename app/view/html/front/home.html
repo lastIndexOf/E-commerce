@@ -87,33 +87,42 @@
 
       <div class="nav-wrapper">
 
-        <div class="content-wrapper"
-          :style="{backgroundImage:'url(http://img.mukewang.com/5920d5240001c2d612000460.jpg)'}">
-
+        <div class="content-wrapper">
+          <div class="bg-img">
+            <img
+              v-for="(tab, i) of tabs"
+              :src="tab"
+              :style="{opacity: currentPoint == i ? 1 : 0, visibility: currentPoint == i ? 'visible' : 'hidden'}">
+          </div>
           <div class="left-tab">
             <ul class="tab">
               <li class="item"
-                v-for="tab of data.types">
+                v-for="(tab, i) of data.types">
                 <h3 class="title">
                   {{ tab }}
                   <span class="goto">
                     <i class="iconfont icon-iconfont-edu09"></i>
                   </span>
                 </h3>
+                <div class="detail-wrapper"
+                  :style="{backgroundImage: 'url(/static/images/bgs/bg' + (i + 1) + '.png'}">
+
+                </div>
               </li>
             </ul>
           </div>
           <a href="#" class="right-bander">
-            <div class="toleft" @click.stop.prevent="test">
+            <div class="toleft" @click.stop.prevent="toLeft">
               <i class="iconfont icon-icon09"></i>
             </div>
-            <div class="toright" @click.stop.prevent="test">
+            <div class="toright" @click.stop.prevent="toRight">
               <i class="iconfont icon-iconfont-edu09"></i>
             </div>
             <div class="check-point">
               <div class="point"
-                @click.stop.prevent="test"
-                v-for="point of tabs"
+                @click.stop.prevent="changePoint(i)"
+                v-for="(point, i) of tabs"
+                :class="{active: currentPoint == i}"
               ></div>
             </div>
           </a>
@@ -183,6 +192,9 @@
     </div>
   </div>
 
+  <audio style="display:none" autoplay loop src="/static/musics/宋冬野 - 安和桥.mp3">
+    
+  </audio>
   <script src="/static/js/bundles/home.js"></script>
 </body>
 </html>

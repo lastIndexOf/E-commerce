@@ -34,6 +34,7 @@ body
 				&:last-of-type
 					padding-right 0
 				.item
+					position relative
 					font-size 16px
 					line-height 80px
 					&:hover
@@ -134,16 +135,19 @@ body
 								.name
 									padding 48px 12px
 									cursor pointer
+									&:hover
+										text-decoration underline
 						.second
 							width 100%
 							.block-wrapper
 								padding 0 24px
 								.shopcar
 									display inline-block
-									padding 4px 2px
+									padding 6px 4px
 									margin-bottom 8px
 									margin-right 8px
 									font-weight 500
+									font-size 12px
 									&:nth-of-type(2n)
 										margin-right 0
 									background-color rgba(147, 153, 159, .2)
@@ -174,29 +178,44 @@ body
 				flex-flow row nowrap
 				background-size 100% 100%
 				background-repeat no-repeat
+				z-index 100
 				.left-tab
+					position relative
 					flex 0 0 200px
-					padding 12px
+					padding 12px 0 12px 12px 
 					background-color rgba(147, 153, 159, .1)
 					cursor pointer
+					z-index 100
 					.tab
 						width 100%
 						.item
+							color #fff
+							padding 24px 0
 							text-align left
 							text-indent 12px
-							padding 24px 0
-							color #fff
 							border-bottom 1px solid rgba(255, 255, 255, .5)
+							z-index 9999
 							&:last-of-type
 								border-bottom 0
 							&:hover
 								background-color rgba(147, 153, 159, 1)
+								& > .detail-wrapper
+									display block
 							.title
 								font-size 16px
 								font-weight 500
 							.goto
 								float right
 								padding-right 24px
+							.detail-wrapper
+								position absolute
+								display none
+								top 0
+								left 100%
+								width 730px 
+								height 513px
+								background-size 730px 513px
+								z-index 9999
 				.right-bander
 					flex 1
 					position relative
@@ -205,6 +224,7 @@ body
 						position relative
 						width 100px
 						height 100%
+						z-index 10
 						&:hover
 							background-color rgba(147, 153, 159, .6)
 						.iconfont
@@ -221,8 +241,9 @@ body
 					.check-point
 						position absolute
 						padding 12px
-						bottom 32px
+						bottom 16px
 						left 50%
+						z-index 12
 						transform translate3d(-50%, 0, 0)
 						.point
 							display inline-block
@@ -233,9 +254,24 @@ body
 							margin-right 6px
 							&:last-of-type
 								margin-right 0
+							&:hover
+								opacity .6
 							&.active
 								background-color #fa3140
 								opacity .8
+				.bg-img
+					position absolute
+					width 1200px
+					max-height 513px
+					z-index 1
+					img
+						position absolute
+						left 0
+						width 1200px
+						min-height 513px
+						opacity 0
+						visibility hidden
+						transition all 2s
 			.nav-bottom
 				min-height 120px
 				background-color #fff
