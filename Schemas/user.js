@@ -14,9 +14,18 @@ let userSchema = new Schema({
     type: String,
     default: '/static/images/default.jpg'
   },
-  username: String,
-  name: String,
-  job: String,
+  username: {
+    type: String,
+    requred: true
+  },
+  name: {
+    type: String,
+    default: ''
+  },
+  job: {
+    type: String,
+    default: ''
+  },
   area: {
     type: Schema.Types.ObjectId,
     ref: 'Area'
@@ -25,13 +34,22 @@ let userSchema = new Schema({
     type: Number,
     default: 2
   },
-  email: String,
-  phone: Number,
+  email: {
+    type: String,
+    default: ''
+  },
+  phone: {
+    type: String,
+    default: 000-00000000000
+  },
   summary: {
     type: String,
     default: '该用户很懒, 没有留下简介...'
   },
-  lastmodified: String,
+  lastmodified: {
+    type: String,
+    default: new Date()
+  },
   shopcar: [{
     type: Schema.Types.ObjectId,
     ref: 'Vedio'

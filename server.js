@@ -38,7 +38,7 @@ app
 	.use(static('/static', './dist'))
 	.use(render)
 	.use(session(config.session, app))
-	.use(bodyParser())
+	.use(bodyParser({ formLimit: '50mb' }))
 	.use(router.routes())
 	.use(router.allowedMethods())
 

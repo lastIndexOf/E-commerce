@@ -58,17 +58,17 @@
       <ul class="nav nav-pills nav-stacked">
         <li class="li-target active" data-type="1" role="presentation"><a href="#target1">视频管理</a></li>
         <li class="li-target" data-type="2" role="presentation"><a href="#target2">子视频管理</a></li>
-        <li class="li-target" data-type="3" role="presentation"><a href="#target3">房间分类信息</a></li>
-        <li class="li-target" data-type="4" role="presentation"><a href="#target4">房间床铺信息</a></li>
+        <li class="li-target" data-type="3" role="presentation"><a href="#target3">视频分类管理</a></li>
+        <!--<li class="li-target" data-type="4" role="presentation"><a href="#target4">房间床铺信息</a></li>
         <li class="li-target" data-type="5" role="presentation"><a href="#target5">配套设施信息</a></li>
-        <li class="li-target" data-type="6" role="presentation"><a href="#target6">房间设施信息</a></li>
+        <li class="li-target" data-type="6" role="presentation"><a href="#target6">房间设施信息</a></li>-->
       </ul>
     </div>
     <!-- main wrapper -->
     <div class="col-sm-10 right-content">
 
       <div id="target1" class="target">
-        <h4>房间基本信息 &gt;</h4>
+        <h4>视频基本管理 &gt;</h4>
         <!-- search, lots of operation -->
         <div class="wrapper">
           <form class="form-inline" id="target1-searchForm">
@@ -117,12 +117,12 @@
                       </label>
                     </div>
                   </td>
-                  <td>房间Id</td>
-                  <td>房间类型</td>
-                  <td>房子展示图片</td>
-                  <td>房屋所在地区</td>
+                  <td>ObjectId</td>
+                  <td>视频发布者</td>
+                  <td>视频标题</td>
                   <td>是否通过审核</td>
-                  <td>房屋题目</td>
+                  <td>视频难度</td>
+                  <td>售价</td>
                   <td>操作</td>
                 </tr>
               </thead>
@@ -188,9 +188,10 @@
                       </label>
                     </div>
                   </td>
-                  <td>照片Id</td>
-                  <td>房屋Id</td>
-                  <td>房子图片Url</td>
+                  <td>ObjectId</td>
+                  <td>父视频标题</td>
+                  <td>子视频标题</td>
+                  <td>子视频路径</td>
                   <td>操作</td>
                 </tr>
               </thead>
@@ -258,9 +259,8 @@
                       </label>
                     </div>
                   </td>
-                  <td>分类Id</td>
+                  <td>ObjectId</td>
                   <td>分类名称</td>
-                  <td>分类图标编码</td>
                   <td>操作</td>
                 </tr>
               </thead>
@@ -281,10 +281,10 @@
         </div>
       </div>
       <!-- *************************************************** -->
-      <div id="target4" class="target">
-        <h4>房间床铺信息 &gt;</h4>
+      <!--<div id="target4" class="target">-->
+        <!--<h4>房间床铺信息 &gt;</h4>-->
         <!-- search, lots of operation -->
-        <div class="wrapper">
+        <!--<div class="wrapper">
           <form class="form-inline" id="target4-searchForm">
             <div class="form-group">
               <label for="exampleInputName3">关键字</label>
@@ -306,17 +306,17 @@
               class="btn btn-default"
               id="target3-searchForKey">搜索</button>
           </form>
-        </div>
+        </div>-->
         <!-- multiple handle -->
-        <div class="handle-wrapper">
+        <!--<div class="handle-wrapper">
           <button id="target4-mul-remove" class="btn btn-warning">批量删除</button>
           <button id="target4-add"
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#addDialog4">增加</button>
-        </div>
+        </div>-->
         <!-- table wrapper -->
-        <div class="table-responsive">
+        <!--<div class="table-responsive">
           <form class="target-form">
             <table id="target4-table" class="table table-bordered .table-hover">
               <thead>
@@ -352,12 +352,12 @@
             <button class="btn btn-default" data-page="-1">>></button>
           </div>
         </div>
-      </div>
+      </div>-->
       <!-- *************************************************** -->
-      <div id="target5" class="target">
-        <h4>配置设施信息 &gt;</h4>
+      <!--<div id="target5" class="target">
+        <h4>配置设施信息 &gt;</h4>-->
         <!-- search, lots of operation -->
-        <div class="wrapper">
+        <!--<div class="wrapper">
           <form class="form-inline" id="target5-searchForm">
             <div class="form-group">
               <label for="exampleInputName3">关键字</label>
@@ -379,17 +379,17 @@
               class="btn btn-default"
               id="target5-searchForKey">搜索</button>
           </form>
-        </div>
+        </div>-->
         <!-- multiple handle -->
-        <div class="handle-wrapper">
+        <!--<div class="handle-wrapper">
           <button id="target5-mul-remove" class="btn btn-warning">批量删除</button>
           <button id="target5-add"
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#addDialog5">增加</button>
-        </div>
+        </div>-->
         <!-- table wrapper -->
-        <div class="table-responsive">
+        <!--<div class="table-responsive">
           <form class="target-form">
             <table id="target5-table" class="table table-bordered .table-hover">
               <thead>
@@ -422,12 +422,12 @@
             <button class="btn btn-default" data-page="-1">>></button>
           </div>
         </div>
-      </div>
+      </div>-->
       <!-- *************************************************** -->
-      <div id="target6" class="target">
-        <h4>房间设施信息 &gt;</h4>
+      <!--<div id="target6" class="target">
+        <h4>房间设施信息 &gt;</h4>-->
         <!-- search, lots of operation -->
-        <div class="wrapper">
+        <!--<div class="wrapper">
           <form class="form-inline" id="target6-searchForm">
             <div class="form-group">
               <label for="exampleInputName3">关键字</label>
@@ -449,17 +449,17 @@
               class="btn btn-default"
               id="target6-searchForKey">搜索</button>
           </form>
-        </div>
+        </div>-->
         <!-- multiple handle -->
-        <div class="handle-wrapper">
+        <!--<div class="handle-wrapper">
           <button id="target6-mul-remove" class="btn btn-warning">批量删除</button>
           <button id="target6-add"
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#addDialog6">增加</button>
-        </div>
+        </div>-->
         <!-- table wrapper -->
-        <div class="table-responsive">
+        <!--<div class="table-responsive">
           <form class="target-form">
             <table id="target6-table" class="table table-bordered .table-hover">
               <thead>
@@ -494,7 +494,7 @@
             <button class="btn btn-default" data-page="-1">>></button>
           </div>
         </div>
-      </div>
+      </div>-->
       <!-- *************************************************** -->
     </div>
   </div>
@@ -530,30 +530,30 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target1-add-form">
             <div class="form-group">
-              <label for="LandlordId" class="col-sm-2 control-label">房东</label>
+              <label for="author" class="col-sm-2 control-label">视频发布者</label>
               <div class="col-sm-10">
-                <select name="LandlordId" class="form-control">
+                <select name="author" class="form-control">
 
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="PurposeId"
-                class="col-sm-2 control-label">房间类型</label>
+              <label for="title" class="col-sm-2 control-label">视频标题</label>
               <div class="col-sm-10">
-                <select name="PurposeId" class="form-control">
-
-                </select>
+                <input type="text"
+                  class="form-control"
+                  name="title"
+                  placeholder="title">
               </div>
             </div>
             <div class="form-group">
-              <label for="ShowPic" class="col-sm-2 control-label">房子展示图片</label>
+              <label for="avatar" class="col-sm-2 control-label">视频海报</label>
               <div class="col-sm-10">
                 <div class="image-input-wrapper">
                   <input type="file"
                     class="form-control showPicReader"
-                    name="ShowPic"
-                    placeholder="ShowPic">
+                    name="avatar"
+                    placeholder="avatar">
                 </div>
                 <img src=""
                   alt="please chose image" class="image-chose-cls"
@@ -563,155 +563,48 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="Area" class="col-sm-2 control-label">房子面积</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Area"
-                  placeholder="Area">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="DistrictId" class="col-sm-2 control-label">房屋地区</label>
-              <div class="col-sm-10">
-                <select name="DistrictId" class="form-control">
-
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Title" class="col-sm-2 control-label">房屋题目</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Title"
-                  placeholder="Title">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Latitude" class="col-sm-2 control-label">房屋所在纬度</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Latitude"
-                  placeholder="Latitude(double)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Longitude" class="col-sm-2 control-label">房屋所在经度</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Longitude"
-                  placeholder="Longitude(double)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Address" class="col-sm-2 control-label">房屋详细地址</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Address"
-                  placeholder="Address">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Introduce" class="col-sm-2 control-label">房屋介绍</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Introduce"
-                  placeholder="Introduce">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="RoomNumber" class="col-sm-2 control-label">房间数</label>
+              <label for="money" class="col-sm-2 control-label">该视频售价</label>
               <div class="col-sm-10">
                 <input type="number"
                   class="form-control"
-                  name="RoomNumber"
-                  placeholder="RoomNumber">
+                  name="money"
+                  placeholder="元">
               </div>
             </div>
             <div class="form-group">
-              <label for="LivingRoomNumber" class="col-sm-2 control-label">客厅数</label>
+              <label for="summary" class="col-sm-2 control-label">视频简介</label>
               <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="LivingRoomNumber"
-                  placeholder="LivingRoomNumber">
+                <textarea name="summary" class="form-control" style="min-height:100px"></textarea>
               </div>
             </div>
             <div class="form-group">
-              <label for="BathroomNumber" class="col-sm-2 control-label">洗漱间数</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="BathroomNumber"
-                  placeholder="BathroomNumber">
-              </div>
+              <label for="promotion" class="col-sm-2 control-label">作者对该视频的介绍</label>
+               <div class="col-sm-10">
+                <textarea class="form-control" name="promotion" style="min-height:100px"></textarea>
+               </div>
             </div>
             <div class="form-group">
-              <label for="KitchenNumber" class="col-sm-2 control-label">厨房数</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="KitchenNumber"
-                  placeholder="KitchenNumber">
-              </div>
+              <label for="type" class="col-sm-2 control-label">分类</label>
+                <div class="col-sm-10">
+                  <div class="type-wrapper">
+                    
+                  </div>
+                </div>
             </div>
             <div class="form-group">
-              <label for="BalconyNumber" class="col-sm-2 control-label">阳台数</label>
+              <label for="diffculty" class="col-sm-2 control-label">难度</label>
               <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="BalconyNumber"
-                  placeholder="BalconyNumber">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="PeopleNumber" class="col-sm-2 control-label">宜居人数</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="PeopleNumber"
-                  placeholder="PeopleNumber">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="RentType" class="col-sm-2 control-label">出租类型</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="RentType"
-                  placeholder="(0：整套出租，1：单间出租，2：合租房间)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Type" class="col-sm-2 control-label">房屋种类</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="Type"
-                  placeholder="(0:其他,1:一居室,2:二居室,3:三居室,4:四居室,5:别墅)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Deposit" class="col-sm-2 control-label">押金</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="Deposit"
-                  placeholder="Deposit(单位:元)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Deadline" class="col-sm-2 control-label">房屋展示截止日期</label>
-              <div class="col-sm-10">
-                <input type="date"
-                  class="form-control"
-                  name="Deadline"
-                  placeholder="Deadline(若当前时间大于截止时间则表示当前不允许显示)">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="diffculty" value="0"> 初级
+                  </label>
+                  <label>
+                    <input type="radio" name="diffculty" value="1"> 中级
+                  </label>
+                  <label>
+                    <input type="radio" name="diffculty" value="2"> 高级
+                  </label>
+                </div>
               </div>
             </div>
           </form>
@@ -734,27 +627,29 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target2-add-form">
             <div class="form-group">
-              <label for="HouseId" class="col-sm-2 control-label">房屋</label>
+              <label for="parent" class="col-sm-2 control-label">父视频</label>
               <div class="col-sm-10">
-                <select name="HouseId" class="form-control">
-
+                <select name="parent" class="form-control">
+                  
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="Url" class="col-sm-2 control-label">照片</label>
+              <label for="title" class="col-sm-2 control-label">子视频标题</label>
               <div class="col-sm-10">
-                <div class="image-input-wrapper">
-                  <input type="file"
-                    class="form-control showPicReader"
-                    name="Url"
-                    placeholder="Url">
-                </div>
-                <img src=""
-                  alt="please chose image" class="image-chose-cls"
-                  width="200"
-                  style="margin-left: 32px;border-radius: 4px;"
-                  height="200">
+                <input type="text"
+                  class="form-control"
+                  name="title"
+                  placeholder="title">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="src" class="col-sm-2 control-label">子视频路径</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="src"
+                  placeholder="src">
               </div>
             </div>
           </form>
@@ -777,31 +672,15 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target3-add-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">分类名称</label>
+              <label for="name" class="col-sm-2 control-label">分类名称</label>
               <div class="col-sm-10">
                 <input type="text"
                 class="form-control"
-                name="Name"
-                placeholder="Name">
+                name="name"
+                placeholder="name">
               </div>
             </div>
-            <div class="form-group">
-              <label for="Img" class="col-sm-2 control-label">分类图标</label>
-              <div class="col-sm-10">
-                <div class="image-input-wrapper">
-                  <input type="file"
-                  class="form-control showPicReader"
-                  name="Img"
-                  placeholder="Img">
-                </div>
-                <img src=""
-                alt="please chose image" class="image-chose-cls"
-                width="200"
-                style="margin-left: 32px;border-radius: 4px;"
-                height="200">
-              </div>
-            </form>
-          </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary"
@@ -815,7 +694,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="addDialog4">
+  <!--<div class="modal fade" id="addDialog4">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
@@ -950,7 +829,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <!-- edit content -->
   <div class="modal fade" id="editDialog1">
@@ -959,30 +838,30 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target1-edit-form">
             <div class="form-group">
-              <label for="LandlordId" class="col-sm-2 control-label">房东</label>
+              <label for="author" class="col-sm-2 control-label">视频发布者</label>
               <div class="col-sm-10">
-                <select name="LandlordId" class="form-control">
+                <select disabled name="author" class="form-control">
 
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="PurposeId"
-                class="col-sm-2 control-label">房间类型</label>
+              <label for="title" class="col-sm-2 control-label">视频标题</label>
               <div class="col-sm-10">
-                <select name="PurposeId" class="form-control">
-
-                </select>
+                <input type="text"
+                  class="form-control"
+                  name="title"
+                  placeholder="title">
               </div>
             </div>
             <div class="form-group">
-              <label for="ShowPic" class="col-sm-2 control-label">房子展示图片</label>
+              <label for="avatar" class="col-sm-2 control-label">视频海报</label>
               <div class="col-sm-10">
                 <div class="image-input-wrapper">
                   <input type="file"
                     class="form-control showPicReader"
-                    name="ShowPic"
-                    placeholder="ShowPic">
+                    name="avatar"
+                    placeholder="avatar">
                 </div>
                 <img src=""
                   alt="please chose image" class="image-chose-cls"
@@ -992,155 +871,48 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="Area" class="col-sm-2 control-label">房子面积</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Area"
-                  placeholder="Area">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="DistrictId" class="col-sm-2 control-label">房屋地区</label>
-              <div class="col-sm-10">
-                <select name="DistrictId" class="form-control">
-
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Title" class="col-sm-2 control-label">房屋题目</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Title"
-                  placeholder="Title">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Latitude" class="col-sm-2 control-label">房屋所在纬度</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Latitude"
-                  placeholder="Latitude(double)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Longitude" class="col-sm-2 control-label">房屋所在经度</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Longitude"
-                  placeholder="Longitude(double)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Address" class="col-sm-2 control-label">房屋详细地址</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Address"
-                  placeholder="Address">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Introduce" class="col-sm-2 control-label">房屋介绍</label>
-              <div class="col-sm-10">
-                <input type="text"
-                  class="form-control"
-                  name="Introduce"
-                  placeholder="Introduce">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="RoomNumber" class="col-sm-2 control-label">房间数</label>
+              <label for="money" class="col-sm-2 control-label">该视频售价</label>
               <div class="col-sm-10">
                 <input type="number"
                   class="form-control"
-                  name="RoomNumber"
-                  placeholder="RoomNumber">
+                  name="money"
+                  placeholder="元">
               </div>
             </div>
             <div class="form-group">
-              <label for="LivingRoomNumber" class="col-sm-2 control-label">客厅数</label>
+              <label for="summary" class="col-sm-2 control-label">视频简介</label>
               <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="LivingRoomNumber"
-                  placeholder="LivingRoomNumber">
+                <textarea name="summary" class="form-control" style="min-height:100px"></textarea>
               </div>
             </div>
             <div class="form-group">
-              <label for="BathroomNumber" class="col-sm-2 control-label">洗漱间数</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="BathroomNumber"
-                  placeholder="BathroomNumber">
-              </div>
+              <label for="promotion" class="col-sm-2 control-label">作者对该视频的介绍</label>
+               <div class="col-sm-10">
+                <textarea class="form-control" name="promotion" style="min-height:100px"></textarea>
+               </div>
             </div>
             <div class="form-group">
-              <label for="KitchenNumber" class="col-sm-2 control-label">厨房数</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="KitchenNumber"
-                  placeholder="KitchenNumber">
-              </div>
+              <label for="type" class="col-sm-2 control-label">分类</label>
+                <div class="col-sm-10">
+                  <div class="type-wrapper">
+                    
+                  </div>
+                </div>
             </div>
             <div class="form-group">
-              <label for="BalconyNumber" class="col-sm-2 control-label">阳台数</label>
+              <label for="diffculty" class="col-sm-2 control-label">难度</label>
               <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="BalconyNumber"
-                  placeholder="BalconyNumber">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="PeopleNumber" class="col-sm-2 control-label">宜居人数</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="PeopleNumber"
-                  placeholder="PeopleNumber">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="RentType" class="col-sm-2 control-label">出租类型</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="RentType"
-                  placeholder="(0：整套出租，1：单间出租，2：合租房间)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Type" class="col-sm-2 control-label">房屋种类</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="Type"
-                  placeholder="(0:其他,1:一居室,2:二居室,3:三居室,4:四居室,5:别墅)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Deposit" class="col-sm-2 control-label">押金</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="Deposit"
-                  placeholder="Deposit(单位:元)">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="Deadline" class="col-sm-2 control-label">房屋展示截止日期</label>
-              <div class="col-sm-10">
-                <input type="date"
-                  class="form-control"
-                  name="Deadline"
-                  placeholder="Deadline(若当前时间大于截止时间则表示当前不允许显示)">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="diffculty" value="0"> 初级
+                  </label>
+                  <label>
+                    <input type="radio" name="diffculty" value="1"> 中级
+                  </label>
+                  <label>
+                    <input type="radio" name="diffculty" value="2"> 高级
+                  </label>
+                </div>
               </div>
             </div>
           </form>
@@ -1148,11 +920,14 @@
         <div class="modal-footer">
           <button class="btn btn-primary"
             type="button"
-            id="editOldFloor1">添加</button>
+            id="editOldFloor1">修改</button>
           <button type="button"
             class="btn btn-danger"
             data-dismiss="modal"
             id="target1-edit-close">关闭</button>
+          <button type="button"
+            class="btn btn-info"
+            id="targetPut1">上线</button>
         </div>
       </div>
     </div>
@@ -1163,27 +938,29 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target2-edit-form">
             <div class="form-group">
-              <label for="HouseId" class="col-sm-2 control-label">房屋</label>
+              <label for="parent" class="col-sm-2 control-label">父视频</label>
               <div class="col-sm-10">
-                <select name="HouseId" class="form-control">
-
+                <select disabled name="parent" class="form-control">
+                  
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="Url" class="col-sm-2 control-label">照片</label>
+              <label for="title" class="col-sm-2 control-label">子视频标题</label>
               <div class="col-sm-10">
-                <div class="image-input-wrapper">
-                  <input type="file"
-                  class="form-control showPicReader"
-                  name="Url"
-                  placeholder="Url">
-                </div>
-                <img src=""
-                alt="please chose image" class="image-chose-cls"
-                width="200"
-                style="margin-left: 32px;border-radius: 4px;"
-                height="200">
+                <input type="text"
+                  class="form-control"
+                  name="title"
+                  placeholder="title">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="src" class="col-sm-2 control-label">子视频路径</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="src"
+                  placeholder="src">
               </div>
             </div>
           </form>
@@ -1191,7 +968,7 @@
         <div class="modal-footer">
           <button class="btn btn-primary"
           type="button"
-          id="editOldFloor2">添加</button>
+          id="editOldFloor2">修改</button>
           <button type="button"
           class="btn btn-danger"
           data-dismiss="modal"
@@ -1206,36 +983,20 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target3-edit-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">分类名称</label>
+              <label for="name" class="col-sm-2 control-label">分类名称</label>
               <div class="col-sm-10">
                 <input type="text"
                 class="form-control"
-                name="Name"
-                placeholder="Name">
+                name="name"
+                placeholder="name">
               </div>
             </div>
-            <div class="form-group">
-              <label for="Img" class="col-sm-2 control-label">分类图标</label>
-              <div class="col-sm-10">
-                <div class="image-input-wrapper">
-                  <input type="file"
-                  class="form-control showPicReader"
-                  name="Img"
-                  placeholder="Img">
-                </div>
-                <img src=""
-                alt="please chose image" class="image-chose-cls"
-                width="200"
-                style="margin-left: 32px;border-radius: 4px;"
-                height="200">
-              </div>
-            </form>
-          </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary"
           type="button"
-          id="editOldFloor3">添加</button>
+          id="editOldFloor3">修改</button>
           <button type="button"
           class="btn btn-danger"
           data-dismiss="modal"
@@ -1244,7 +1005,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="editDialog4">
+  <!--<div class="modal fade" id="editDialog4">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
@@ -1379,7 +1140,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <!-- alert -->
   <div class="target-alert">
@@ -1396,13 +1157,13 @@
               <input
                 class="childbox"
                 type="checkbox"
-                value="<%= ResultList[i].Id %>">选择
+                value="<%= ResultList[i]._id %>">选择
             </label>
           </div>
         </th>
         <% for (var key in ResultList[i]) { %>
           <td class="text-center">
-            <% if (key === 'HeadImgUrl'
+            <% if (key === 'avatar'
               || key === 'ShowPicUrl'
               || key === 'Url') { %>
               <img
@@ -1410,10 +1171,12 @@
                 height="60"
                 src="<%= ResultList[i][key] %>"
                 alt="error"/>
-            <% } else if (key === 'HeadImgUrl') { %>
-              <%= ResultList[i][key] === 0 ? '保密' : (ResultList[i][key] === 1 ? '男' : '女') %>
-            <% } else if (key === ' IsThroughAudit') { %>
-              <%= ResultList[i][key] === 0 ? '未通过' : '通过' %>
+            <% } else if (key === 'gender') { %>
+              <%= ResultList[i][key] === 2 ? '保密' : (ResultList[i][key] === 0 ? '男' : '女') %>
+            <% } else if (key === 'isthrough') { %>
+              <%= ResultList[i][key] === false ? '未通过' : '通过' %>
+            <% } else if (key === 'diffculty') { %>
+              <%= ResultList[i][key] === 0 ? '初级' : ResultList[i][key] === 1 ? '中级' : '高级' %>
             <% } else { %>
               <%= ResultList[i][key] %>
             <% } %>
@@ -1421,7 +1184,7 @@
         <% } %>
         <td>
           <button class="btn btn-primary"
-            data-id="<%= ResultList[i].Id %>"
+            data-id="<%= ResultList[i]._id %>"
             data-type="<%= type %>"
             data-toggle="modal"
             data-target="#editDialog<%= type %>"
@@ -1430,7 +1193,7 @@
             editDate(editType, editId)">编辑</button>
           &nbsp;&nbsp;
           <button class="btn btn-danger"
-            data-id="<%= ResultList[i].Id %>"
+            data-id="<%= ResultList[i]._id %>"
             data-type="<%= type %>"
             data-toggle="modal"
             data-target="#myModal"

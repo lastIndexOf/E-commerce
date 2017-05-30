@@ -56,7 +56,7 @@
     <div class="col-sm-2 left-menu">
       <ul class="nav nav-pills nav-stacked">
         <li class="li-target active" data-type="1" role="presentation"><a href="#target1">普通用户</a></li>
-        <li class="li-target" data-type="2" role="presentation"><a href="#target2">视频发布用户</a></li>
+        <li class="li-target" data-type="2" role="presentation"><a href="#target2">高级用户</a></li>
       </ul>
     </div>
     <!-- main wrapper -->
@@ -110,12 +110,12 @@
                   </td>
                   <td>ObjectId</td>
                   <td>用户名</td>
-                  <td>姓名</td>
-                  <td>性别</td>
-                  <td>头像</td>
+                  <td>最后登录时间</td>
                   <td>电话</td>
                   <td>邮箱</td>
-                  <td>最后登录时间</td>
+                  <td>性别</td>
+                  <td>姓名</td>
+                  <td>头像</td>
                   <td>操作</td>
                 </tr>
               </thead>
@@ -137,7 +137,7 @@
       </div>
       <!-- *************************************************** -->
       <div id="target2" class="target">
-        <h4>视频发布用户 &gt;</h4>
+        <h4>高级用户 &gt;</h4>
         <!-- search, lots of operation -->
         <div class="wrapper">
           <form class="form-inline" id="target2-searchForm">
@@ -182,8 +182,8 @@
                     </div>
                   </td>
                   <td>ObjectId</td>
-                  <td>用户名</td>
                   <td>姓名</td>
+                  <td>用户名</td>
                   <td>性别</td>
                   <td>头像</td>
                   <td>操作</td>
@@ -240,54 +240,68 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target2-add-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">姓名</label>
+              <label for="name" class="col-sm-2 control-label">姓名</label>
               <div class="col-sm-10">
                 <input type="text"
                   class="form-control"
-                  name="Name"
-                  placeholder="Name">
+                  name="name"
+                  placeholder="name">
               </div>
             </div>
             <div class="form-group">
-              <label for="Phone"
-                class="col-sm-2 control-label">手机</label>
-              <div class="col-sm-10">
-                <input type="number"
-                   class="form-control"
-                   pattern="[0-9]{11}"
-                   name="Phone"
-                   placeholder="Phone">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="WeixinCode" class="col-sm-2 control-label">微信</label>
+              <label for="username" class="col-sm-2 control-label">用户名</label>
               <div class="col-sm-10">
                 <input type="text"
                   class="form-control"
-                  name="WeixinCode"
-                  placeholder="weChat">
+                  name="username"
+                  placeholder="username">
               </div>
             </div>
             <div class="form-group">
-              <label for="QQCode" class="col-sm-2 control-label">qq号码</label>
+              <label for="avatar" class="col-sm-2 control-label">头像</label>
               <div class="col-sm-10">
-                <input type="number"
+                <div class="image-input-wrapper">
+                  <input type="file"
+                    class="form-control showPicReader"
+                    name="avatar"
+                    placeholder="avatar">
+                </div>
+                <img src=""
+                  alt="please chose image" class="image-chose-cls"
+                  width="200"
+                  style="margin-left: 32px;border-radius: 4px;"
+                  height="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-sm-2 control-label">密码</label>
+              <div class="col-sm-10">
+                <input type="password"
                   class="form-control"
-                  name="QQCode"
-                  placeholder="QQCode">
+                  name="password"
+                  placeholder="password">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="job" class="col-sm-2 control-label">工作岗位</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  name="job"
+                  placeholder="job">
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="Sex" value="1"> 男
+                    <input type="radio" name="gender" value="0"> 男
                   </label>
                   <label>
-                    <input type="radio" name="Sex" value="2"> 女
+                    <input type="radio" name="gender" value="1"> 女
                   </label>
                   <label>
-                    <input type="radio" name="Sex" value="0"> 保密
+                    <input type="radio" name="gender" value="2"> 保密
                   </label>
                 </div>
               </div>
@@ -314,53 +328,58 @@
         <div class="modal-body">
           <form class="form-horizontal" id="target2-edit-form">
             <div class="form-group">
-              <label for="Name" class="col-sm-2 control-label">姓名</label>
+              <label for="name" class="col-sm-2 control-label">姓名</label>
               <div class="col-sm-10">
                 <input type="text"
                   class="form-control"
-                  name="Name"
-                  placeholder="Name">
+                  name="name"
+                  placeholder="name">
               </div>
             </div>
             <div class="form-group">
-              <label for="Phone"
-                class="col-sm-2 control-label">手机</label>
               <div class="col-sm-10">
-                <input type="number"
-                   class="form-control"
-                   name="Phone"
-                   placeholder="Phone">
+                <input type="hidden"
+                  class="form-control"
+                  name="username"
+                  placeholder="username">
               </div>
             </div>
             <div class="form-group">
-              <label for="WeixinCode" class="col-sm-2 control-label">微信</label>
+              <label for="avatar" class="col-sm-2 control-label">头像</label>
+              <div class="col-sm-10">
+                <div class="image-input-wrapper">
+                  <input type="file"
+                    class="form-control showPicReader"
+                    name="avatar"
+                    placeholder="avatar">
+                </div>
+                <img src=""
+                  alt="please chose image" class="image-chose-cls"
+                  width="200"
+                  style="margin-left: 32px;border-radius: 4px;"
+                  height="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="job" class="col-sm-2 control-label">工作岗位</label>
               <div class="col-sm-10">
                 <input type="text"
                   class="form-control"
-                  name="WeixinCode"
-                  placeholder="weChat">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="QQCode" class="col-sm-2 control-label">qq号码</label>
-              <div class="col-sm-10">
-                <input type="number"
-                  class="form-control"
-                  name="QQCode"
-                  placeholder="QQCode">
+                  name="job"
+                  placeholder="job">
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="Sex" value="1"> 男
+                    <input type="radio" name="gender" value="0"> 男
                   </label>
                   <label>
-                    <input type="radio" name="Sex" value="2"> 女
+                    <input type="radio" name="gender" value="1"> 女
                   </label>
                   <label>
-                    <input type="radio" name="Sex" value="0"> 保密
+                    <input type="radio" name="gender" value="2"> 保密
                   </label>
                 </div>
               </div>
@@ -395,18 +414,20 @@
               <input
                 class="childbox"
                 type="checkbox"
-                value="<%= ResultList[i].Id %>">选择
+                value="<%= ResultList[i]._id %>">选择
             </label>
           </div>
         </th>
         <% for (var key in ResultList[i]) { %>
           <td class="text-center">
-            <% if (key === 'HeadImgUrl') { %>
+            <% if (key === 'avatar') { %>
               <img
                 width="60"
                 height="60"
                 src="<%= ResultList[i][key] %>"
                 alt="error"/>
+            <% } else if (key === 'gender') { %>
+              <%= ResultList[i][key] === 0 ? '男' : ResultList[i][key] === 1 ? '女' : '保密' %>
             <% } else { %>
               <%= ResultList[i][key] %>
             <% } %>
@@ -414,7 +435,7 @@
         <% } %>
         <td>
           <button class="btn btn-primary"
-            data-id="<%= ResultList[i].Id %>"
+            data-id="<%= ResultList[i]._id %>"
             data-type="<%= type %>"
             data-toggle="modal"
             data-target="#editDialog"
@@ -423,7 +444,7 @@
             editDate(editType, editId)">编辑</button>
           &nbsp;&nbsp;
           <button class="btn btn-danger"
-            data-id="<%= ResultList[i].Id %>"
+            data-id="<%= ResultList[i]._id %>"
             data-type="<%= type %>"
             data-toggle="modal"
             data-target="#myModal"

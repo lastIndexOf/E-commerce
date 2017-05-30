@@ -15,6 +15,13 @@ var editType
   var allRemove1 = $('#target1-mul-remove')
   var allRemove2 = $('#target2-mul-remove')
 
+   // load image url ...
+  var images = $('.image-chose-cls')
+  var reader = new FileReader()
+  var imgFileInput = $('.showPicReader')
+  var base64Code
+
+
   eventHandle()
   ajaxToDate(1)
   getAdminName()
@@ -47,18 +54,28 @@ var editType
 
     })
 
+    imgFileInput.on('change', function (e) {
+      console.log(1)
+      reader.onload = function () {
+        base64Code = reader.result
+        imgFileInput.parent().next().attr('src', base64Code)
+      }
+      reader.readAsDataURL(this.files[0])
+    })
+
     floorAdd.click(function (e) {
       var addForm = $('#target2-add-form')
       var form = addForm.get(0).elements
       $.ajax({
-        type: 'POST',
-        url: '/teenlong/src/v1/landlord/landlord.php',
+        type: 'PUT',
+        url: '/v1/api/user/master',
         data: {
-          Sex: form.Sex.value,
-          Name: form.Name.value,
-          Phone: form.Phone.value,
-          WeixinCode: form.WeixinCode.value,
-          QQCode: form.QQCode.value
+          name: form.name.value,
+          username: form.username.value,
+          password: form.password.value,
+          avatar: base64Code,
+          job: form.job.value,
+          gender: form.gender.value
         }
       })
       .done(function (data) {
@@ -72,7 +89,7 @@ var editType
         ajaxToDate(2)
       })
       .fail(function (err) {
-        console.error(err)
+        swal('', err.Error, 'error')
       })
 
     })
@@ -81,17 +98,16 @@ var editType
       var editForm = $('#target2-edit-form')
       var form = editForm.get(0).elements
       $.ajax({
-        type: 'PUT',
-        url: '/teenlong/src/v1/landlord/landlord.php',
+        type: 'POST',
+        url: '/v1/api/user/masters',
         data: {
-          Type: 0,
-          Id: editId,
-          Update: {
-            Sex: form.Sex.value,
-            Name: form.Name.value,
-            Phone: form.Phone.value,
-            WeixinCode: form.WeixinCode.value,
-            QQCode: form.QQCode.value
+          id: editId,
+          update: {
+            name: form.name.value,
+            username: form.username.value,
+            avatar: base64Code,
+            job: form.job.value,
+            gender: form.gender.value
           }
         }
       })
@@ -108,20 +124,20 @@ var editType
       })
     })
 
-    allRemove1.on('click', function(e) {
-      var ids = []
-      DOMs.forms
-        .eq(0)
-        .find('.childbox')
-        .each(function (i, v) {
-          if (v.selected === true) {
-            ids.push(v.value)
-          }
-        })
-      removeId = ids.join('+')
-      removeType = 1
-      removeOne()
-    })
+    // allRemove1.on('click', function(e) {
+    //   var ids = []
+    //   DOMs.forms
+    //     .eq(0)
+    //     .find('.childbox')
+    //     .each(function (i, v) {
+    //       if (v.selected === true) {
+    //         ids.push(v.value)
+    //       }
+    //     })
+    //   removeId = ids.join('+')
+    //   removeType = 1
+    //   removeOne()
+    // })
     allRemove2.on('click', function(e) {
       var ids = []
       DOMs.forms
@@ -141,13 +157,12 @@ var editType
   function ajaxToDate(type) {
     switch (type) {
       case 1:
-        $.get('/v1/api/users', {
+        $.get('/v1/api/user/users', {
           page: page1,
           limit: 10,
-          key: '_id+username+name+gender+avatar+phone+email+lastmodified'
+          keys: '_id+username+name+gender+avatar+phone+email+lastmodified'
         })
         .done(function (data) {
-          data = JSON.parse(data)
           data.LEN = 8
           data.type = type
           var tpl = $('#target1-table-template').html()
@@ -162,13 +177,12 @@ var editType
         })
         break
       case 2:
-        $.get('/v1/api/masters', {
+        $.get('/v1/api/user/masters', {
           page: page2,
           limit: 10,
-          key: '_id+username+name+gender+avatar'
+          keys: '_id+username+name+gender+avatar'
         })
         .done(function (data) {
-          data = JSON.parse(data)
           data.LEN = 5
           data.type = type
           var tpl = $('#target1-table-template').html()
@@ -221,33 +235,31 @@ var editType
           Btns.find('.btn').hide().eq(1).show().text(1).end().eq(2).show().text(2)
         }
         else if (pages === 3) {
-          Btns
-            .find('.btn')
-            .hide()
-            .eq(1)
-            .show()
-            .text(1)
-            .end()
-            .eq(2)
-            .show()
-            .text(2)
-            .end()
-            .eq(3)
-            .show()
-            .text(3)
+          Btns.find('.btn').hide()
+            .eq(1).show().text(1)
+            .end().eq(2).show().text(2)
+            .end().eq(3).show().text(3)
         }
         else {
-          Btns
-            .find('.btn')
-            .show()
-            .eq(3)
-            .text(page1 === pages ? page1 : (page1 === 1 ? page1 + 2 : page1 + 1))
-            .end()
-            .eq(2)
-            .text(page1 === pages ? page1 - 1 : (page1 === 1 ? page1 + 1 : page1))
-            .end()
-            .eq(1)
-            .text(page1 === pages ? page1 - 2 : (page1 === 1 ? page1 : page1 - 1))
+          Btns.find('.btn').show()
+            .eq(3).text(
+              page1 === pages 
+                ? page1 
+                : page1 === 1 
+                  ? page1 + 2 
+                  : page1 + 1)
+            .end().eq(2).text(
+              page1 === pages 
+                ? page1 - 1 
+                : page1 === 1 
+                  ? page1 + 1 
+                  : page1)
+            .end().eq(1).text(
+              page1 === pages 
+                ? page1 - 2 
+                : page1 === 1 
+                  ? page1 
+                  : page1 - 1)
         }
 
         break
@@ -259,33 +271,31 @@ var editType
           Btns.find('.btn').hide().eq(1).show().text(1).end().eq(2).show().text(2)
         }
         else if (pages === 3) {
-          Btns
-            .find('.btn')
-            .hide()
-            .eq(1)
-            .show()
-            .text(1)
-            .end()
-            .eq(2)
-            .show()
-            .text(2)
-            .end()
-            .eq(3)
-            .show()
-            .text(3)
+          Btns.find('.btn').hide()
+            .eq(1).show().text(1)
+            .end().eq(2).show().text(2)
+            .end().eq(3).show().text(3)
         }
         else {
-          Btns
-            .find('.btn')
-            .show()
-            .eq(3)
-            .text(page2 === pages ? page2 : (page2 === 1 ? page2 + 2 : page2 + 1))
-            .end()
-            .eq(2)
-            .text(page2 === pages ? page2 - 1 : (page2 === 1 ? page2 + 1 : page2))
-            .end()
-            .eq(1)
-            .text(page2 === pages ? page2 - 2 : (page2 === 1 ? page2 : page2 - 1))
+          Btns.find('.btn').show()
+            .eq(3).text(
+              page2 === pages 
+                ? page2 
+                : page2 === 1 
+                  ? page2 + 2 
+                  : page2 + 1)
+            .end().eq(2).text(
+              page2 === pages 
+                ? page2 - 1 
+                : page2 === 1 
+                  ? page2 + 1 
+                  : page2)
+            .end().eq(1).text(
+              page2 === pages 
+                ? page2 - 2 
+                : page2 === 1 
+                  ? page2 
+                  : page2 - 1)
         }
 
         break
@@ -317,13 +327,10 @@ var editType
         break
       case 2:
         $.ajax({
-          url: '/teenlong/src/v1/landlord/landlord.php',
+          url: '/v1/api/user/masters',
           type: 'DELETE',
           data: {
-            Type: 0,
-            Search: {
-              Id: removeId
-            }
+            ids: removeId
           }
         })
         .done(function (data) {
@@ -334,7 +341,7 @@ var editType
           removeType = ''
         })
         .fail(function (err) {
-          swal('', JSON.parse(err).message, 'error')
+          swal('', JSON.parse(err.responseText).Error, 'error')
         })
         break
     }
@@ -344,27 +351,20 @@ var editType
     switch(type) {
       case 2:
         var editDialog = $('#editDialog')
-        $.get('/teenlong/src/v1/landlord/landlord.php', {
-          Type: 0,
-          Keys: '',
-          Search: {
-            Id: id
-          }
-        })
-        .done(function (data) {
-          data = JSON.parse(data)
-          var forms = $('#target2-edit-form')
-          console.log(forms.get(0).elements['Name'])
-          for (var key in data.ResultList[0]) {
-            var keyword = forms.get(0).elements[key]
-            if (keyword) {
-              keyword.value = data.ResultList[0][key]
+        $.get('/v1/api/user/master/' + id)
+          .done(function (data) {
+            var forms = $('#target2-edit-form')
+            console.log(forms.get(0).elements['Name'])
+            for (var key in data.ResultList[0]) {
+              var keyword = forms.get(0).elements[key]
+              if (keyword) {
+                keyword.value = data.ResultList[0][key]
+              }
             }
-          }
-        })
-        .fail(function (err) {
-          swal('', JSON.parse(err).message, 'error')
-        })
+          })
+          .fail(function (err) {
+            swal('', JSON.parse(err).message, 'error')
+          })
         break
     }
 

@@ -37,6 +37,10 @@ module.exports = class Func extends BaseContructor {
         })
       })
 
+      user.lastmodified = new Date()
+
+      await user.save()
+      
       return ctx.body = {
         isLogin: true,
         user: user
@@ -55,6 +59,11 @@ module.exports = class Func extends BaseContructor {
           isLogin: true,
           user: ctx.session.user
         }
+      }
+    } else {
+      return ctx.body = {
+        isLogin: false,
+        user: null
       }
     }
   } 

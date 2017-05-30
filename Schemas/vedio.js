@@ -18,6 +18,10 @@ let vedioSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Type'
 	}],
+	money: {
+		type: Number,
+		default: 0
+	},
 	followers: [{
 		type: Schema.Types.ObjectId,
 		ref: 'User'
@@ -31,7 +35,7 @@ let vedioSchema = new Schema({
 		default: '0小时0分0秒'
 	},
 	diffculty: {
-		type: Schema.Types.ObjectId,
+		type: Number,
 		default: 0
 	},
 	children: [{
@@ -42,7 +46,10 @@ let vedioSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Comment'
 	}],
-	promotion: String,
+	promotion: {
+		type: String,
+		default: ''
+	},
 	isthrough: {
 		type: Boolean,
 		default: false

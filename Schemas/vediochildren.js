@@ -12,6 +12,10 @@ let vedioChildrenSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Vedio'
   },
+  time: {
+    type: Number,
+		default: 0
+  },
   src: {
     type: String,
     required: true

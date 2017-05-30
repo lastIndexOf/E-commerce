@@ -4,7 +4,9 @@ const
   Master          =  require('../../../Models/master.js'),
   Admin           =  require('../../../Models/admin.js'),
   Vedio           =  require('../../../Models/vedio.js'),
-  BaseContructor  =  require('./base.js')
+  BaseContructor  =  require('./base.js'),
+  { writeFile }   =  require('fs'),
+  { join }        =  require('path')
 
 module.exports = class UserClass extends BaseContructor {
   // User
@@ -23,6 +25,25 @@ module.exports = class UserClass extends BaseContructor {
         return ctx.body = {
           Error: '请求格式错误'
         }
+    }
+
+    try {
+      const datas = await User.find({ 
+        username: { $in: body.username },
+        email: { $in: body.email } 
+      })
+
+      if (datas.length > 0) {
+        ctx.status = 403
+
+        return ctx.body = {
+          Error: '用户名已存在'
+        }
+      }
+    } catch(e) {
+      return ctx.body = {
+        Error: e.message
+      }
     }
 
     const newUser = new User(body)
@@ -331,7 +352,6 @@ module.exports = class UserClass extends BaseContructor {
   // Master
   static async putMaster(ctx) {
     const body = ctx.request.body
-
     const requiredKeys = [
       'username',
       'password',
@@ -345,10 +365,51 @@ module.exports = class UserClass extends BaseContructor {
         }
     }
 
+     try {
+      const datas = await Master.find({ 
+        username: { $in: body.username }
+      })
+
+      if (datas.length > 0) {
+        ctx.status = 403
+
+        return ctx.body = {
+          Error: '用户名已存在'
+        }
+      }
+    } catch(e) {
+      return ctx.body = {
+        Error: e.message
+      }
+    }
+
+    if (body.avatar) {
+      let avatar = body.avatar.split(/data:image\/[\w\W]+;base64,/)[1]
+
+      try {
+        await new Promise((resolve, reject) => {
+          writeFile(join(__dirname,'../../../dist/avatars', body.username + '-avatar.jpg'),
+            Buffer.from(avatar, 'base64'), err => {
+              if (err) reject(err)
+
+              resolve()
+            })
+        })
+
+        delete body.avatar
+        body.avatar = `/static/avatars/${ body.username }-avatar.jpg`
+      } catch(e) {
+        return ctx.body = {
+          Error: e.message
+        }
+      }
+    }
+
     const newMaster = new Master(body)
 
     try {
       const Id = await newMaster.save()
+      
       ctx.status = 201
       return ctx.body = { Id }
     } catch(e) {
@@ -359,6 +420,8 @@ module.exports = class UserClass extends BaseContructor {
   }
 
   static async delMaster(ctx) {
+    ctx.status = 422
+    
     ctx.body = {
       Error: '不允许删除高级用户信息'
     }
@@ -372,6 +435,28 @@ module.exports = class UserClass extends BaseContructor {
         Error: '请求格式错误'
       }
 
+    if (body.update.avatar) {
+      let avatar = body.update.avatar.split(/data:image\/[\w\W]+;base64,/)[1]
+
+      try {
+        await new Promise((resolve, reject) => {
+          writeFile(join(__dirname,'../../../dist/avatars', body.update.username + '-avatar.jpg'),
+            Buffer.from(avatar, 'base64'), err => {
+              if (err) reject(err)
+
+              resolve()
+            })
+        })
+
+        delete body.update.avatar
+        body.update.avatar = `/static/avatars/${ body.update.username }-avatar.jpg`
+      } catch(e) {
+        return ctx.body = {
+          Error: e.message
+        }
+      }
+    }
+    
     try {
       let doc = await Master.findById({ _id: body.id })
 
