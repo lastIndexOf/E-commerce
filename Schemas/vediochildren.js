@@ -13,7 +13,7 @@ let vedioChildrenSchema = new Schema({
     ref: 'Vedio'
   },
   time: {
-    type: Number,
+    type: String,
 		default: 0
   },
   src: {

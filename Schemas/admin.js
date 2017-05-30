@@ -55,7 +55,16 @@ adminSchema.pre('save', function (next) {
   })
 })
 
-adminSchema.methods = {}
+adminSchema.methods = {
+  compareMatch(_password, cb) {
+    bcrypt.compare(_password, this.password, (err, isMatch) => {
+      if (err)
+        return cb(err)
+      
+      return cb(null, isMatch)
+    })
+  }
+}
 adminSchema.statics = {}
 
 module.exports = adminSchema

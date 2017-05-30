@@ -1,4 +1,4 @@
-const serverPort = 8000
+const serverPort = 8080
 
 module.exports = {
 	enter: 'home.js',
@@ -18,7 +18,7 @@ module.exports = {
 	keys: ['this is secret'],
 	session: {
 		key: 'koa:sess',
-		maxAge: 1800000,
+		maxAge: 86400000,
 		overwrite: true,
 		httpOnly: true,
 		signed: true

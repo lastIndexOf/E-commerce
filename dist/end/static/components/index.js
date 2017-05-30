@@ -200,17 +200,17 @@ var editType
   }
 
   function getAdminName() {
-    $.get('/v1/api/admin', {
-      key: 'name'
-    })
-    .done(function (data) {
-      data = JSON.parse(data)
-      var usrName = data.ResultList[0].Name
-      DOMs.adminUser.text(usrName)
-    })
-    .fail(function (err) {
-      console.error('wrong: ' + JSON.parse(err).Error)
-    })
+    $.get('/v1/api/admin/personal')
+      .done(function (data) {
+        var usrName = data.user.name
+        DOMs.adminUser.text(usrName)
+        $('#singOut').click(function(e) {
+          window.location.href = '/v1/api/admin/logout/' + data.user._id
+        })
+      })
+      .fail(function (err) {
+        swal('', 'something was wrong', 'error')
+      })
   }
 
   function addSearchKeys() {

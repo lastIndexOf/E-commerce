@@ -20,6 +20,9 @@ module.exports = class Index extends BaseContructor {
 
 
   // 后台管理页面
+  static async adminSigninAction(ctx) {
+    await send(ctx, '/app/view/html/end/login.html')
+  }
 
   static async adminUserAction(ctx) {
     await send(ctx, '/app/view/html/end/components/index/index.html')

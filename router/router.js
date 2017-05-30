@@ -35,20 +35,26 @@ module.exports = router => {
 
 
   // 后台管理页面
-  router.get('/admin/user', Index.adminUserAction)
-  router.get('/admin/location', Index.adminLocationAction)
-  router.get('/admin/vedio', Index.adminVedioAction)
-  router.get('/admin/other', Index.adminOtherAction)
+  router.get('/admin',Func.adminSigninManager, Index.adminSigninAction)
+  router.get('/admin/user',Func.isAdmin, Index.adminUserAction)
+  router.get('/admin/location',Func.isAdmin, Index.adminLocationAction)
+  router.get('/admin/vedio',Func.isAdmin, Index.adminVedioAction)
+  router.get('/admin/other',Func.isAdmin, Index.adminOtherAction)
 
 
 
   /**
    *  功能性接口(登陆登出注册等)
    */
+  // 普通用户
   router.get('/v1/api/user/personal', Func.getPersonal)
   router.post('/v1/api/user/login', Func.login)
   router.get('/v1/api/user/logout/:id', Func.logout)
 
+  // 管理员
+  router.get('/v1/api/admin/personal', Func.getAdminPersonal)
+  router.post('/v1/api/admin/login', Func.adminLogin)
+  router.get('/v1/api/admin/logout/:id', Func.adminLogout)
 
   /**
    *  User 接口

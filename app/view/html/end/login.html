@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>XXXX管理后台</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/common/reset.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/common/fonts/iconfont.css">
+  <style>
+    body, html {
+      height: 100%
+    }
+
+    .main-wrapper {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgb(11, 40, 79) 0%, rgb(14, 60, 108) 60%, rgb(28, 90, 144))
+    }
+
+    .signin-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -100%, 0);
+      width: 320px;
+      font-size: 0;
+    }
+
+    .signin-wrapper > .title {
+      color: #fff;
+      padding-bottom: 48px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: normal
+    }
+
+    .signin-wrapper .form-control {
+      line-height: 0
+    }
+
+    /*.signin-wrapper form {
+      border-radius: 6px;
+    }*/
+
+    .signin-wrapper form input {
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      border-bottom: 1px solid #ddd;
+      background-color: rgb(250, 255, 189)
+    }
+
+    .signin-wrapper form .form-control .username {
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+
+    .signin-wrapper form .form-control .password {
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+    
+    .form-control {
+      position: relative;
+    }
+
+    .signin-wrapper form .form-control .enter {
+      position: absolute;
+      display: inline-block;
+      bottom: 5px;
+      right: -10px;
+      width: 25px;
+      height: 25px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #000;
+      border: 1px solid #000;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+
+    <div class="signin-wrapper">
+      <h1 class="title">登录后台管理</h1>
+      <form>
+        <div class="form-control">
+          <input class="username" type="text" placeholder="用户名/邮箱">
+        </div>
+        <div class="form-control">
+          <input class="password" type="password" placeholder="密码">
+          <span class="enter">
+            <i class="iconfont icon-fanhuishouyeicon"></i>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/js/common/superagent.js"></script>
+  <script>
+    ;(function() {
+      var enter = document.querySelector('.enter')
+
+      enter.addEventListener('click', function(e) {
+        superagent.post('/v1/api/admin/login')
+          .send({
+            username: document.querySelector('.username').value,
+            password: document.querySelector('.password').value
+          })
+          .end(function(err, res) {
+            if (err)
+              alert(err.message)
+            else {
+              if (res.body.isLogin) {
+                window.location.href = '/admin/user?'
+              } else {
+                alert(res.body.Error)
+              }
+            }
+          })
+      })
+
+    })()
+  </script>
+</body>
+</html>
