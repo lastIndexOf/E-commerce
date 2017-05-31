@@ -1,0 +1,209 @@
+@import '../../node_modules/sweetalert2/dist/sweetalert2.min.css';
+
+
+body
+	background-color rgba(245, 245, 245, 1)
+
+#root
+	.header
+		width 100%
+		height 80px
+		background-color rgb(42, 42, 42)
+		color #fff
+		.left
+			display inline-block
+			height 100%
+			padding 20px 32px
+			color #fff
+			.logo
+				width 40px
+				height 40px
+				vertical-align middle
+			.title
+				font-size 18px
+				font-weight 700
+				padding-left 12px
+				line-height 40px
+		.tab
+			display inline-block
+			color #fff
+			padding-left 64px
+			height 100%
+			vertical-align middle
+			.tab-item
+				display inherit
+				color #fff
+				height 100%
+				vertical-align middle
+				padding-right 32px
+				&:last-of-type
+					padding-right 0
+				.item
+					position relative
+					color #fff
+					font-size 16px
+					line-height 80px
+					&:hover
+						color #fa3140
+		.form-wrapper
+			float right
+			height 100%
+			padding-right 72px
+			color #ddd
+			.form-item
+				padding-top 20px
+				color #ddd
+				.form-control
+					height 100%
+					color #ddd
+					.input-content
+						border 0
+						color #ddd
+						padding 12px 0 12px 6px
+						border-bottom 1px solid #ddd
+						background-color transparent
+					.submit
+						display inline-block
+						border 0
+						padding-top 12px
+						background-color transparent
+						.iconfont
+							color #ddd
+							font-size 16px
+		.right
+			float right
+			height 100%
+			display flex
+			flex-flow row nowrap
+			justify-content center
+			align-items center
+			.shopcar
+				color #ddd
+				flex 0 0 100px
+				width 100px
+				cursor pointer
+				&:hover
+					color #fa3140
+					& > .title
+						color #fa3140
+				.iconfont
+					font-size 24px
+					padding-right 12px
+					color #ddd
+				.title
+					color #ddd
+			.sign
+				flex 1
+				padding-left 24px
+				color #ddd
+				.signin
+					display inline-block
+					padding-right 32px
+					&:hover
+						color #fa3140
+						cursor pointer
+				.signup
+					display inline-block
+					padding-right 32px
+					&:hover
+						color #fa3140
+						cursor pointer
+				&.loging
+					position relative
+					.personal-wrapper
+						cursor pointer
+						padding-right 32px
+						&:hover > img
+							border 2px solid #fa3140
+						img
+							border-radius 50%
+							border 2px solid transparent
+					&:hover .information-wrapper
+						visibility visible
+						opacity 1
+					.information-wrapper
+						visibility hidden
+						opacity 0
+						position absolute
+						top 100%
+						right 12px
+						width 280px
+						height 260px
+						background-color #fff
+						box-shadow -2px 2px 5px #ddd
+						z-index 1000
+						.first
+							width 100%
+							.left-wrapper
+								display inline-block
+								width 40%
+								vertical-align top
+								box-sizing border-box
+								padding 24px
+								img
+									border-radius 50%
+							.right-wrapper
+								display inline-block
+								.name
+									padding 48px 12px
+									cursor pointer
+									&:hover
+										text-decoration underline
+						.second
+							width 100%
+							.block-wrapper
+								padding 0 24px
+								.shopcar
+									display inline-block
+									padding 6px 4px
+									margin-bottom 8px
+									margin-right 8px
+									font-weight 500
+									font-size 12px
+									&:nth-of-type(2n)
+										margin-right 0
+									background-color rgba(147, 153, 159, .2)
+									text-align center
+									&:hover
+										font-weight 700
+										background-color rgba(147, 153, 159, .1)
+						.signout
+							.out
+								float right
+								padding-right 24px
+								padding-top 12px
+								&:hover
+									color #ddd
+	.footer
+		width 100%
+		min-height 150px
+		background-color rgb(42, 42, 42)
+		.footer-wrapper
+			padding 32px 300px
+			text-align center
+			.first-line
+				padding 12px
+				.iconfont
+					color #ddd
+					font-size 32px
+					&:hover
+						color #fa3140
+			.second-line
+				font-size 16px
+				font-weight 700
+				padding 12px 0
+				border-bottom 1px solid #666
+				a
+					color #ddd
+					padding-left 24px
+					padding-right 24px
+					border-right 1px solid #ddd
+					&:last-of-type
+						border-right 0
+				& > a:hover
+					color #fa3140
+			.last-line
+				padding 12px 0 0 0
+				color #ddd
+				font-size 12px
+				font-weight normal

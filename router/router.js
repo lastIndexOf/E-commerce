@@ -31,6 +31,12 @@ module.exports = router => {
    */
 
   router.get('/', Index.homeAction)
+  router.get('/type', Index.typeAction)
+  router.get('/vedio', Index.vedioAction)
+  router.get('/vediochild', Index.vedioChildAction)
+  router.get('/personal', Index.personalAction)
+
+
   router.get('/test/:id', Index.testAction)
 
 

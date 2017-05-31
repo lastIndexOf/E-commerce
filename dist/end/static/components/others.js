@@ -405,21 +405,17 @@ var editType
   }
 
   function getAdminName() {
-    $.get('/teenlong/src/v1/user/admin.php', {
-      Type: 0,
-      Keys: 'Name',
-      Search: {
-        Id: ''
-      }
-    })
-    .done(function (data) {
-      data = JSON.parse(data)
-      var usrName = data.ResultList[0].Name
-      DOMs.adminUser.text(usrName)
-    })
-    .fail(function (err) {
-      swal('', 'something was wrong', 'error')
-    })
+    $.get('/v1/api/admin/personal')
+      .done(function (data) {
+        var usrName = data.user.name
+        DOMs.adminUser.text(usrName)
+        $('#singOut').click(function(e) {
+          window.location.href = '/v1/api/admin/logout/' + data.user._id
+        })
+      })
+      .fail(function (err) {
+        swal('', 'something was wrong', 'error')
+      })
   }
 
   function addSearchKeys() {
@@ -444,20 +440,10 @@ var editType
           Btns.find('.btn').hide().eq(1).show().text(1).end().eq(2).show().text(2)
         }
         else if (pages === 3) {
-          Btns
-            .find('.btn')
-            .hide()
-            .eq(1)
-            .show()
-            .text(1)
-            .end()
-            .eq(2)
-            .show()
-            .text(2)
-            .end()
-            .eq(3)
-            .show()
-            .text(3)
+          Btns.find('.btn').hide()
+            .eq(1).show().text(1)
+            .end().eq(2).show().text(2)
+            .end().eq(3).show().text(3)
         }
         else {
           Btns
@@ -494,33 +480,35 @@ var editType
           Btns.find('.btn').hide().eq(1).show().text(1).end().eq(2).show().text(2)
         }
         else if (pages === 3) {
-          Btns
-            .find('.btn')
-            .hide()
-            .eq(1)
-            .show()
-            .text(1)
-            .end()
-            .eq(2)
-            .show()
-            .text(2)
-            .end()
-            .eq(3)
-            .show()
-            .text(3)
+          Btns.find('.btn').hide()
+            .eq(1).show().text(1)
+            .end().eq(2).show().text(2)
+            .end().eq(3).show().text(3)
         }
         else {
           Btns
             .find('.btn')
             .show()
             .eq(3)
-            .text(page2 === pages ? page2 : (page2 === 1 ? page2 + 2 : page2 + 1))
+            .text(page2 === pages
+                ? page2
+                : (page2 === 1
+                  ? page2 + 2
+                  : page2 + 1))
             .end()
             .eq(2)
-            .text(page2 === pages ? page2 - 1 : (page2 === 1 ? page2 + 2 : page2 + 1))
+            .text(page2 === pages
+              ? page2 - 1
+              : (page2 === 1
+                ? page2 + 1
+                : page2))
             .end()
             .eq(1)
-            .text(page2 === pages ? page2 - 2 : (page2 === 1 ? page2 + 2 : page2 + 1))
+            .text(page2 === pages
+              ? page2 - 2
+              : (page2 === 1
+                ? page2
+                : page2 - 1))
         }
 
         break
@@ -532,33 +520,35 @@ var editType
           Btns.find('.btn').hide().eq(1).show().text(1).end().eq(2).show().text(2)
         }
         else if (pages === 3) {
-          Btns
-            .find('.btn')
-            .hide()
-            .eq(1)
-            .show()
-            .text(1)
-            .end()
-            .eq(2)
-            .show()
-            .text(2)
-            .end()
-            .eq(3)
-            .show()
-            .text(3)
+          Btns.find('.btn').hide()
+            .eq(1).show().text(1)
+            .end().eq(2).show().text(2)
+            .end().eq(3).show().text(3)
         }
         else {
           Btns
             .find('.btn')
             .show()
             .eq(3)
-            .text(page3 === pages ? page3 : (page3 === 1 ? page3 + 2 : page3 + 1))
+            .text(page3 === pages
+                ? page3
+                : (page3 === 1
+                  ? page3 + 2
+                  : page3 + 1))
             .end()
             .eq(2)
-            .text(page3 === pages ? page3 - 1 : (page3 === 1 ? page3 + 2 : page3 + 1))
+            .text(page3 === pages
+              ? page3 - 1
+              : (page3 === 1
+                ? page3 + 1
+                : page3))
             .end()
             .eq(1)
-            .text(page3 === pages ? page3 - 2 : (page3 === 1 ? page3 + 2 : page3 + 1))
+            .text(page3 === pages
+              ? page3 - 2
+              : (page3 === 1
+                ? page3
+                : page3 - 1))
         }
 
         break

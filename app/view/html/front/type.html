@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>小视频贩卖网</title>
+  <!-- icon -->
+  <link rel="stylesheet" href="/static/css/common/fonts/iconfont.css">
+  <!-- logo图标 -->
+  <link rel="icon" href="/static/favicon.ico" type="image/iconx">
+  <!-- 消除浏览器差异 -->
+  <link rel="stylesheet" href="/static/css/common/reset.css">
+  <!-- 要写的CSS -->
+  <link rel="stylesheet" href="/static/css/type.css">
+</head>
+<body>
+  <div id="root">
+    <!-- header -->
+    <header class="header">
+      <section class="left">
+        <img src="/static/images/favicon.ico" class="logo">
+        <span class="title">小视频贩卖网</span>
+      </section>
+
+      <section class="tab">
+        <div class="tab-item">
+          <a href="#" class="item">课程</a>
+        </div>
+        <div class="tab-item">
+          <a href="javascript:;" class="item" @click="payFor">付费咨询</a>
+        </div>
+      </section>
+
+      <section class="right">
+        <div class="shopcar">
+          <i class="iconfont icon-gouwuche"></i>
+          <span class="title">购物车</span>
+        </div>
+        <div class="sign" v-if="!isSingnedin">
+          <span class="signin"
+            @click="signin">登录</span>
+          <span class="signup"
+            @click="signup">注册</span>
+        </div>
+        <div class="sign loging" v-if="isSingnedin">
+          <div class="personal-wrapper">
+            <img :src="_user.avatar" width="40" height="40">
+          </div>
+          <div class="information-wrapper">
+            <div class="first">
+              <div class="left-wrapper">
+                <img :src="_user.avatar" width="75" height="75">
+              </div>
+              <div class="right-wrapper">
+                <h3 class="name">{{ _user.username }}</h3>  
+              </div>              
+            </div>
+            <div class="second">
+              <div class="block-wrapper">
+                <a href="#" class="shopcar">我的课程</a>
+                <a href="#" class="shopcar">我的订单</a>
+                <a href="#" class="shopcar">个人设置</a>
+              </div>
+            </div>
+            <div class="signout">
+              <a :href="'/v1/api/user/logout/'+_user._id" class="out">安全退出</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-wrapper">
+        <form action="" class="form-item">
+          <div class="form-control">
+            <input type="text" name="search" class="input-content">
+            <button type="submit" class="submit">
+              <i class="iconfont icon-sousuo-sousuo"></i>
+            </button>
+          </div>
+        </form>
+      </section>
+
+    </header>
+  
+    <footer class="footer">
+
+      <div class="footer-wrapper">
+        <div class="first-line">
+          <a href="https://github.com/lastIndexOf" class="github">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </div>
+        <div class="second-line">
+          <a href="https://github.com/lastIndexOf/E-commerce.git" class="about-us">文档链接</a>
+          <a href="javascript:;"
+            class="about-us"
+            @click="aboutUs">关于我们</a>
+        </div>
+        <div class="last-line">
+          @made by 郑凡恺， 冯博， 章焕
+        </div>
+      </div>
+    </footer>
+    <div class="to-top"
+      v-show="isShow"
+      @click="toTop">
+      <i class="iconfont icon-fanhuidingbu"></i>
+    </div>
+
+  </div>
+  
+  <script src="/static/js/bundles/type.js"></script>
+</body>
+</html>

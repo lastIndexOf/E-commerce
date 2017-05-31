@@ -9,10 +9,22 @@ module.exports = class Index extends BaseContructor {
     await send(ctx, '/app/view/html/front/home.html')
   }
 
+  static async typeAction(ctx) {
+    await send(ctx, '/app/view/html/front/type.html')
+  }
+
   static async vedioAction(ctx) {
     await send(ctx, '/app/view/html/front/vedio.html')
   }
 
+  static async vedioChildAction(ctx) {
+    await send(ctx, '/app/view/html/front/vediochild.html')
+  }
+
+  static async personalAction(ctx) {
+    await send(ctx, '/app/view/html/front/personal.html')
+  }
+  
   static async testAction(ctx) {
     await send(ctx, '/app/view/html/front/css.html')
   }
