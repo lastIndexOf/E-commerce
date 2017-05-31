@@ -33,6 +33,7 @@ module.exports = class Func extends BaseContructor {
           if (match) {
             console.log(2)
             ctx.session.user = user
+            ctx.session.password = body.password
             ctx.session.type = 'user'
             resolve()
           } else {
@@ -59,6 +60,10 @@ module.exports = class Func extends BaseContructor {
   static async getPersonal(ctx) {
     if (ctx.session.type === 'user' || ctx.session.type === 'master') {
       if (ctx.session.user._id) {
+
+        const newUser = await User.findById(ctx.session.user._id) 
+
+        ctx.session.user = newUser
         return ctx.body = {
           isLogin: true,
           user: ctx.session.user
@@ -78,6 +83,7 @@ module.exports = class Func extends BaseContructor {
     if (ctx.session.type === 'user' || ctx.session.type === 'master') {
       if (ctx.session.user._id === id) {
         delete ctx.session.type
+        delete ctx.session.password
         delete ctx.session.user
 
         ctx.body = 

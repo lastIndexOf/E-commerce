@@ -10,9 +10,10 @@ new Vue({
     return {
       scrollTop: 0,
       isSingnedin: false,
+      currentPoint: 0,
       _user: {},
-      ownVdeios: [],
-      pageIndex: 0
+      selectall: false,
+      shopcar: []
     }
   },
   computed: {
@@ -25,32 +26,57 @@ new Vue({
         return true
 
       return false
+    },
+    sumMoney() {
+      let sum = 0
+      for (let i = 0, len = this.shopcar.length; i < len; i++) {
+        sum += this.shopcar[i].money
+      }
+
+      return sum
+    },
+    allSum() {
+      return this.shopcar.length
     }
   },
   methods: {
-    payFor() {
-      swal('', '请加QQ2080437116, :)', 'success')
+    changePoint(index) {
+      this.currentPoint = index  
     },
-    editUser() {
-      console.log(this._user)
+    cancel(id) {
+      const index = this.shopcar.findIndex(item => item._id === id)
 
+      let arr = []
+      let newShopCar = []
+      for (let [i, value] of this.shopcar.entries()) {
+        if (index === i) continue
+
+        arr.push(value._id)
+        newShopCar.push(value)
+      }
+
+      console.log(arr)
       request.post('/v1/api/user/users')
         .send({
           id: this._user._id,
           update: {
-            name: this._user.name,
-            job: this._user.job,
-            gender: this._user.gender,
-            summary: this._user.summary
+            shopcar: arr
           }
         })
         .end((err, res) => {
           if (err)
             console.error(err)
           else {
-            swal('', '修改成功', 'success')
+            if (res.status === 201) {
+              swal('', '删除成功', 'success')
+              this.shopcar = newShopCar
+            }
+              
           }
         })
+    },
+    payFor() {
+      swal('', '请加QQ2080437116, :)', 'success')
     },
     toTop() {
       let _timer = setInterval(function() {
@@ -60,9 +86,6 @@ new Vue({
           clearInterval(_timer)
         }
       }, 10)
-    },
-    goToOrder() {
-      window.location.href = '/order'
     },
     _throttle(func, _timer = 100) {
       let _start
@@ -220,51 +243,65 @@ new Vue({
         }
       })
     },
-    _initCourse() {
-      request.get('/v1/api/user/user/' + this._user._id)
-        .query({
-          keys: 'ownedvedios',
-          populate: true
+    buyVedio() {
+      let ids = []
+      let shopcar = []
+      let newShopCar = []
+      for (let item of this.shopcar) {
+        if (item.checked) {
+          ids.push(item._id)
+        } else {
+          newShopCar.push(item)
+          shopcar.push(item._id)
+        }
+      } 
+
+      for (let id of ids) {
+        this._user.ownedvedios.push(id)
+      }
+
+      request.post('/v1/api/user/users')
+        .send({
+          id: this._user._id,
+          update: {
+            ownedvedios: this._user.ownedvedios,
+            shopcar: shopcar
+          }
         })
         .end((err, res) => {
           if (err)
             console.error(err)
           else {
-            this.ownVdeios = res.body.ResultList[0].ownedvedios
+            if (res.status === 201) {
+              swal('', '购买成功!请尽情享受吧', 'success')
+              this.shopcar = newShopCar
+            }
           }
         })
-    },
-    _initOrder() {
-
+      
     }
   },
   filters: {
-    fitGender(gender) {
-      switch(gender) {
-        case 0:
-          return '男'
-        case 1:
-          return '女'
-        case 2:
-          return '保密'
+    getsum(shopcar) {
+      let sum = 0
+      for (let item of shopcar) {
+        if (item.checked)
+          sum++
       }
-    },
-    fitJob(job) {
-      if (!job)
-        return '无业游民~'
 
-      return job
+      return sum
     }
   },
   watch: {
-    pageIndex(nV, oV) {
-      switch(nV) {
-        case 1:
-          this._initCourse()
-          break
-        case 2:
-          this._initOrder()
-          break
+    selectall(nV) {
+      if (nV) {
+        for (let item of this.shopcar) {
+          item.checked = true
+        }
+      } else {
+        for (let item of this.shopcar) {
+          item.checked = false
+        }
       }
     }
   },
@@ -284,6 +321,19 @@ new Vue({
           if (res.body.isLogin) {
             this._user = res.body.user
             this.isSingnedin = true
+          
+            request.get('/v1/api/user/user/' + this._user._id)
+              .query({
+                populate: true
+              })
+              .end((err, res) => {
+                if (err)
+                  console.error(err)
+                else {
+                  this._user = res.body.ResultList[0]
+                  this.shopcar = this._user.shopcar
+                }
+              })
           }
         }
       })

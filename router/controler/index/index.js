@@ -25,6 +25,10 @@ module.exports = class Index extends BaseContructor {
     await send(ctx, '/app/view/html/front/personal.html')
   }
   
+  static async orderAction(ctx) {
+    await send(ctx, '/app/view/html/front/order.html')
+  }
+  
   static async testAction(ctx) {
     await send(ctx, '/app/view/html/front/css.html')
   }

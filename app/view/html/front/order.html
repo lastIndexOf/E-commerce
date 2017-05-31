@@ -12,7 +12,8 @@
   <!-- 消除浏览器差异 -->
   <link rel="stylesheet" href="/static/css/common/reset.css">
   <!-- 要写的CSS -->
-  <link rel="stylesheet" href="/static/css/personal.css">
+  <link rel="stylesheet" href="/static/css/order.css">
+  <link rel="stylesheet" href="/static/css/order-02.css">
 </head>
 <body>
   <div id="root" :style="{backgroundColor: !isSingnedin ? 'rgba(242, 242, 242, 1)' : '#fff'}">
@@ -55,7 +56,7 @@
                 <img :src="_user.avatar" width="75" height="75">
               </div>
               <div class="right-wrapper">
-                <h3 class="name">{{ _user.username }}</h3>  
+                <h3 class="name"><a href="/personal">{{ _user.username }}</a></h3>  
               </div>              
             </div>
             <div class="second">
@@ -84,89 +85,48 @@
       </section>
 
     </header>
-    
-    <div id="personal-wrapper" v-if="isSingnedin">
+  
+    <div class="order" v-if="isSingnedin">
       <div class="heading">
-        <div class="left">
-          <img :src="_user.avatar" :alt="_user.username" width="180" height="180">
-          <span class="setting"
-            @click="pageIndex=0"><i class="iconfont icon-shezhi"></i></span>
-        </div>
-        <div class="right">
-          <h2 class="nickname">{{ _user.username }}</h2>
-          <p class="desc">{{ _user.gender | fitGender }} {{ _user.job | fitJob }}</p>
-          <p class="summary">{{ _user.summary }}</p>
-        </div>
       </div>
 
-      <div class="personal-center">
-        <div class="tab-menu">
-          <ul class="menu">
-            <li class="tab" :class="{active:pageIndex===0}" @click="pageIndex=0">
-              个人信息
-            </li>
-            <li class="tab" :class="{active:pageIndex===1}" @click="pageIndex=1">
-              我的课程
-            </li>
-            <li class="tab" :class="{active:pageIndex===2}" @click="goToOrder">
-              我的订单
-            </li>
-          </ul>
-        </div>
+      <div class="main-content">
+        <h1 class="title">我的购物车
+          <span class="selected">共 {{ allSum }} 门 </span>
+          <!--<span class="selected">已选中 {{ shopcar | getsum }} 门</span>-->
+        </h1>
 
-        <div class="center-content">
-          <div class="personal-setting" v-if="pageIndex===0">
-            <h2 class="personal-heading">
-              个人信息
-              <span class="edit" @click="editUser">修改</span>
-            </h2>
-
-            <div class="content">
-              <form>
-                <div class="edit-control">
-                  <label class="title" for="name">姓名</label>
-                  <input type="text" name="name" v-model="_user.name">
+        <div class="shopcar-wrapper">
+          <div class="car-wrapper">
+            <ul class="item-list" v-if="shopcar.length">
+              <li class="first">
+                <label class="selectall" for="selectall">
+                  <input type="checkbox" name="selectall" v-model="selectall"> 全选
+                </label>
+                <span class="course">
+                  课程
+                </span>
+                <span class="money">售价</span>
+                <span class="control">操作</span>
+              </li>
+              <li class="item" v-for="(item, i) of shopcar">
+                <label class="item-check">
+                  <input type="checkbox" v-model="item.checked">
+                </label>
+                <div class="course">
+                  <img :src="item.avatar" :alt="item.title" class="post" width="200" height="140">
+                  <h3 class="title">{{ item.title }}</h3>
                 </div>
-                <div class="edit-control">
-                  <label class="title" for="job">职位</label>
-                  <input type="text" name="job" v-model="_user.job">
-                </div>
-                <div class="edit-control">
-                  <label class="title" for="gender">性别</label>
-                  <input type="radio" name="gender" value="0" v-model="_user.gender">男
-                  <input type="radio" name="gender" value="1" v-model="_user.gender">女
-                  <input type="radio" name="gender" value="2" v-model="_user.gender">保密
-                </div>
-                <div class="edit-control">
-                  <label class="title" for="summary">简介</label>
-                  <textarea name="summary" v-model="_user.summary"></textarea>
-                </div>
-
-              </form>
-            </div>
-          </div>
-          <div class="personal-course" v-if="pageIndex===1">
-            <h2 class="personal-heading">
-              我的课程
-            </h2>
-
-            <div class="course-wrapper">
-              <ul class="course-list">
-                <li class="course-item" v-for="vedio of ownVdeios">
-                  <div class="left">
-                    <a :href="'/vedio?id=' + vedio._id">
-                      <img :src="vedio.avatar" :alt="vedio.title" class="post" width="220" height="140">
-                    </a>
-                  </div>
-                  <div class="right">
-                    <h3 class="title">{{ vedio.title }}</h3>
-                    <p class="total-time">时长 {{ vedio.totaltime }}</p>
-                    <p class="desc">更新至 第{{ vedio.children.length }}章</p>
-                  </div>
-                  <div class="continue"><a :href="'/vedio?id=' + vedio._id">继续学习</a></div>
-                </li>
-                <li class="info" v-if="!ownVdeios.length">您还没有课程哦, 快去购买吧:(</li>
-              </ul>
+                <div class="money">￥{{ item.money }}</div>
+                <div class="control" @click="cancel(item._id)">ｘ</div>
+              </li>
+              <li class="end">
+                <div class="sum-money">总金额: <span class="sum">￥{{ sumMoney }} 元</span></div>
+                <div class="btn confirm-buy" @click="buyVedio">确认购买</div>
+              </li>
+            </ul>
+            <div class="nothing" v-if="!shopcar.length">
+              您的购物车空空如也:(
             </div>
           </div>
         </div>
@@ -201,8 +161,9 @@
       @click="toTop">
       <i class="iconfont icon-fanhuidingbu"></i>
     </div>
+
   </div>
   
-  <script src="/static/js/bundles/personal.js"></script>
+  <script src="/static/js/bundles/order.js"></script>
 </body>
 </html>

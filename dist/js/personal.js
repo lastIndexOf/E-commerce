@@ -29,7 +29,9 @@ new _vue2.default({
     return {
       scrollTop: 0,
       isSingnedin: false,
-      _user: {}
+      _user: {},
+      ownVdeios: [],
+      pageIndex: 0
     };
   },
 
@@ -46,6 +48,23 @@ new _vue2.default({
     payFor: function payFor() {
       (0, _sweetalert2.default)('', '请加QQ2080437116, :)', 'success');
     },
+    editUser: function editUser() {
+      console.log(this._user);
+
+      _superagent2.default.post('/v1/api/user/users').send({
+        id: this._user._id,
+        update: {
+          name: this._user.name,
+          job: this._user.job,
+          gender: this._user.gender,
+          summary: this._user.summary
+        }
+      }).end(function (err, res) {
+        if (err) console.error(err);else {
+          (0, _sweetalert2.default)('', '修改成功', 'success');
+        }
+      });
+    },
     toTop: function toTop() {
       var _timer = setInterval(function () {
         var addr = document.body.scrollTop = document.body.scrollTop - 100;
@@ -54,6 +73,9 @@ new _vue2.default({
           clearInterval(_timer);
         }
       }, 10);
+    },
+    goToOrder: function goToOrder() {
+      window.location.href = '/order';
     },
     _throttle: function _throttle(func) {
       var _timer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
@@ -178,7 +200,20 @@ new _vue2.default({
           _this.isSingnedin = true;
         }
       });
-    }
+    },
+    _initCourse: function _initCourse() {
+      var _this2 = this;
+
+      _superagent2.default.get('/v1/api/user/user/' + this._user._id).query({
+        keys: 'ownedvedios',
+        populate: true
+      }).end(function (err, res) {
+        if (err) console.error(err);else {
+          _this2.ownVdeios = res.body.ResultList[0].ownedvedios;
+        }
+      });
+    },
+    _initOrder: function _initOrder() {}
   },
   filters: {
     fitGender: function fitGender(gender) {
@@ -197,8 +232,20 @@ new _vue2.default({
       return job;
     }
   },
+  watch: {
+    pageIndex: function pageIndex(nV, oV) {
+      switch (nV) {
+        case 1:
+          this._initCourse();
+          break;
+        case 2:
+          this._initOrder();
+          break;
+      }
+    }
+  },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     var self = this;
     sr.reveal('.detail');
@@ -210,8 +257,8 @@ new _vue2.default({
     _superagent2.default.get('/v1/api/user/personal').end(function (err, res) {
       if (err) console.error(err);else {
         if (res.body.isLogin) {
-          _this2._user = res.body.user;
-          _this2.isSingnedin = true;
+          _this3._user = res.body.user;
+          _this3.isSingnedin = true;
         }
       }
     });

@@ -12,6 +12,7 @@ new Vue({
       isSingnedin: false,
       currentPoint: 0,
       _user: {},
+      types: [],
       data: {
         types: ['前端开发', '后端开发', '移动开发', '数据库', '云计算&大数据', '运维&计算', 'UI设计']
       },
@@ -412,18 +413,17 @@ new Vue({
   filters: {
     diffFilt(val) {
       switch(val) {
-        case '2':
+        case 2:
           return '高级'
-        case '1':
+        case 1:
           return '中级'
-        case '0':
+        case 0:
           return '初级'
       }
     }
   },
   mounted() {
     const self = this
-    sr.reveal('.detail')
 
     window.addEventListener('scroll', this._throttle(function(e) {
       self.scrollTop = document.body.scrollTop
@@ -441,6 +441,24 @@ new Vue({
         }
       })
 
+    request.get('/v1/api/type/types')
+      .query({
+        limit: 8,
+        page: 1,
+        populate: true
+      })
+      .end((err, res) => {
+        if (err)
+          console.error(err)
+        else {
+          this.types = res.body.ResultList
+
+          this.$nextTick(() => {
+            sr.reveal('.detail')
+          })
+        }
+      })
+      
     this._timer = setInterval(() => {
       const length = this.tabs.length
       
@@ -450,5 +468,6 @@ new Vue({
         this.currentPoint++
       }
     }, 6000)
+
   }
 }).$mount('#root')

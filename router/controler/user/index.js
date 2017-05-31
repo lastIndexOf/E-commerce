@@ -73,11 +73,38 @@ module.exports = class UserClass extends BaseContructor {
         Error: '请求格式错误'
       }
 
+    if (body.update.avatar) {
+
+      if (/data:image\/[\w\W]+;base64,/.test(body.update.avatar)) {
+        let avatar = body.update.avatar.split(/data:image\/[\w\W]+;base64,/)[1]
+
+        try {
+          await new Promise((resolve, reject) => {
+            writeFile(join(__dirname,'../../../dist/avatars', body.update.username + '-avatar.jpg'),
+              Buffer.from(avatar, 'base64'), err => {
+                if (err) reject(err)
+
+                resolve()
+              })
+          })
+
+          delete body.update.avatar
+          body.update.avatar = `/static/avatars/${ body.update.username }-avatar.jpg`
+        } catch(e) {
+          return ctx.body = {
+            Error: e.message
+          }
+        }
+      }
+
+    }
+    
     try {
       let doc = await User.findById({ _id: body.id })
 
       Object.assign(doc, body.update)
 
+      doc.password = ctx.session.password
       await doc.save()
 
       return ctx.status = 201
@@ -98,9 +125,9 @@ module.exports = class UserClass extends BaseContructor {
           const data = await User
             .findById(id)
             .populate('area')
-            .populate('shopchar')
+            .populate('shopcar')
             .populate('ownedvedios')
-
+          
           return ctx.body = {
             Total: 1,
             ResultList: [ data ]

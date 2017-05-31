@@ -60,7 +60,8 @@
 // })
 
 const mongoose = require('mongoose')
-const Type = require('./Models/type.js')
+const Vedio = require('./Models/vedio.js')
+const vedioChild = require('./Models/vediochildren.js')
 
 mongoose.connect('mongodb://localhost:27017/commerce', err => {
   if (err)
@@ -69,16 +70,21 @@ mongoose.connect('mongodb://localhost:27017/commerce', err => {
    console.log('connection sussecc!')
 })
 
-const arr = ["592c253d3a322270d55a0b9f", "592c25863a322270d55a0ba5", "592c25a83a322270d55a0ba8"]
+// const arr = ["592c253d3a322270d55a0b9f", "592c25863a322270d55a0ba5", "592c25a83a322270d55a0ba8"]
 
 // Type.update({ _id: { $in: arr } }, { $addToSet: { vedios: '592d041c83aa3638181defba' } })
 
+Vedio.find({})
+	.populate('children')
+	.exec((err, vedios) => {
+		console.log(vedios[0].children)
+	})
 
-Type.update({ _id: { $in: arr }}, {
-	$addToSet: { vedios: '592d041c83aa3638181defba' }
-}, err => {
-	if (err)
-		console.error(err)
-	else
-		console.log('success')
-})
+// Type.update({ _id: { $in: arr }}, {
+// 	$addToSet: { vedios: '592d041c83aa3638181defba' }
+// }, err => {
+// 	if (err)
+// 		console.error(err)
+// 	else
+// 		console.log('success')
+// })

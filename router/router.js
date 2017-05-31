@@ -34,6 +34,7 @@ module.exports = router => {
   router.get('/type', Index.typeAction)
   router.get('/vedio', Index.vedioAction)
   router.get('/vediochild', Index.vedioChildAction)
+  router.get('/order', Index.orderAction)
   router.get('/personal', Index.personalAction)
 
 

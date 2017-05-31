@@ -32,6 +32,7 @@ new _vue2.default({
       isSingnedin: false,
       currentPoint: 0,
       _user: {},
+      types: [],
       data: {
         types: ['前端开发', '后端开发', '移动开发', '数据库', '云计算&大数据', '运维&计算', 'UI设计']
       },
@@ -350,11 +351,11 @@ new _vue2.default({
   filters: {
     diffFilt: function diffFilt(val) {
       switch (val) {
-        case '2':
+        case 2:
           return '高级';
-        case '1':
+        case 1:
           return '中级';
-        case '0':
+        case 0:
           return '初级';
       }
     }
@@ -363,7 +364,6 @@ new _vue2.default({
     var _this2 = this;
 
     var self = this;
-    sr.reveal('.detail');
 
     window.addEventListener('scroll', this._throttle(function (e) {
       self.scrollTop = document.body.scrollTop;
@@ -375,6 +375,20 @@ new _vue2.default({
           _this2._user = res.body.user;
           _this2.isSingnedin = true;
         }
+      }
+    });
+
+    _superagent2.default.get('/v1/api/type/types').query({
+      limit: 8,
+      page: 1,
+      populate: true
+    }).end(function (err, res) {
+      if (err) console.error(err);else {
+        _this2.types = res.body.ResultList;
+
+        _this2.$nextTick(function () {
+          sr.reveal('.detail');
+        });
       }
     });
 
