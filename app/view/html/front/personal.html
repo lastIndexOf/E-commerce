@@ -82,7 +82,23 @@
       </section>
 
     </header>
-  
+    
+    <div id="personal-wrapper" v-if="isSingnedin">
+      <div class="heading">
+        <div class="left">
+          <img :src="_user.avatar" :alt="_user.username">
+          <span class="setting"><i class="iconfont icon-shezhi"></i></span>
+        </div>
+        <div class="right">
+          <h2 class="nickname">{{ _user.username }}</h2>
+          <p class="desc">{{ _user.gender | fitGender }} {{ _user.job | fitJob }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="need-for-signin" v-if="!isSingnedin">
+      <img src="/static/system/need-for-signin.png">
+    </div>
+
 
     <footer class="footer">
 
