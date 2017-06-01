@@ -19,7 +19,7 @@ module.exports = class UserClass extends BaseContructor {
       'password',
       'gender'
     ]
-
+    
     for (let key of requiredKeys) {
       if (!(key in body))
         return ctx.body = {

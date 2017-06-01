@@ -244,8 +244,10 @@ var editType
           type: 'warning'
         }).then(function() {
           swal('', '上线成功', 'success')
+          ajaxToDate(1)
         }).catch(function() {
           swal('', '发生未知错误', 'error')
+          ajaxToDate(1)
         })
       } else {
         swal({
@@ -276,8 +278,10 @@ var editType
           type: 'error'
         }).then(function() {
             swal('', '下架成功成功', 'success')
+            ajaxToDate(1)
           }).catch(function() {
             swal('', '发生未知错误', 'error')
+            ajaxToDate(1)
           })
       }
     })
@@ -370,7 +374,6 @@ var editType
     floorEdit1.click(function (e) {
       var editForm = $('#target1-edit-form')
       var form = editForm.get(0).elements
-      
       var checkboxs = []
       for (var i = 0, len = form.type.length; i < len; i++) {
         if (form.type[i].checked === true) {

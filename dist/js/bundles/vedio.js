@@ -32,152 +32,9 @@ new _vue2.default({
       isSingnedin: false,
       currentPoint: 0,
       _user: {},
-      data: {
-        types: ['前端开发', '后端开发', '移动开发', '数据库', '云计算&大数据', '运维&计算', 'UI设计']
-      },
-      tabs: ['/static/images/bgs/01.jpg', 'http://img.mukewang.com/5927d3d60001df7312000460.jpg', 'http://img.mukewang.com/5927a131000173ba12000460.jpg', 'http://img.mukewang.com/5922c53400011a8f12000460.jpg', 'http://img.mukewang.com/59199516000174f312000460.jpg'],
-      navBottom: ['/static/images/path_1.png', '/static/images/path_1.png', '/static/images/path_1.png', '/static/images/path_1.png', '/static/images/path_1.png'],
-      details: [{
-        title: '前端开发工程师',
-        children: [{
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }]
-      }, {
-        title: '前端开发工程师',
-        children: [{
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }]
-      }, {
-        title: '前端开发工程师',
-        children: [{
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }]
-      }, {
-        title: '前端开发工程师',
-        children: [{
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }]
-      }, {
-        title: '前端开发工程师',
-        children: [{
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }, {
-          title: '从H5网页开发到移动响应式开发',
-          src: '#',
-          instruction: 'test instruction',
-          diff: '1'
-        }]
-      }]
+      _id: '',
+      _vedio: {},
+      isActive: true
     };
   },
 
@@ -331,9 +188,33 @@ new _vue2.default({
       });
     }
   },
-  filters: {},
-  mounted: function mounted() {
+  filters: {
+    filDif: function filDif(diffculty) {
+      switch (diffculty) {
+        case 0:
+          return '初级';
+        case 1:
+          return '中级';
+        case 2:
+          return '高级';
+      }
+    }
+  },
+  created: function created() {
     var _this2 = this;
+
+    this._id = window.location.search.split('?')[1].split('=')[1];
+
+    _superagent2.default.get('/v1/api/vedio/vedio/' + this._id).query({
+      populate: true
+    }).end(function (err, res) {
+      if (err) console.error(err);else {
+        _this2._vedio = res.body.ResultList[0];
+      }
+    });
+  },
+  mounted: function mounted() {
+    var _this3 = this;
 
     var self = this;
     sr.reveal('.detail');
@@ -345,21 +226,11 @@ new _vue2.default({
     _superagent2.default.get('/v1/api/user/personal').end(function (err, res) {
       if (err) console.error(err);else {
         if (res.body.isLogin) {
-          _this2._user = res.body.user;
-          _this2.isSingnedin = true;
+          _this3._user = res.body.user;
+          _this3.isSingnedin = true;
         }
       }
     });
-
-    this._timer = setInterval(function () {
-      var length = _this2.tabs.length;
-
-      if (_this2.currentPoint === length - 1) {
-        _this2.currentPoint = 0;
-      } else {
-        _this2.currentPoint++;
-      }
-    }, 6000);
   }
 }).$mount('#root');
 

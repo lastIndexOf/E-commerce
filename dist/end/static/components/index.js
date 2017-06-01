@@ -357,8 +357,12 @@ var editType
             console.log(forms.get(0).elements['Name'])
             for (var key in data.ResultList[0]) {
               var keyword = forms.get(0).elements[key]
-              if (keyword) {
+              if (keyword && key !== 'avatar') {
                 keyword.value = data.ResultList[0][key]
+              }
+              if (key === 'avatar') {
+                base64Code = data.ResultList[0][key]
+                images.eq(1).attr('src', base64Code)
               }
             }
           })

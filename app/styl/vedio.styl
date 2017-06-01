@@ -1,5 +1,8 @@
 @import '../../node_modules/sweetalert2/dist/sweetalert2.min.css';
 
+@font-face
+	font-family 'yuanti'
+	src url(/static/css/common/styles/yuanti.ttf)
 
 body
 	background-color rgba(245, 245, 245, 1)
@@ -176,6 +179,90 @@ body
 								padding-top 12px
 								&:hover
 									color #ddd
+	.vedio-wrapper
+		width 100%
+		min-height 640px
+		.heading
+			height 524px
+			background-image url(/static/system/vedio-02.png)
+			// background-repeat no-repeat
+			text-align center
+		.heading-wrapper
+			position absolute
+			top 0
+			left 50%
+			transform translate3d(-50%, 0, 0)
+			text-align center
+			.title
+				padding-top 224px
+				font-size 64px
+				height 64px
+				line-heihgt 64px
+				font-family 'yuanti'
+				color rgba(252, 215, 77, .7)
+			.instruction
+				font-size 16px
+				color rgba(252, 215, 77, .7)
+				.author
+					color #fa3140
+					font-size 24px
+			.desc
+				margin-top 64px
+				display flex
+				flex-flow row nowrap
+				color #999
+				.diffculty
+					flex 1
+					padding 0 12px
+					font-size 14px
+					line-height 14px
+					height 14px
+					border-right 1px solid #999
+				.total-time
+					flex 1
+					height 14px
+					padding 0 12px
+					font-size 14px
+					line-height 14px
+			.money
+				padding-top 32px
+				color #fa3140
+				font-size 32px
+				font-weight bold
+			.buy
+				display inline-block
+				// width 48px
+				height 32px
+				color #fff
+				font-size 16px
+				line-height 32px
+				padding 12px 24px
+				margin-top 32px
+				background-color rgb(240, 20, 4)
+				cursor pointer
+				&:hover
+					opacity .8
+		.nav-bar
+			width 100%
+			.nav-list
+				display flex
+				flex-flow row nowrap
+				justify-content center
+				align-items center
+				width 100%
+				height 60px
+				.nav-item
+					flex 0 0 128px
+					width 128px
+					font-size 16px
+					cursor pointer
+					&:hover
+						color #fa3140
+					&.active
+						color #fa3140
+		.content-wrapper
+			padding-top 12px
+			width 100%
 	.footer
 		width 100%
 		min-height 150px
@@ -209,3 +296,16 @@ body
 				color #ddd
 				font-size 12px
 				font-weight normal
+	.to-top
+		position fixed
+		bottom 180px
+		right 0
+		width 32px
+		height 32px
+		padding 12px
+		background-color #fff
+		cursor pointer
+		box-shadow -5px 5px 10px #ddd
+		.iconfont
+			font-size 32px
+			color #999

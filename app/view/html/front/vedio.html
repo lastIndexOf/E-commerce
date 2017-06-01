@@ -19,8 +19,10 @@
     <!-- header -->
     <header class="header">
       <section class="left">
-        <img src="/static/images/favicon.ico" class="logo">
-        <span class="title">小视频贩卖网</span>
+        <a href="/" style="color: #fff">
+          <img src="/static/images/favicon.ico" class="logo">
+          <span class="title">小视频贩卖网</span>
+        </a>
       </section>
 
       <section class="tab">
@@ -83,6 +85,52 @@
 
     </header>
   
+    <div class="vedio-wrapper">
+      <div class="heading">
+      </div>
+      <div class="heading-wrapper">
+        <h2 class="title">{{ _vedio.title }}</h2>
+
+        <p class="instruction">一份独一无二的, 来自
+          <span class="author">{{ _vedio.author.name }}</span>
+          的独家珍藏!
+        </p>
+        
+        <div class="desc">
+          <div class="diffculty">难度: {{ _vedio.diffculty | filDif }}</div>
+          <div class="total-time">时长: {{ _vedio.totaltime }}</div>
+        </div>
+
+        <div class="money">
+          ￥{{ _vedio.money }}
+        </div>
+
+        <div class="btn buy">加入购物车</div>
+      </div>
+      
+      <div class="nav-bar">
+        <ul class="nav-list">
+          <li class="nav-item" :class="{active: isActive}" @click="isActive = true">
+            课程介绍  
+          </li>
+          <li class="nav-item" :class="{active: !isActive}" @click="isActive = false"> 
+            课程评价
+          </li>
+        </ul>
+      </div>
+
+      <div class="content-wrapper">
+
+        <div class="course-instruction" v-if="isActive">
+          hello, world
+        </div>
+  
+        <div class="course-comment" v-if="!isActive">
+          hello, world2
+        </div>
+      </div>
+    </div>
+
     <footer class="footer">
 
       <div class="footer-wrapper">

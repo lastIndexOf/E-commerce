@@ -89,7 +89,10 @@ module.exports = class TypeClass extends BaseContructor {
         try {
           const data = await Type
             .findById(id)
-            .populate('vedios')
+            .populate({
+              path: 'vedios',
+              match: { isthrough: true }
+            })
 
           return ctx.body = {
             Total: 1,
@@ -121,7 +124,10 @@ module.exports = class TypeClass extends BaseContructor {
         try {
           const data = await Type
             .find({ _id: id })
-            .populate('vedios')
+            .populate({
+              path: 'vedios',
+              match: { isthrough: true }
+            })
             .select(keys)
 
           return ctx.body = {
@@ -164,7 +170,10 @@ module.exports = class TypeClass extends BaseContructor {
           try {
             let datas = await Type
               .find({ _id: { $in: ids } })
-              .populate('vedios')
+              .populate({
+                path: 'vedios',
+                match: { isthrough: true }
+              })
 
             const count = await Type.count()
 
@@ -201,7 +210,10 @@ module.exports = class TypeClass extends BaseContructor {
           try {
             let datas = await Type
               .find({ _id: { $in: ids } })
-              .populate('vedios')
+              .populate({
+                path: 'vedios',
+                match: { isthrough: true }
+              })
               .select(keys)
 
             const count = await Type.count()
@@ -244,7 +256,10 @@ module.exports = class TypeClass extends BaseContructor {
           try {
             let datas = await Type
               .find({})
-              .populate('vedios')
+              .populate({
+                path: 'vedios',
+                match: { isthrough: true }
+              })
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
@@ -286,7 +301,10 @@ module.exports = class TypeClass extends BaseContructor {
             let data = Type
               .find({})
               .select(keys)
-              .populate('vedios')
+              .populate({
+                path: 'vedios',
+                match: { isthrough: true }
+              })
               .limit(query.limit - 0)
               .skip(query.page - 1)
 
