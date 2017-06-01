@@ -101,14 +101,20 @@
               <li class="item"
                 v-for="(tab, i) of data.types">
                 <h3 class="title">
-                  {{ tab }}
+                  {{ tab.name }}
                   <span class="goto">
                     <i class="iconfont icon-iconfont-edu09"></i>
                   </span>
                 </h3>
                 <div class="detail-wrapper"
                   :style="{backgroundImage: 'url(/static/images/bgs/bg' + (i + 1) + '.png'}">
-
+                  <div class="link-wrapper">
+                    <ul class="items-wrapper">
+                      <li class="item-link" v-for="(item, i) of tab.vedios" v-if="i <= 11">
+                        <a :href="'/vedio?id=' + item._id">{{ item.title }}</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </li>
             </ul>

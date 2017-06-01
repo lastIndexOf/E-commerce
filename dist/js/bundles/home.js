@@ -360,8 +360,21 @@ new _vue2.default({
       }
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     var _this2 = this;
+
+    _superagent2.default.get('/v1/api/type/types').query({
+      limit: 7,
+      page: 2,
+      populate: true
+    }).end(function (err, res) {
+      if (err) console.error(err);else {
+        _this2.data.types = res.body.ResultList;
+      }
+    });
+  },
+  mounted: function mounted() {
+    var _this3 = this;
 
     var self = this;
 
@@ -372,8 +385,8 @@ new _vue2.default({
     _superagent2.default.get('/v1/api/user/personal').end(function (err, res) {
       if (err) console.error(err);else {
         if (res.body.isLogin) {
-          _this2._user = res.body.user;
-          _this2.isSingnedin = true;
+          _this3._user = res.body.user;
+          _this3.isSingnedin = true;
         }
       }
     });
@@ -384,21 +397,21 @@ new _vue2.default({
       populate: true
     }).end(function (err, res) {
       if (err) console.error(err);else {
-        _this2.types = res.body.ResultList;
+        _this3.types = res.body.ResultList;
 
-        _this2.$nextTick(function () {
+        _this3.$nextTick(function () {
           sr.reveal('.detail');
         });
       }
     });
 
     this._timer = setInterval(function () {
-      var length = _this2.tabs.length;
+      var length = _this3.tabs.length;
 
-      if (_this2.currentPoint === length - 1) {
-        _this2.currentPoint = 0;
+      if (_this3.currentPoint === length - 1) {
+        _this3.currentPoint = 0;
       } else {
-        _this2.currentPoint++;
+        _this3.currentPoint++;
       }
     }, 6000);
   }

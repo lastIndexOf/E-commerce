@@ -422,6 +422,21 @@ new Vue({
       }
     }
   },
+  created() {
+    request.get('/v1/api/type/types')
+      .query({
+        limit: 7,
+        page: 2,
+        populate: true
+      })
+      .end((err, res) => {
+        if (err)
+          console.error(err)
+        else {
+          this.data.types = res.body.ResultList
+        }
+      })
+  },
   mounted() {
     const self = this
 
