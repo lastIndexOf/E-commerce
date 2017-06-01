@@ -14,10 +14,24 @@ new Vue({
       _user: {},
       _id: '',
       _vedio: {},
-      isActive: true
+      isActive: 0
     }
   },
   computed: {
+    totalTime() {
+      let totalTime = 0
+      this._vedio.children.forEach(child => {
+        totalTime += (child.time - 0)
+      })
+
+      const sss = totalTime / 1000
+     
+      const hour = Number.parseInt(sss / 60 / 60)
+      const minute = Number.parseInt((sss - hour * 60 * 60) / 60)
+      const second = Number.parseInt(sss - hour * 60 * 60 - minute * 60)
+
+      return `${hour}时${minute}分${second}秒`
+    },
     isShow() {
       const wHeight = window.innerHeight
         || document.documentElement.clientHeight
@@ -27,9 +41,53 @@ new Vue({
         return true
 
       return false
+    },
+    hasThisVedio() {
+      if (this._user.ownedvedios.indexOf(this._id) !== -1)
+        return true
+      else
+        return false
     }
   },
   methods: {
+    studyThisCourse() {
+      if (this._user.ownedvedios.indexOf(this._id) !== -1)
+        this.isActive = 2
+      else
+        swal('', '请先购买该课程', 'warning')
+    },
+    addToShopCar() {
+      if (this._user.ownedvedios.indexOf(this._id) !== -1) {
+        swal('', '您已购买该视频', 'warning')
+      } else {
+        if (this._user.shopcar.indexOf(this._id) !== -1) {
+          swal('', '您已经添加视频到购物车!', 'warning')
+        } else {
+          let shopcar = []
+          for (let id of this._user.shopcar) {
+            shopcar.push(id)
+          }
+
+          shopcar.push(this._id)
+          request.post('/v1/api/user/users')
+            .send({
+              id: this._user._id,
+              update: {
+                shopcar: shopcar
+              }
+            })
+            .end((err, res) => {
+              if (err)
+                console.error(err)
+              else {
+                if (res.status === 201)
+                  swal('', '添加购物车成功', 'success')
+                  this._user.shopcar = shopcar
+              }
+            })
+        }
+      }
+    },
     changePoint(index) {
       this.currentPoint = index  
     },
@@ -245,6 +303,14 @@ new Vue({
           if (res.body.isLogin) {
             this._user = res.body.user
             this.isSingnedin = true
+          } else {
+            swal('', '请先登录', 'error')
+              .then(() => {
+                window.location.href = '/'
+              })
+              .catch(() => {
+                window.location.href = '/'
+              })
           }
         }
       })

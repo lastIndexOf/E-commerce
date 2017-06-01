@@ -114,8 +114,10 @@
                   <input type="checkbox" v-model="item.checked">
                 </label>
                 <div class="course">
-                  <img :src="item.avatar" :alt="item.title" class="post" width="200" height="140">
-                  <h3 class="title">{{ item.title }}</h3>
+                  <a :href="'/vedio?id=' + item._id">
+                    <img :src="item.avatar" :alt="item.title" class="post" width="200" height="140">
+                    <h3 class="title">{{ item.title }}</h3>
+                  </a>
                 </div>
                 <div class="money">￥{{ item.money }}</div>
                 <div class="control" @click="cancel(item._id)">ｘ</div>

@@ -4,6 +4,14 @@ var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _parseInt = require('babel-runtime/core-js/number/parse-int');
+
+var _parseInt2 = _interopRequireDefault(_parseInt);
+
 var _vue = require('vue/dist/vue.js');
 
 var _vue2 = _interopRequireDefault(_vue);
@@ -33,20 +41,90 @@ new _vue2.default({
       _user: {},
       _id: '',
       _vedio: {},
-      isActive: true
+      isActive: 0
     };
   },
 
   computed: {
+    totalTime: function totalTime() {
+      var totalTime = 0;
+      this._vedio.children.forEach(function (child) {
+        totalTime += child.time - 0;
+      });
+
+      var sss = totalTime / 1000;
+
+      var hour = (0, _parseInt2.default)(sss / 60 / 60);
+      var minute = (0, _parseInt2.default)((sss - hour * 60 * 60) / 60);
+      var second = (0, _parseInt2.default)(sss - hour * 60 * 60 - minute * 60);
+
+      return hour + '\u65F6' + minute + '\u5206' + second + '\u79D2';
+    },
     isShow: function isShow() {
       var wHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
       if (this.scrollTop - wHeight >= 0) return true;
 
       return false;
+    },
+    hasThisVedio: function hasThisVedio() {
+      if (this._user.ownedvedios.indexOf(this._id) !== -1) return true;else return false;
     }
   },
   methods: {
+    studyThisCourse: function studyThisCourse() {
+      if (this._user.ownedvedios.indexOf(this._id) !== -1) this.isActive = 2;else (0, _sweetalert2.default)('', '请先购买该课程', 'warning');
+    },
+    addToShopCar: function addToShopCar() {
+      var _this = this;
+
+      if (this._user.ownedvedios.indexOf(this._id) !== -1) {
+        (0, _sweetalert2.default)('', '您已购买该视频', 'warning');
+      } else {
+        if (this._user.shopcar.indexOf(this._id) !== -1) {
+          (0, _sweetalert2.default)('', '您已经添加视频到购物车!', 'warning');
+        } else {
+          var shopcar = [];
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = (0, _getIterator3.default)(this._user.shopcar), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var id = _step.value;
+
+              shopcar.push(id);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          shopcar.push(this._id);
+          _superagent2.default.post('/v1/api/user/users').send({
+            id: this._user._id,
+            update: {
+              shopcar: shopcar
+            }
+          }).end(function (err, res) {
+            if (err) console.error(err);else {
+              if (res.status === 201) (0, _sweetalert2.default)('', '添加购物车成功', 'success');
+              _this._user.shopcar = shopcar;
+            }
+          });
+        }
+      }
+    },
     changePoint: function changePoint(index) {
       this.currentPoint = index;
     },
@@ -156,7 +234,7 @@ new _vue2.default({
       document.querySelector('#gender').name = 'gender';
     },
     signin: function signin() {
-      var _this = this;
+      var _this2 = this;
 
       var self = this;
 
@@ -182,7 +260,7 @@ new _vue2.default({
       }).then(function (body) {
         if (!body.isLogin) (0, _sweetalert2.default)('', body.Error, 'error');else {
           self._user = body.user;
-          _this.isSingnedin = true;
+          _this2.isSingnedin = true;
         }
       });
     }
@@ -200,7 +278,7 @@ new _vue2.default({
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     this._id = window.location.search.split('?')[1].split('=')[1];
 
@@ -208,12 +286,12 @@ new _vue2.default({
       populate: true
     }).end(function (err, res) {
       if (err) console.error(err);else {
-        _this2._vedio = res.body.ResultList[0];
+        _this3._vedio = res.body.ResultList[0];
       }
     });
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     var self = this;
     sr.reveal('.detail');
@@ -225,8 +303,14 @@ new _vue2.default({
     _superagent2.default.get('/v1/api/user/personal').end(function (err, res) {
       if (err) console.error(err);else {
         if (res.body.isLogin) {
-          _this3._user = res.body.user;
-          _this3.isSingnedin = true;
+          _this4._user = res.body.user;
+          _this4.isSingnedin = true;
+        } else {
+          (0, _sweetalert2.default)('', '请先登录', 'error').then(function () {
+            window.location.href = '/';
+          }).catch(function () {
+            window.location.href = '/';
+          });
         }
       }
     });

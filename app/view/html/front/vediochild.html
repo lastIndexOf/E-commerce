@@ -19,8 +19,10 @@
     <!-- header -->
     <header class="header">
       <section class="left">
-        <img src="/static/images/favicon.ico" class="logo">
-        <span class="title">小视频贩卖网</span>
+        <a href="/" style="color: #fff">
+          <img src="/static/images/favicon.ico" class="logo">
+          <span class="title">小视频贩卖网</span>
+        </a>
       </section>
 
       <section class="tab">
@@ -53,7 +55,7 @@
                 <img :src="_user.avatar" width="75" height="75">
               </div>
               <div class="right-wrapper">
-                <h3 class="name">{{ _user.username }}</h3>  
+                <h3 class="name"><a href="/personal">{{ _user.username }}</a></h3>  
               </div>              
             </div>
             <div class="second">
@@ -82,6 +84,8 @@
       </section>
 
     </header>
+
+    
 
     <footer class="footer">
 

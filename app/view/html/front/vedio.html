@@ -55,7 +55,7 @@
                 <img :src="_user.avatar" width="75" height="75">
               </div>
               <div class="right-wrapper">
-                <h3 class="name">{{ _user.username }}</h3>  
+                <h3 class="name"><a href="/personal">{{ _user.username }}</a></h3>  
               </div>              
             </div>
             <div class="second">
@@ -98,35 +98,91 @@
         
         <div class="desc">
           <div class="diffculty">难度: {{ _vedio.diffculty | filDif }}</div>
-          <div class="total-time">时长: {{ _vedio.totaltime }}</div>
+          <div class="total-time">时长: {{ totalTime }}</div>
         </div>
 
         <div class="money">
           ￥{{ _vedio.money }}
         </div>
 
-        <div class="btn buy">加入购物车</div>
+        <div class="btn buy" v-if="!hasThisVedio" @click="addToShopCar">加入购物车</div>
+        <div class="btn buy" v-if="hasThisVedio" @click="isActive = 2">继续学习</div>
       </div>
       
       <div class="nav-bar">
         <ul class="nav-list">
-          <li class="nav-item" :class="{active: isActive}" @click="isActive = true">
+          <li class="nav-item" :class="{active: isActive === 0}" @click="isActive = 0">
             课程介绍  
           </li>
-          <li class="nav-item" :class="{active: !isActive}" @click="isActive = false"> 
+          <li class="nav-item" :class="{active: isActive === 1}" @click="isActive = 1"> 
             课程评价
+          </li>
+          <li class="nav-item" :class="{active: isActive === 2}" @click="studyThisCourse"> 
+            学习课程
           </li>
         </ul>
       </div>
 
       <div class="content-wrapper">
 
-        <div class="course-instruction" v-if="isActive">
-          hello, world
+        <div class="course-instruction" v-if="isActive === 0">
+          <div class="vedio-player-wrapper">
+            <video width="780" height="540" controls>
+              <source src="/static/vedios/test.mp4" type="video/mp4">
+              您的浏览器不支持Video标签。
+            </video>
+          </div>
+
+          <div class="instruction">
+            <h2 class="title">课程介绍</h2>
+
+            <p class="desc">{{ _vedio.summary }}</p>
+          </div>
+
+          <div class="author-instruction">
+            <h3 class="title">讲师介绍</h3>
+          
+            <div class="wrapper">
+              <div class="author-wrapper">
+                <div class="left">
+                  <img width="200" height="200" :src="_vedio.author.avatar" :alt="_vedio.author.nickname">
+                </div>
+                <div class="right">
+                  <h3 class="title">哈工大威海著名老司机</h3>
+
+                  <p class="name">{{ _vedio.author.name }}</p>
+
+                  <p style="text-align: left; padding-bottom: 12px">讲师告诉你, 你可以学到: </p>
+                  <p class="summary">{{ _vedio.promotion }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
   
-        <div class="course-comment" v-if="!isActive">
+        <div class="course-comment" v-if="isActive === 1">
           hello, world2
+        </div>
+        
+        <div class="course-study" v-if="isActive === 2">
+          <div class="courses-wrapper">
+            <h3 class="title">课程章节</h3>
+
+            <div class="courses-list">
+              <ul class="courses">
+                <li class="course"
+                 v-for="child of _vedio.children">
+                  <a :href="'/vediochild?id=' + child._id" class="link-to-child">
+                    {{ child.title }}
+                    <span class="enter"><i class="iconfont icon-iconfont-edu09"></i></span>
+                  </a>
+                 </li>
+                 <li class="course" v-if="!_vedio.children.length">
+                   讲师暂时还没有发布课程章节
+                 </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
