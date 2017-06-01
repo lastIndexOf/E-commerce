@@ -41,7 +41,8 @@ new _vue2.default({
       _user: {},
       _id: '',
       _vedio: {},
-      isActive: 0
+      isActive: 0,
+      commentContent: ''
     };
   },
 
@@ -72,11 +73,27 @@ new _vue2.default({
     }
   },
   methods: {
+    commentThis: function commentThis() {
+      var _this = this;
+
+      _superagent2.default.put('/v1/api/comment/comment').send({
+        from: this._user._id,
+        content: this.commentContent,
+        vedio: this._vedio._id
+      }).end(function (err, res) {
+        if (err) console.error(err);else {
+          if (res.status === 201) {
+            (0, _sweetalert2.default)('', '评论成功', 'success');
+            _this._vedio.comment.push(res.body.Id);
+          }
+        }
+      });
+    },
     studyThisCourse: function studyThisCourse() {
       if (this._user.ownedvedios.indexOf(this._id) !== -1) this.isActive = 2;else (0, _sweetalert2.default)('', '请先购买该课程', 'warning');
     },
     addToShopCar: function addToShopCar() {
-      var _this = this;
+      var _this2 = this;
 
       if (this._user.ownedvedios.indexOf(this._id) !== -1) {
         (0, _sweetalert2.default)('', '您已购买该视频', 'warning');
@@ -119,7 +136,7 @@ new _vue2.default({
           }).end(function (err, res) {
             if (err) console.error(err);else {
               if (res.status === 201) (0, _sweetalert2.default)('', '添加购物车成功', 'success');
-              _this._user.shopcar = shopcar;
+              _this2._user.shopcar = shopcar;
             }
           });
         }
@@ -234,7 +251,7 @@ new _vue2.default({
       document.querySelector('#gender').name = 'gender';
     },
     signin: function signin() {
-      var _this2 = this;
+      var _this3 = this;
 
       var self = this;
 
@@ -260,7 +277,7 @@ new _vue2.default({
       }).then(function (body) {
         if (!body.isLogin) (0, _sweetalert2.default)('', body.Error, 'error');else {
           self._user = body.user;
-          _this2.isSingnedin = true;
+          _this3.isSingnedin = true;
         }
       });
     }
@@ -278,7 +295,7 @@ new _vue2.default({
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     this._id = window.location.search.split('?')[1].split('=')[1];
 
@@ -286,12 +303,12 @@ new _vue2.default({
       populate: true
     }).end(function (err, res) {
       if (err) console.error(err);else {
-        _this3._vedio = res.body.ResultList[0];
+        _this4._vedio = res.body.ResultList[0];
       }
     });
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     var self = this;
     sr.reveal('.detail');
@@ -303,8 +320,8 @@ new _vue2.default({
     _superagent2.default.get('/v1/api/user/personal').end(function (err, res) {
       if (err) console.error(err);else {
         if (res.body.isLogin) {
-          _this4._user = res.body.user;
-          _this4.isSingnedin = true;
+          _this5._user = res.body.user;
+          _this5.isSingnedin = true;
         } else {
           (0, _sweetalert2.default)('', '请先登录', 'error').then(function () {
             window.location.href = '/';

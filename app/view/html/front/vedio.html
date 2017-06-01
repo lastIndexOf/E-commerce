@@ -161,7 +161,27 @@
         </div>
   
         <div class="course-comment" v-if="isActive === 1">
-          hello, world2
+          <div class="content-wrapper">
+
+            <div class="comment-wrapper">
+              <h3 class="title">用户评价</h3>
+
+              <ul class="comments-wrapper">
+                <li class="comment" v-for="comment of _vedio.comment">
+                  <div class="wrapper">
+                    <h3 class="time-wrapper">{{ comment.meta.updateAt }}</h3>
+                    {{ comment.content }}
+                  </div>
+                </li>
+                <li class="comment" v-if="!_vedio.comment.length">暂无评论</li>
+              </ul>
+
+              <div class="submit-comment" v-if="hasThisVedio">
+                <textarea rows="6" cols="45" v-model="commentContent"></textarea>
+                <button type="button" @click="commentThis">评论</button>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div class="course-study" v-if="isActive === 2">

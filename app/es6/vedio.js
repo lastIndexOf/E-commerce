@@ -14,7 +14,8 @@ new Vue({
       _user: {},
       _id: '',
       _vedio: {},
-      isActive: 0
+      isActive: 0,
+      commentContent: ''
     }
   },
   computed: {
@@ -50,6 +51,24 @@ new Vue({
     }
   },
   methods: {
+    commentThis() {
+      request.put('/v1/api/comment/comment') 
+        .send({
+          from: this._user._id,
+          content: this.commentContent,
+          vedio: this._vedio._id
+        })
+        .end((err, res) => {
+          if (err)
+            console.error(err)
+          else {
+            if (res.status === 201) {
+              swal('', '评论成功', 'success')
+              this._vedio.comment.push(res.body.Id)
+            }
+          }
+        })
+    },
     studyThisCourse() {
       if (this._user.ownedvedios.indexOf(this._id) !== -1)
         this.isActive = 2

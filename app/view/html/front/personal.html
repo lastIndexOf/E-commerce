@@ -163,7 +163,9 @@
                     <p class="total-time">时长 {{ vedio.totaltime }}</p>
                     <p class="desc">更新至 第{{ vedio.children.length }}章</p>
                   </div>
-                  <div class="continue"><a :href="'/vedio?id=' + vedio._id">继续学习</a></div>
+                  <a :href="'/vedio?id=' + vedio._id">
+                    <div class="continue">继续学习</div>
+                  </a>
                 </li>
                 <li class="info" v-if="!ownVdeios.length">您还没有课程哦, 快去购买吧:(</li>
               </ul>

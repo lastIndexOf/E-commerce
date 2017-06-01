@@ -85,7 +85,32 @@
 
     </header>
 
-    
+    <div class="content-wrapper">
+      <div class="vedio-player-wrapper">
+        <video width="100%" height="720" controls>
+          <source :src="_child.src" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="comment-wrapper">
+        <h3 class="title">用户评价</h3>
+
+        <ul class="comments-wrapper">
+          <li class="comment" v-for="comment of _child.comment">
+            <div class="wrapper">
+              <h3 class="time-wrapper">{{ comment.meta.updateAt }}</h3>
+              {{ comment.content }}
+            </div>
+          </li>
+          <li class="comment" v-if="!_child.comment.length">暂无评论</li>
+        </ul>
+
+        <div class="submit-comment">
+          <textarea rows="6" cols="45" v-model="content"></textarea>
+          <button type="button" @click="commentThis">评论</button>
+        </div>
+      </div>
+    </div>
 
     <footer class="footer">
 

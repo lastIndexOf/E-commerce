@@ -5,7 +5,7 @@ const
   Comment         =  require('../../../Models/comment.js'),
   BaseContructor  =  require('./base.js')
 
-module.exports = class Comment extends BaseContructor {
+module.exports = class CommentClass extends BaseContructor {
   // Type
   static async putComment(ctx) {
     const body = ctx.request.body

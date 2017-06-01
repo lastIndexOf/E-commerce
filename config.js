@@ -1,10 +1,10 @@
-const serverPort = 8080
+const serverPort = 4000
 
 module.exports = {
-	enter: 'vediochild.js',
+	enter: 'type.js',
  	server: 'server.js',
  	proxy: `http://localhost:${ serverPort }`,  // 需要开启代理监听的端口
- 	port: 8001, // 开启代理的端口号
+ 	port: 4555, // 开启代理的端口号
 	env: 'development',
  	serverConfig: {
  		port: serverPort
