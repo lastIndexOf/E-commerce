@@ -11,7 +11,8 @@ new Vue({
       scrollTop: 0,
       isSingnedin: false,
       currentPoint: 0,
-      type: {}
+      type: {},
+      types: []
     }
   },
   computed: {
@@ -199,7 +200,19 @@ new Vue({
       })
     }
   },
-  filters: {},
+  filters: {
+    diffFilt(diffculty) {
+      switch(diffculty) {
+        case 0:
+          return '初级'
+        case 1:
+          return '中级'
+        case 2:
+          return '高级'
+
+      }
+    }
+  },
   created() {
     this._id = window.location.search.split('?')[1].split('=')[1]
 
@@ -212,6 +225,21 @@ new Vue({
           console.error(err)
         else {
           this.type = res.body.ResultList[0]
+        }
+      })
+
+    request.get('/v1/api/type/types')
+      .query({
+        limit: 99999,
+        page: 1,
+        keys: '_id+name',
+        populate: true
+      })
+      .end((err, res) => {
+        if (err)
+          console.error(err)
+        else {
+          this.types = res.body.ResultList
         }
       })
   },
@@ -234,15 +262,5 @@ new Vue({
           }
         }
       })
-
-    this._timer = setInterval(() => {
-      const length = this.tabs.length
-      
-      if (this.currentPoint === length - 1) {
-        this.currentPoint = 0
-      } else {
-        this.currentPoint++
-      }
-    }, 6000)
   }
 }).$mount('#root')

@@ -186,6 +186,22 @@ body
 			font-weight 700
 			text-align left
 			border-bottom 1px solid #ddd
+		.types-wrapper
+			margin-bottom 64px
+			.types-list
+				.type-item
+					display inline-block
+					padding 6px 12px
+					border-radius 6px
+					&.active
+						background-color #fa3140
+						& > a
+							color #fff	
+					a
+						font-size 16px
+					&:not(.active):hover > a
+							text-decoration underline
+							color #fa3140
 		.item-list
 			display flex
 			flex-flow row wrap
@@ -238,7 +254,7 @@ body
 					.diff
 						color #999
 						padding 12px
-						text-align left
+						text-align right
 	.footer
 		width 100%
 		min-height 150px

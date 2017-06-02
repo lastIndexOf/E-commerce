@@ -35,10 +35,12 @@
       </section>
 
       <section class="right">
-        <div class="shopcar">
-          <i class="iconfont icon-gouwuche"></i>
-          <span class="title">购物车</span>
-        </div>
+        <a href="/order">
+          <div class="shopcar">
+            <i class="iconfont icon-gouwuche"></i>
+            <span class="title">购物车</span>
+          </div>
+        </a>
         <div class="sign" v-if="!isSingnedin">
           <span class="signin"
             @click="signin">登录</span>
@@ -60,9 +62,9 @@
             </div>
             <div class="second">
               <div class="block-wrapper">
-                <a href="#" class="shopcar">我的课程</a>
-                <a href="#" class="shopcar">我的订单</a>
-                <a href="#" class="shopcar">个人设置</a>
+                <a href="/personal?type=course" class="shopcar">我的课程</a>
+                <a href="/order" class="shopcar">我的订单</a>
+                <a href="/personal" class="shopcar">个人设置</a>
               </div>
             </div>
             <div class="signout">
@@ -86,6 +88,17 @@
     </header>
   
     <div class="type-item-wrapper">
+      <div class="title">类别</div>
+
+      <div class="types-wrapper">
+        <ul class="types-list">
+          <li class="type-item" :class="{active: item._id===_id}" v-for="item of types">
+            <a :href="'/type?id=' + item._id">{{ item.name }}</a>
+          </li>
+        </ul>
+      </div>
+
+
       <h2 class="title">{{ type.name }}</h2>
 
       <ul class="item-list">
@@ -97,7 +110,7 @@
               <div class="body">
                 <h3 class="heading">{{ vedio.title }}</h3>
                 <div class="instruction">{{ vedio.summary }}</div>
-                <div class="diff">{{ vedio.diffculty | diffFilt }}</div>
+                <div class="diff">{{ vedio.diffculty | diffFilt }} · {{ vedio.comment.length }}个评价</div>
               </div>
             </a>
         </li>

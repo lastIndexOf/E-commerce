@@ -27,7 +27,7 @@
 
       <section class="tab">
         <div class="tab-item">
-          <a href="#" class="item">课程</a>
+          <a href="/type?id=592c253d3a322270d55a0b9f" class="item">课程</a>
         </div>
         <div class="tab-item">
           <a href="javascript:;" class="item" @click="payFor">付费咨询</a>
@@ -35,10 +35,12 @@
       </section>
 
       <section class="right">
-        <div class="shopcar">
-          <i class="iconfont icon-gouwuche"></i>
-          <span class="title">购物车</span>
-        </div>
+        <a href="/order">
+          <div class="shopcar">
+            <i class="iconfont icon-gouwuche"></i>
+            <span class="title">购物车</span>
+          </div>
+        </a>
         <div class="sign" v-if="!isSingnedin">
           <span class="signin"
             @click="signin">登录</span>
@@ -60,9 +62,9 @@
             </div>
             <div class="second">
               <div class="block-wrapper">
-                <a href="#" class="shopcar">我的课程</a>
-                <a href="#" class="shopcar">我的订单</a>
-                <a href="#" class="shopcar">个人设置</a>
+                <a href="/personal?type=course" class="shopcar">我的课程</a>
+                <a href="/order" class="shopcar">我的订单</a>
+                <a href="/personal" class="shopcar">个人设置</a>
               </div>
             </div>
             <div class="signout">
@@ -90,7 +92,8 @@
         <div class="left">
           <img :src="_user.avatar" :alt="_user.username" width="180" height="180">
           <span class="setting"
-            @click="pageIndex=0"><i class="iconfont icon-shezhi"></i></span>
+            @click.stop="pageIndex=0"><i class="iconfont icon-shezhi"></i></span>
+          <input class="file-select" type="file" @change="changeAvatar">
         </div>
         <div class="right">
           <h2 class="nickname">{{ _user.username }}</h2>
@@ -152,7 +155,7 @@
 
             <div class="course-wrapper">
               <ul class="course-list">
-                <li class="course-item" v-for="vedio of ownVdeios">
+                <li class="course-item" v-for="(vedio, i) of ownVdeios">
                   <div class="left">
                     <a :href="'/vedio?id=' + vedio._id">
                       <img :src="vedio.avatar" :alt="vedio.title" class="post" width="220" height="140">
@@ -160,7 +163,7 @@
                   </div>
                   <div class="right">
                     <h3 class="title">{{ vedio.title }}</h3>
-                    <p class="total-time">时长 {{ vedio.totaltime }}</p>
+                    <p class="total-time">时长 {{ totaltimes[i] }}</p>
                     <p class="desc">更新至 第{{ vedio.children.length }}章</p>
                   </div>
                   <a :href="'/vedio?id=' + vedio._id">

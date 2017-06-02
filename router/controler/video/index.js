@@ -651,12 +651,12 @@ module.exports = class VedioClass extends BaseContructor {
               .populate('parent')
               .populate('comment')
             
-            const sss = data.time / 1000
-            const hh = Number.parseInt(sss / 60 / 60)
-            const mm = Number.parseInt((sss - hh * 60 * 60) / 60)
-            const ss = Number.parseInt(sss - hh * 60 * 60 - mm * 60)
+            // const sss = data.time / 1000
+            // const hh = Number.parseInt(sss / 60 / 60)
+            // const mm = Number.parseInt((sss - hh * 60 * 60) / 60)
+            // const ss = Number.parseInt(sss - hh * 60 * 60 - mm * 60)
 
-            data.time = [hh, mm, ss].join(':')
+            // data.time = [hh, mm, ss].join(':')
 
             return ctx.body = {
               Total: datas.length,
@@ -671,15 +671,17 @@ module.exports = class VedioClass extends BaseContructor {
           try {
             let datas = await VedioChildren.find({ _id: { $in: ids } })
 
-            const sss = data.time / 1000
-            const hh = Number.parseInt(sss / 60 / 60)
-            const mm = Number.parseInt((sss - hh * 60 * 60) / 60)
-            const ss = Number.parseInt(sss - hh * 60 * 60 - mm * 60)
+            // const sss = data.time / 1000
+            // const hh = Number.parseInt(sss / 60 / 60)
+            // const mm = Number.parseInt((sss - hh * 60 * 60) / 60)
+            // const ss = Number.parseInt(sss - hh * 60 * 60 - mm * 60)
 
-            data.time = [hh, mm, ss].join(':')
+            // data.time = [hh, mm, ss].join(':')
+
+            const count = await VedioChildren.count()
 
             return ctx.body = {
-              Total: datas.length,
+              Total: count,
               ResultList: datas
             }
           } catch(e) {

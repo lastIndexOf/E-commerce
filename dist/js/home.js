@@ -33,7 +33,7 @@ new _vue2.default({
       _user: {},
       types: [],
       data: {
-        types: ['前端开发', '后端开发', '移动开发', '数据库', '云计算&大数据', '运维&计算', 'UI设计']
+        types: []
       },
       tabs: ['/static/images/bgs/01.jpg', 'http://img.mukewang.com/5927d3d60001df7312000460.jpg', 'http://img.mukewang.com/5927a131000173ba12000460.jpg', 'http://img.mukewang.com/5922c53400011a8f12000460.jpg', 'http://img.mukewang.com/59199516000174f312000460.jpg'],
       navBottom: ['/static/images/path_1.png', '/static/images/path_1.png', '/static/images/path_1.png', '/static/images/path_1.png', '/static/images/path_1.png'],

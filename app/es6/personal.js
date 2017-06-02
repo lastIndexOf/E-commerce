@@ -12,7 +12,8 @@ new Vue({
       isSingnedin: false,
       _user: {},
       ownVdeios: [],
-      pageIndex: 0
+      pageIndex: 0,
+      totaltimes: []
     }
   },
   computed: {
@@ -231,8 +232,67 @@ new Vue({
             console.error(err)
           else {
             this.ownVdeios = res.body.ResultList[0].ownedvedios
+            
+            this.ownVdeios.forEach((video, i) => {
+              let ids = video.children.join('+')
+              if (ids) {
+                request.get('/v1/api/vedio/children')
+                  .query({
+                    ids 
+                  })
+                  .end((err, res) => {
+                    if (err)
+                      console.error(err)
+                    else {
+                      let totalTime = 0
+
+                      res.body.ResultList.forEach(item => {
+                        totalTime += Number.parseInt(item.time)
+                      })
+                      console.log(totalTime)
+                      
+                      const sss = totalTime / 1000
+                    
+                      const hour = Number.parseInt(sss / 60 / 60)
+                      const minute = Number.parseInt((sss - hour * 60 * 60) / 60)
+                      const second = Number.parseInt(sss - hour * 60 * 60 - minute * 60)
+
+                      this.totaltimes[i] = `${hour}时${minute}分${second}秒`
+                    }
+                  })
+              } else {
+                this.totaltimes[i] = '0时0分0秒'
+              }
+            })
           }
         })
+
+    },
+    changeAvatar(e) {
+      const self = this
+      
+      let fileReader = new FileReader()
+      fileReader.onload = function() {
+        request.post('/v1/api/user/users')
+          .send({
+            id: self._user._id,
+            update: {
+              username: self._user.username,
+              avatar: this.result
+            }
+          })
+          .end((err, res) => {
+            if (err)
+              console.error(err)
+            else {
+              if (res.status === 201) {
+                swal('', '修改头像成功', 'success')
+                self._user.avatar = res.body.Id.avatar
+              }
+            }
+          })
+      }
+      fileReader.readAsDataURL(e.target.files[0])
     },
     _initOrder() {
 
@@ -284,6 +344,11 @@ new Vue({
           if (res.body.isLogin) {
             this._user = res.body.user
             this.isSingnedin = true
+
+            if (/course/.test('course')) {
+              this._initCourse()
+              this.pageIndex = 1
+            }
           }
         }
       })

@@ -28,7 +28,7 @@
 
       <section class="tab">
         <div class="tab-item">
-          <a href="#" class="item">课程</a>
+          <a href="/type?id=592c253d3a322270d55a0b9f" class="item">课程</a>
         </div>
         <div class="tab-item">
           <a href="javascript:;" class="item" @click="payFor">付费咨询</a>
@@ -36,10 +36,12 @@
       </section>
 
       <section class="right">
-        <div class="shopcar">
-          <i class="iconfont icon-gouwuche"></i>
-          <span class="title">购物车</span>
-        </div>
+        <a href="/order">
+          <div class="shopcar">
+            <i class="iconfont icon-gouwuche"></i>
+            <span class="title">购物车</span>
+          </div>
+        </a>
         <div class="sign" v-if="!isSingnedin">
           <span class="signin"
             @click="signin">登录</span>
@@ -61,9 +63,9 @@
             </div>
             <div class="second">
               <div class="block-wrapper">
-                <a href="#" class="shopcar">我的课程</a>
-                <a href="#" class="shopcar">我的订单</a>
-                <a href="#" class="shopcar">个人设置</a>
+                <a href="/personal?type=course" class="shopcar">我的课程</a>
+                <a href="/order" class="shopcar">我的订单</a>
+                <a href="/personal" class="shopcar">个人设置</a>
               </div>
             </div>
             <div class="signout">

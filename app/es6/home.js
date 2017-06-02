@@ -14,7 +14,7 @@ new Vue({
       _user: {},
       types: [],
       data: {
-        types: ['前端开发', '后端开发', '移动开发', '数据库', '云计算&大数据', '运维&计算', 'UI设计']
+        types: []
       },
       tabs: [
         '/static/images/bgs/01.jpg',

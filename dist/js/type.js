@@ -30,7 +30,8 @@ new _vue2.default({
       scrollTop: 0,
       isSingnedin: false,
       currentPoint: 0,
-      type: {}
+      type: {},
+      types: []
     };
   },
 
@@ -184,7 +185,19 @@ new _vue2.default({
       });
     }
   },
-  filters: {},
+  filters: {
+    diffFilt: function diffFilt(diffculty) {
+      switch (diffculty) {
+        case 0:
+          return '初级';
+        case 1:
+          return '中级';
+        case 2:
+          return '高级';
+
+      }
+    }
+  },
   created: function created() {
     var _this2 = this;
 
@@ -195,6 +208,17 @@ new _vue2.default({
     }).end(function (err, res) {
       if (err) console.error(err);else {
         _this2.type = res.body.ResultList[0];
+      }
+    });
+
+    _superagent2.default.get('/v1/api/type/types').query({
+      limit: 99999,
+      page: 1,
+      keys: '_id+name',
+      populate: true
+    }).end(function (err, res) {
+      if (err) console.error(err);else {
+        _this2.types = res.body.ResultList;
       }
     });
   },
@@ -216,16 +240,6 @@ new _vue2.default({
         }
       }
     });
-
-    this._timer = setInterval(function () {
-      var length = _this3.tabs.length;
-
-      if (_this3.currentPoint === length - 1) {
-        _this3.currentPoint = 0;
-      } else {
-        _this3.currentPoint++;
-      }
-    }, 6000);
   }
 }).$mount('#root');
 //# sourceMappingURL=maps/type.js.map

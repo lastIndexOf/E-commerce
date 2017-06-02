@@ -195,9 +195,28 @@ $width = 80%
 			background-size 100% 240px
 			background-repeat no-repeat
 			.left
-				flex 0 0 280px
-				width 280px
+				flex 0 0 180px
+				width 180px
 				position relative
+				&:hover::after
+					opacity 1
+					visibility visible
+				&::after
+					content '更改'
+					display block
+					position absolute
+					top 48px
+					width 180px
+					height 180px
+					color #fff
+					border-radius 50%
+					text-align center
+					line-height 180px
+					cursor pointer
+					transition all .5s
+					background-color rgba(42, 42, 42, .6)
+					opacity 0
+					visibility hidden
 				img
 					position relative
 					top 48px
@@ -211,8 +230,17 @@ $width = 80%
 					&:hover
 						color rgba(245, 245, 245, 1)
 						cursor pointer
+				.file-select
+					position absolute
+					top 48px
+					width 180px
+					height 180px
+					z-index 999
+					opacity 0
+					cursor pointer
 			.right
 				flex 0 0 1
+				padding-left 60px
 				.nickname
 					padding-top 64px
 					color #fff

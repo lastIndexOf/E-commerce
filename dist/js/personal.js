@@ -1,5 +1,9 @@
 'use strict';
 
+var _parseInt = require('babel-runtime/core-js/number/parse-int');
+
+var _parseInt2 = _interopRequireDefault(_parseInt);
+
 var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
@@ -31,7 +35,8 @@ new _vue2.default({
       isSingnedin: false,
       _user: {},
       ownVdeios: [],
-      pageIndex: 0
+      pageIndex: 0,
+      totaltimes: []
     };
   },
 
@@ -210,8 +215,58 @@ new _vue2.default({
       }).end(function (err, res) {
         if (err) console.error(err);else {
           _this2.ownVdeios = res.body.ResultList[0].ownedvedios;
+
+          _this2.ownVdeios.forEach(function (video, i) {
+            var ids = video.children.join('+');
+            if (ids) {
+              _superagent2.default.get('/v1/api/vedio/children').query({
+                ids: ids
+              }).end(function (err, res) {
+                if (err) console.error(err);else {
+                  var totalTime = 0;
+
+                  res.body.ResultList.forEach(function (item) {
+                    totalTime += (0, _parseInt2.default)(item.time);
+                  });
+                  console.log(totalTime);
+
+                  var sss = totalTime / 1000;
+
+                  var hour = (0, _parseInt2.default)(sss / 60 / 60);
+                  var minute = (0, _parseInt2.default)((sss - hour * 60 * 60) / 60);
+                  var second = (0, _parseInt2.default)(sss - hour * 60 * 60 - minute * 60);
+
+                  _this2.totaltimes[i] = hour + '\u65F6' + minute + '\u5206' + second + '\u79D2';
+                }
+              });
+            } else {
+              _this2.totaltimes[i] = '0时0分0秒';
+            }
+          });
         }
       });
+    },
+    changeAvatar: function changeAvatar(e) {
+      var self = this;
+
+      var fileReader = new FileReader();
+      fileReader.onload = function () {
+        _superagent2.default.post('/v1/api/user/users').send({
+          id: self._user._id,
+          update: {
+            username: self._user.username,
+            avatar: this.result
+          }
+        }).end(function (err, res) {
+          if (err) console.error(err);else {
+            if (res.status === 201) {
+              (0, _sweetalert2.default)('', '修改头像成功', 'success');
+              self._user.avatar = res.body.Id.avatar;
+            }
+          }
+        });
+      };
+      fileReader.readAsDataURL(e.target.files[0]);
     },
     _initOrder: function _initOrder() {}
   },
@@ -259,6 +314,11 @@ new _vue2.default({
         if (res.body.isLogin) {
           _this3._user = res.body.user;
           _this3.isSingnedin = true;
+
+          if (/course/.test('course')) {
+            _this3._initCourse();
+            _this3.pageIndex = 1;
+          }
         }
       }
     });

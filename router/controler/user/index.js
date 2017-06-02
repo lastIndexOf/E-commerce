@@ -8,6 +8,8 @@ const
   { writeFile }   =  require('fs'),
   { join }        =  require('path')
 
+
+let number = 0
 module.exports = class UserClass extends BaseContructor {
   // User
   static async putUser(ctx) {
@@ -79,8 +81,9 @@ module.exports = class UserClass extends BaseContructor {
         let avatar = body.update.avatar.split(/data:image\/[\w\W]+;base64,/)[1]
 
         try {
+          const str = number + ''
           await new Promise((resolve, reject) => {
-            writeFile(join(__dirname,'../../../dist/avatars', body.update.username + '-avatar.jpg'),
+            writeFile(join(__dirname,'../../../dist/avatars', body.update.username + str + '-avatar.jpg'),
               Buffer.from(avatar, 'base64'), err => {
                 if (err) reject(err)
 
@@ -89,7 +92,8 @@ module.exports = class UserClass extends BaseContructor {
           })
 
           delete body.update.avatar
-          body.update.avatar = `/static/avatars/${ body.update.username }-avatar.jpg`
+          body.update.avatar = `/static/avatars/${ body.update.username + str }-avatar.jpg`
+          number++
         } catch(e) {
           return ctx.body = {
             Error: e.message
@@ -105,9 +109,10 @@ module.exports = class UserClass extends BaseContructor {
       Object.assign(doc, body.update)
 
       doc.password = ctx.session.password
-      await doc.save()
+      const Id = await doc.save()
 
-      return ctx.status = 201
+      ctx.status = 201
+      return ctx.body = { Id }
     } catch(e) {
       return ctx.body = {
         Error: e.message
