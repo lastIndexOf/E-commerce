@@ -10,7 +10,7 @@ new Vue({
     return {
       scrollTop: 0,
       isSingnedin: false,
-      _user: {},
+      user: {},
       ownVdeios: [],
       pageIndex: 0,
       totaltimes: []
@@ -33,16 +33,16 @@ new Vue({
       swal('', '请加QQ2080437116, :)', 'success')
     },
     editUser() {
-      console.log(this._user)
+      console.log(this.user)
 
       request.post('/v1/api/user/users')
         .send({
-          id: this._user._id,
+          id: this.user._id,
           update: {
-            name: this._user.name,
-            job: this._user.job,
-            gender: this._user.gender,
-            summary: this._user.summary
+            name: this.user.name,
+            job: this.user.job,
+            gender: this.user.gender,
+            summary: this.user.summary
           }
         })
         .end((err, res) => {
@@ -216,13 +216,13 @@ new Vue({
         if (!body.isLogin)
           swal('', body.Error, 'error')
         else {
-          self._user = body.user
+          self.user = body.user
           this.isSingnedin = true
         }
       })
     },
     _initCourse() {
-      request.get('/v1/api/user/user/' + this._user._id)
+      request.get('/v1/api/user/user/' + this.user._id)
         .query({
           keys: 'ownedvedios',
           populate: true
@@ -275,9 +275,9 @@ new Vue({
       fileReader.onload = function() {
         request.post('/v1/api/user/users')
           .send({
-            id: self._user._id,
+            id: self.user._id,
             update: {
-              username: self._user.username,
+              username: self.user.username,
               avatar: this.result
             }
           })
@@ -287,7 +287,7 @@ new Vue({
             else {
               if (res.status === 201) {
                 swal('', '修改头像成功', 'success')
-                self._user.avatar = res.body.Id.avatar
+                self.user.avatar = res.body.Id.avatar
               }
             }
           })
@@ -342,9 +342,10 @@ new Vue({
           console.error(err)
         else {
           if (res.body.isLogin) {
-            this._user = res.body.user
+            this.user = res.body.user
             this.isSingnedin = true
 
+            console.log(this.user)
             if (/course/.test('course')) {
               this._initCourse()
               this.pageIndex = 1

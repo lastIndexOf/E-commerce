@@ -49,15 +49,15 @@
         </div>
         <div class="sign loging" v-if="isSingnedin">
           <div class="personal-wrapper">
-            <img :src="_user.avatar" width="40" height="40">
+            <img :src="user.avatar" width="40" height="40">
           </div>
           <div class="information-wrapper">
             <div class="first">
               <div class="left-wrapper">
-                <img :src="_user.avatar" width="75" height="75">
+                <img :src="user.avatar" width="75" height="75">
               </div>
               <div class="right-wrapper">
-                <h3 class="name">{{ _user.username }}</h3>  
+                <h3 class="name">{{ user.username }}</h3>  
               </div>              
             </div>
             <div class="second">
@@ -68,7 +68,7 @@
               </div>
             </div>
             <div class="signout">
-              <a :href="'/v1/api/user/logout/'+_user._id" class="out">安全退出</a>
+              <a :href="'/v1/api/user/logout/'+user._id" class="out">安全退出</a>
             </div>
           </div>
         </div>
@@ -86,19 +86,18 @@
       </section>
 
     </header>
-    
     <div id="personal-wrapper" v-if="isSingnedin">
       <div class="heading">
         <div class="left">
-          <img :src="_user.avatar" :alt="_user.username" width="180" height="180">
+          <img :src="user.avatar" :alt="user.username" width="180" height="180">
           <span class="setting"
             @click.stop="pageIndex=0"><i class="iconfont icon-shezhi"></i></span>
           <input class="file-select" type="file" @change="changeAvatar">
         </div>
         <div class="right">
-          <h2 class="nickname">{{ _user.username }}</h2>
-          <p class="desc">{{ _user.gender | fitGender }} {{ _user.job | fitJob }}</p>
-          <p class="summary">{{ _user.summary }}</p>
+          <h2 class="nickname">{{ user.username }}</h2>
+          <p class="desc">{{ user.gender | fitGender }} {{ user.job | fitJob }}</p>
+          <p class="summary">{{ user.summary }}</p>
         </div>
       </div>
 
@@ -128,21 +127,21 @@
               <form>
                 <div class="edit-control">
                   <label class="title" for="name">姓名</label>
-                  <input type="text" name="name" v-model="_user.name">
+                  <input type="text" name="name" v-model="user.name">
                 </div>
                 <div class="edit-control">
                   <label class="title" for="job">职位</label>
-                  <input type="text" name="job" v-model="_user.job">
+                  <input type="text" name="job" v-model="user.job">
                 </div>
                 <div class="edit-control">
                   <label class="title" for="gender">性别</label>
-                  <input type="radio" name="gender" value="0" v-model="_user.gender">男
-                  <input type="radio" name="gender" value="1" v-model="_user.gender">女
-                  <input type="radio" name="gender" value="2" v-model="_user.gender">保密
+                  <input type="radio" name="gender" value="0" v-model="user.gender">男
+                  <input type="radio" name="gender" value="1" v-model="user.gender">女
+                  <input type="radio" name="gender" value="2" v-model="user.gender">保密
                 </div>
                 <div class="edit-control">
                   <label class="title" for="summary">简介</label>
-                  <textarea name="summary" v-model="_user.summary"></textarea>
+                  <textarea name="summary" v-model="user.summary"></textarea>
                 </div>
 
               </form>
@@ -180,7 +179,6 @@
     <div class="need-for-signin" v-if="!isSingnedin">
       <img src="/static/system/need-for-signin.png">
     </div>
-
 
     <footer class="footer">
 

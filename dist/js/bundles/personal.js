@@ -34,7 +34,7 @@ new _vue2.default({
     return {
       scrollTop: 0,
       isSingnedin: false,
-      _user: {},
+      user: {},
       ownVdeios: [],
       pageIndex: 0,
       totaltimes: []
@@ -55,15 +55,15 @@ new _vue2.default({
       (0, _sweetalert2.default)('', '请加QQ2080437116, :)', 'success');
     },
     editUser: function editUser() {
-      console.log(this._user);
+      console.log(this.user);
 
       _superagent2.default.post('/v1/api/user/users').send({
-        id: this._user._id,
+        id: this.user._id,
         update: {
-          name: this._user.name,
-          job: this._user.job,
-          gender: this._user.gender,
-          summary: this._user.summary
+          name: this.user.name,
+          job: this.user.job,
+          gender: this.user.gender,
+          summary: this.user.summary
         }
       }).end(function (err, res) {
         if (err) console.error(err);else {
@@ -202,7 +202,7 @@ new _vue2.default({
         }
       }).then(function (body) {
         if (!body.isLogin) (0, _sweetalert2.default)('', body.Error, 'error');else {
-          self._user = body.user;
+          self.user = body.user;
           _this.isSingnedin = true;
         }
       });
@@ -210,7 +210,7 @@ new _vue2.default({
     _initCourse: function _initCourse() {
       var _this2 = this;
 
-      _superagent2.default.get('/v1/api/user/user/' + this._user._id).query({
+      _superagent2.default.get('/v1/api/user/user/' + this.user._id).query({
         keys: 'ownedvedios',
         populate: true
       }).end(function (err, res) {
@@ -253,16 +253,16 @@ new _vue2.default({
       var fileReader = new FileReader();
       fileReader.onload = function () {
         _superagent2.default.post('/v1/api/user/users').send({
-          id: self._user._id,
+          id: self.user._id,
           update: {
-            username: self._user.username,
+            username: self.user.username,
             avatar: this.result
           }
         }).end(function (err, res) {
           if (err) console.error(err);else {
             if (res.status === 201) {
               (0, _sweetalert2.default)('', '修改头像成功', 'success');
-              self._user.avatar = res.body.Id.avatar;
+              self.user.avatar = res.body.Id.avatar;
             }
           }
         });
@@ -313,9 +313,10 @@ new _vue2.default({
     _superagent2.default.get('/v1/api/user/personal').end(function (err, res) {
       if (err) console.error(err);else {
         if (res.body.isLogin) {
-          _this3._user = res.body.user;
+          _this3.user = res.body.user;
           _this3.isSingnedin = true;
 
+          console.log(_this3.user);
           if (/course/.test('course')) {
             _this3._initCourse();
             _this3.pageIndex = 1;
