@@ -261,7 +261,7 @@ module.exports = class TypeClass extends BaseContructor {
                 match: { isthrough: true }
               })
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             const count = await Type.count()
 
@@ -279,7 +279,7 @@ module.exports = class TypeClass extends BaseContructor {
             let datas = await Type
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             const count = await Type.count()
 
@@ -306,7 +306,7 @@ module.exports = class TypeClass extends BaseContructor {
                 match: { isthrough: true }
               })
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             let count = Type.count()
 
@@ -327,7 +327,7 @@ module.exports = class TypeClass extends BaseContructor {
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             let count = Type.count()
 

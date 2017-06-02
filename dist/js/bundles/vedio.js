@@ -41,7 +41,7 @@ new _vue2.default({
       currentPoint: 0,
       _user: {},
       _id: '',
-      _vedio: {},
+      thisVedio: {},
       isActive: 0,
       commentContent: ''
     };
@@ -50,7 +50,7 @@ new _vue2.default({
   computed: {
     totalTime: function totalTime() {
       var totalTime = 0;
-      this._vedio.children.forEach(function (child) {
+      this.thisVedio.children.forEach(function (child) {
         totalTime += child.time - 0;
       });
 
@@ -80,12 +80,12 @@ new _vue2.default({
       _superagent2.default.put('/v1/api/comment/comment').send({
         from: this._user._id,
         content: this.commentContent,
-        vedio: this._vedio._id
+        vedio: this.thisVedio._id
       }).end(function (err, res) {
         if (err) console.error(err);else {
           if (res.status === 201) {
             (0, _sweetalert2.default)('', '评论成功', 'success');
-            _this._vedio.comment.push(res.body.Id);
+            _this.thisVedio.comment.push(res.body.Id);
           }
         }
       });
@@ -304,7 +304,7 @@ new _vue2.default({
       populate: true
     }).end(function (err, res) {
       if (err) console.error(err);else {
-        _this4._vedio = res.body.ResultList[0];
+        _this4.thisVedio = res.body.ResultList[0];
       }
     });
   },

@@ -157,7 +157,7 @@ module.exports = class Location extends BaseContructor {
           let datas = await Province
             .find({})
             .limit(query.limit - 0)
-            .skip(query.page - 1)
+            .skip((query.page - 1) * query.limit)
 
           return ctx.body = {
             Total: datas.length,
@@ -176,7 +176,7 @@ module.exports = class Location extends BaseContructor {
             .find({})
             .select(keys)
             .limit(query.limit - 0)
-            .skip(query.page - 1)
+            .skip((query.page - 1) * query.limit)
 
           let count = Province.count()
 
@@ -347,13 +347,13 @@ module.exports = class Location extends BaseContructor {
             datas = await City
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
               .populate('province', 'name _id')
           } else {
             datas = await City
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           return ctx.body = {
@@ -376,13 +376,13 @@ module.exports = class Location extends BaseContructor {
               .populate('province', 'name _id')
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           } else {
             data = City
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           let count = City.count()
@@ -555,7 +555,7 @@ module.exports = class Location extends BaseContructor {
             datas = await Area
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
               .populate('city', '_id name')
           } else {
             datas = await Area
@@ -583,14 +583,14 @@ module.exports = class Location extends BaseContructor {
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
               .populate('city', '_id name')
           } else {
             data = Area
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           let count = Area.count()

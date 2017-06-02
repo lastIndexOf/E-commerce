@@ -296,7 +296,7 @@ module.exports = class UserClass extends BaseContructor {
               .populate('shopchar')
               .populate('ownedvedios')
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             const count = await User.count()
 
@@ -314,7 +314,7 @@ module.exports = class UserClass extends BaseContructor {
             let datas = await User
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             const count = await User.count()
 
@@ -340,7 +340,7 @@ module.exports = class UserClass extends BaseContructor {
               .populate('shopchar')
               .populate('ownedvedios')
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             let count = User.count()
 
@@ -361,7 +361,7 @@ module.exports = class UserClass extends BaseContructor {
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             let count = User.count()
 
@@ -669,13 +669,13 @@ module.exports = class UserClass extends BaseContructor {
             datas = await Master
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
               .populate('own')
           } else {
             datas = await Master
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           const count = await Master.count()
@@ -700,13 +700,13 @@ module.exports = class UserClass extends BaseContructor {
               .populate('own')
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           } else {
             data = Master
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           let count = await Master.count()
@@ -960,14 +960,14 @@ module.exports = class UserClass extends BaseContructor {
             datas = await VedioChildren
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
               .populate('parent')
               .populate('comment')
           } else {
             datas = await VedioChildren
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           const count = await VedioChildren.count()
@@ -993,13 +993,13 @@ module.exports = class UserClass extends BaseContructor {
               .populate('comment')
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           } else {
             data = VedioChildren
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           let count = await VedioChildren.count()

@@ -91,20 +91,20 @@
       <div class="heading">
       </div>
       <div class="heading-wrapper">
-        <h2 class="title">{{ _vedio.title }}</h2>
+        <h2 class="title">{{ thisVedio.title }}</h2>
 
         <p class="instruction">一份独一无二的, 来自
-          <span class="author">{{ _vedio.author.name }}</span>
+          <span class="author">{{ thisVedio.author.name }}</span>
           的独家珍藏!
         </p>
         
         <div class="desc">
-          <div class="diffculty">难度: {{ _vedio.diffculty | filDif }}</div>
+          <div class="diffculty">难度: {{ thisVedio.diffculty | filDif }}</div>
           <div class="total-time">时长: {{ totalTime }}</div>
         </div>
 
         <div class="money">
-          ￥{{ _vedio.money }}
+          ￥{{ thisVedio.money }}
         </div>
 
         <div class="btn buy" v-if="!hasThisVedio" @click="addToShopCar">加入购物车</div>
@@ -138,7 +138,7 @@
           <div class="instruction">
             <h2 class="title">课程介绍</h2>
 
-            <p class="desc">{{ _vedio.summary }}</p>
+            <p class="desc">{{ thisVedio.summary }}</p>
           </div>
 
           <div class="author-instruction">
@@ -147,15 +147,15 @@
             <div class="wrapper">
               <div class="author-wrapper">
                 <div class="left">
-                  <img width="200" height="200" :src="_vedio.author.avatar" :alt="_vedio.author.nickname">
+                  <img width="200" height="200" :src="thisVedio.author.avatar" :alt="thisVedio.author.nickname">
                 </div>
                 <div class="right">
                   <h3 class="title">哈工大威海著名老司机</h3>
 
-                  <p class="name">{{ _vedio.author.name }}</p>
+                  <p class="name">{{ thisVedio.author.name }}</p>
 
                   <p style="text-align: left; padding-bottom: 12px">讲师告诉你, 你可以学到: </p>
-                  <p class="summary">{{ _vedio.promotion }}</p>
+                  <p class="summary">{{ thisVedio.promotion }}</p>
                 </div>
               </div>
             </div>
@@ -169,13 +169,13 @@
               <h3 class="title">用户评价</h3>
 
               <ul class="comments-wrapper">
-                <li class="comment" v-for="comment of _vedio.comment">
+                <li class="comment" v-for="comment of thisVedio.comment">
                   <div class="wrapper">
                     <h3 class="time-wrapper">{{ comment.meta.updateAt }}</h3>
                     {{ comment.content }}
                   </div>
                 </li>
-                <li class="comment" v-if="!_vedio.comment.length">暂无评论</li>
+                <li class="comment" v-if="!thisVedio.comment.length">暂无评论</li>
               </ul>
 
               <div class="submit-comment" v-if="hasThisVedio">
@@ -193,13 +193,13 @@
             <div class="courses-list">
               <ul class="courses">
                 <li class="course"
-                 v-for="child of _vedio.children">
+                 v-for="child of thisVedio.children">
                   <a :href="'/vediochild?id=' + child._id" class="link-to-child">
                     {{ child.title }}
                     <span class="enter"><i class="iconfont icon-iconfont-edu09"></i></span>
                   </a>
                  </li>
-                 <li class="course" v-if="!_vedio.children.length">
+                 <li class="course" v-if="!thisVedio.children.length">
                    讲师暂时还没有发布课程章节
                  </li>
               </ul>

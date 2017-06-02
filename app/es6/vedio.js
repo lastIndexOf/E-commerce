@@ -13,7 +13,7 @@ new Vue({
       currentPoint: 0,
       _user: {},
       _id: '',
-      _vedio: {},
+      thisVedio: {},
       isActive: 0,
       commentContent: ''
     }
@@ -21,7 +21,7 @@ new Vue({
   computed: {
     totalTime() {
       let totalTime = 0
-      this._vedio.children.forEach(child => {
+      this.thisVedio.children.forEach(child => {
         totalTime += (child.time - 0)
       })
 
@@ -56,7 +56,7 @@ new Vue({
         .send({
           from: this._user._id,
           content: this.commentContent,
-          vedio: this._vedio._id
+          vedio: this.thisVedio._id
         })
         .end((err, res) => {
           if (err)
@@ -64,7 +64,7 @@ new Vue({
           else {
             if (res.status === 201) {
               swal('', '评论成功', 'success')
-              this._vedio.comment.push(res.body.Id)
+              this.thisVedio.comment.push(res.body.Id)
             }
           }
         })
@@ -302,7 +302,7 @@ new Vue({
         if (err)
           console.error(err)
         else {
-          this._vedio = res.body.ResultList[0]
+          this.thisVedio = res.body.ResultList[0]
         }
       })
   },

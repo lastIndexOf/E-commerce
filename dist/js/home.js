@@ -364,7 +364,7 @@ new _vue2.default({
 
     _superagent2.default.get('/v1/api/type/types').query({
       limit: 7,
-      page: 2,
+      page: 1,
       populate: true
     }).end(function (err, res) {
       if (err) console.error(err);else {

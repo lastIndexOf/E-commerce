@@ -426,7 +426,7 @@ new Vue({
     request.get('/v1/api/type/types')
       .query({
         limit: 7,
-        page: 2,
+        page: 1,
         populate: true
       })
       .end((err, res) => {

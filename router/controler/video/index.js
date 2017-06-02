@@ -345,7 +345,7 @@ module.exports = class VedioClass extends BaseContructor {
               .populate('children')
               .populate('comment')
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             const count = await Vedio.count()
 
@@ -363,7 +363,7 @@ module.exports = class VedioClass extends BaseContructor {
             let datas = await Vedio
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             const count = await Vedio.count()
 
@@ -391,7 +391,7 @@ module.exports = class VedioClass extends BaseContructor {
               .populate('children')
               .populate('comment')
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             let count = Vedio.count()
 
@@ -412,7 +412,7 @@ module.exports = class VedioClass extends BaseContructor {
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             let count = Vedio.count()
 
@@ -757,14 +757,14 @@ module.exports = class VedioClass extends BaseContructor {
             datas = await VedioChildren
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
               .populate('parent')
               .populate('comment')
           } else {
             datas = await VedioChildren
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           const sss = data.time / 1000
@@ -797,13 +797,13 @@ module.exports = class VedioClass extends BaseContructor {
               .populate('comment')
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           } else {
             data = VedioChildren
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
           }
 
           let count = await VedioChildren.count()

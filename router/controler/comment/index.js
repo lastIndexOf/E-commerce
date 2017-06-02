@@ -261,7 +261,7 @@ module.exports = class CommentClass extends BaseContructor {
               .populate('vedio')
               .populate('vediochildren')
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             const count = await Comment.count()
 
@@ -279,7 +279,7 @@ module.exports = class CommentClass extends BaseContructor {
             let datas = await Comment
               .find({})
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             const count = await Comment.count()
 
@@ -304,7 +304,7 @@ module.exports = class CommentClass extends BaseContructor {
               .populate('vedio')
               .populate('vediochildren')
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             let count = Comment.count()
 
@@ -325,7 +325,7 @@ module.exports = class CommentClass extends BaseContructor {
               .find({})
               .select(keys)
               .limit(query.limit - 0)
-              .skip(query.page - 1)
+              .skip((query.page - 1) * query.limit)
 
             let count = Comment.count()
 
