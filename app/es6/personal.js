@@ -13,7 +13,8 @@ new Vue({
       user: {},
       ownVdeios: [],
       pageIndex: 0,
-      totaltimes: []
+      totaltimes: [],
+      fixTop: '360px'
     }
   },
   computed: {
@@ -56,7 +57,7 @@ new Vue({
     toTop() {
       let _timer = setInterval(function() {
         const addr = document.body.scrollTop = document.body.scrollTop - 100
-        
+
         if (addr <= 0) {
           clearInterval(_timer)
         }
@@ -89,10 +90,6 @@ new Vue({
       swal('', 'QQ2080437116 ：）', 'success')
     },
     _valiInput(data) {
-      console.log(data.username.value)
-      console.log(data.password.value)
-      console.log(data.email.value)
-      console.log(data.gender.value)
       if (!/^([a-zA-Z])[\w\W]{7,}/.test(data.username.value)) {
         swal('', '请输入以字母开头，至少为7位的用户名', 'warning')
         return false
@@ -127,9 +124,9 @@ new Vue({
         title: '新账号注册',
         html:
           '<form id="signup-form">' +
-            '<input type="text" name="username" class="swal2-input" placeholder="用户名"/>' + 
-            '<input type="password" name="password" class="swal2-input" placeholder="密码"/>' + 
-            '<input type="password" name="repeat" class="swal2-input" placeholder="重复密码"/>' + 
+            '<input type="text" name="username" class="swal2-input" placeholder="用户名"/>' +
+            '<input type="password" name="password" class="swal2-input" placeholder="密码"/>' +
+            '<input type="password" name="repeat" class="swal2-input" placeholder="重复密码"/>' +
             '<input type="email" name="email" class="swal2-input" placeholder="邮箱"/>' +
             '<div class="swal2-radio">' +
               '<label>' +
@@ -189,8 +186,8 @@ new Vue({
         title: '用户登录',
         html:
           '<form id="signup-form">' +
-            '<input type="text" name="username" class="swal2-input" placeholder="用户名/邮箱地址"/>' + 
-            '<input type="password" name="password" class="swal2-input" placeholder="密码"/>' + 
+            '<input type="text" name="username" class="swal2-input" placeholder="用户名/邮箱地址"/>' +
+            '<input type="password" name="password" class="swal2-input" placeholder="密码"/>' +
           '</form>',
         confirmButtonText: '登录',
         showLoaderOnConfirm: true,
@@ -232,13 +229,13 @@ new Vue({
             console.error(err)
           else {
             this.ownVdeios = res.body.ResultList[0].ownedvedios
-            
+
             this.ownVdeios.forEach((video, i) => {
               let ids = video.children.join('+')
               if (ids) {
                 request.get('/v1/api/vedio/children')
                   .query({
-                    ids 
+                    ids
                   })
                   .end((err, res) => {
                     if (err)
@@ -250,9 +247,9 @@ new Vue({
                         totalTime += Number.parseInt(item.time)
                       })
                       console.log(totalTime)
-                      
+
                       const sss = totalTime / 1000
-                    
+
                       const hour = Number.parseInt(sss / 60 / 60)
                       const minute = Number.parseInt((sss - hour * 60 * 60) / 60)
                       const second = Number.parseInt(sss - hour * 60 * 60 - minute * 60)
@@ -270,7 +267,7 @@ new Vue({
     },
     changeAvatar(e) {
       const self = this
-      
+
       let fileReader = new FileReader()
       fileReader.onload = function() {
         request.post('/v1/api/user/users')
@@ -334,7 +331,13 @@ new Vue({
 
     window.addEventListener('scroll', this._throttle(function(e) {
       self.scrollTop = document.body.scrollTop
-    }, 50))
+
+      if (self.scrollTop >= 240) {
+        self.fixTop = '120px'
+      }
+      else
+        self.fixTop = 360 - self.scrollTop + 'px'
+    }, 10))
 
     request.get('/v1/api/user/personal')
       .end((err, res) => {

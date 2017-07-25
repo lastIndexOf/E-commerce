@@ -58,8 +58,8 @@
                 <img :src="_user.avatar" width="75" height="75">
               </div>
               <div class="right-wrapper">
-                <h3 class="name"><a href="/personal">{{ _user.username }}</a></h3>  
-              </div>              
+                <h3 class="name"><a href="/personal">{{ _user.username }}</a></h3>
+              </div>
             </div>
             <div class="second">
               <div class="block-wrapper">
@@ -87,7 +87,7 @@
       </section>
 
     </header>
-  
+
     <div class="order" v-if="isSingnedin">
       <div class="heading">
       </div>
@@ -117,7 +117,7 @@
                 </label>
                 <div class="course">
                   <a :href="'/vedio?id=' + item._id">
-                    <img :src="item.avatar" :alt="item.title" class="post" width="200" height="140">
+                    <img :src="item.avatar" :alt="item.title" class="post" width="150" height="100">
                     <h3 class="title">{{ item.title }}</h3>
                   </a>
                 </div>
@@ -167,7 +167,7 @@
     </div>
 
   </div>
-  
+
   <script src="/static/js/bundles/order.js"></script>
 </body>
 </html>

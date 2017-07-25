@@ -36,7 +36,8 @@ new _vue2.default({
       user: {},
       ownVdeios: [],
       pageIndex: 0,
-      totaltimes: []
+      totaltimes: [],
+      fixTop: '360px'
     };
   },
 
@@ -108,10 +109,6 @@ new _vue2.default({
       (0, _sweetalert2.default)('', 'QQ2080437116 ：）', 'success');
     },
     _valiInput: function _valiInput(data) {
-      console.log(data.username.value);
-      console.log(data.password.value);
-      console.log(data.email.value);
-      console.log(data.gender.value);
       if (!/^([a-zA-Z])[\w\W]{7,}/.test(data.username.value)) {
         (0, _sweetalert2.default)('', '请输入以字母开头，至少为7位的用户名', 'warning');
         return false;
@@ -307,7 +304,11 @@ new _vue2.default({
 
     window.addEventListener('scroll', this._throttle(function (e) {
       self.scrollTop = document.body.scrollTop;
-    }, 50));
+
+      if (self.scrollTop >= 240) {
+        self.fixTop = '120px';
+      } else self.fixTop = 360 - self.scrollTop + 'px';
+    }, 10));
 
     _superagent2.default.get('/v1/api/user/personal').end(function (err, res) {
       if (err) console.error(err);else {

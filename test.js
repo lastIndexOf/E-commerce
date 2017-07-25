@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Vedio = require('./Models/vedio.js')
+const Admin = require('./Models/admin.js')
 
 mongoose.connect('mongodb://localhost:27017/commerce', err => {
   if (err)
@@ -9,30 +9,30 @@ mongoose.connect('mongodb://localhost:27017/commerce', err => {
    console.log('connection sussecc!')
 })
 
-Vedio.find({})
-  .skip(10)
-  .limit(10)
-  .exec((err, videos) => {
-    if (err)
-      console.error(err)
-    else {
-      console.log(videos)
-    }
-  })
+//Vedio.find({})
+//  .skip(10)
+//  .limit(10)
+//  .exec((err, videos) => {
+//    if (err)
+//      console.error(err)
+//    else {
+//      console.log(videos)
+//    }
+//  })
 
-// // new Admin({
-// // 	name: '郑凡恺',
-// // 	password: 'zhengfankai',
-// // 	username: 'zhengfankai',
-// // 	gender: '0',
-// // 	role: 99
-// // }).save((err, admin) => {
-// // 	if (err)
-// // 		console.error(err)
-// // 	else {
-// // 		console.log(admin)
-// // 	}
-// // })
+new Admin({
+  name: '郑凡恺',
+  password: 'zhengfankai',
+  username: 'zhengfankai',
+  gender: '0',
+  role: 99
+}).save((err, admin) => {
+  if (err)
+    console.error(err)
+  else {
+    console.log(admin)
+  }
+})
 
 // // const testSchema = new Schema({
 // // 	name: String,

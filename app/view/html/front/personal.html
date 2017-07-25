@@ -57,8 +57,8 @@
                 <img :src="user.avatar" width="75" height="75">
               </div>
               <div class="right-wrapper">
-                <h3 class="name">{{ user.username }}</h3>  
-              </div>              
+                <h3 class="name">{{ user.username }}</h3>
+              </div>
             </div>
             <div class="second">
               <div class="block-wrapper">
@@ -102,7 +102,7 @@
       </div>
 
       <div class="personal-center">
-        <div class="tab-menu">
+        <div class="tab-menu" :style="{top: fixTop}">
           <ul class="menu">
             <li class="tab" :class="{active:pageIndex===0}" @click="pageIndex=0">
               个人信息
@@ -205,7 +205,7 @@
       <i class="iconfont icon-fanhuidingbu"></i>
     </div>
   </div>
-  
+
   <script src="/static/js/bundles/personal.js"></script>
 </body>
 </html>
