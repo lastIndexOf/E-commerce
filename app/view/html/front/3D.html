@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html onselectstart="return false">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3D拖动相册</title>
+
+<style type="text/css">
+	*{margin:0px;}
+	body{background-color:#000; -moz-user-select:none;}
+	#pic{width:120px; height:180px; margin:200px auto 0px; position:relative;
+		 transform-style:preserve-3d; transform:perspective(800px) rotateX(-10deg) rotateY(0deg);}
+		 /*搭建3D场景   perspective相当于隔多远去看  transform:rotateY(33deg)意思是在y轴方向旋转33度*/
+	#pic img{position:absolute; width:100%; height:100%;
+			 border-radius:5px; box-shadow:0px 0px 10px #fff;
+			 -webkit-box-reflect:below 10px -webkit-linear-gradient(top,rgba(0,0,0,0) 50%,rgba(0,0,0,0.5) 100%);}
+			 /*圆角   阴影   倒影(渐变)*/
+	#pic p{width:1200px; height:1200px; position:absolute; left:50%; top:100%;
+		   margin-top:-600px; margin-left:-600px; transform:rotateX(90deg); border-radius:600px;
+		   background:-webkit-radial-gradient(center center,600px 600px,rgba(255,255,255,.5),rgba(0,0,0,0));}
+</style>
+</head>
+
+<body>
+	<div id="pic">
+    	<img src="/static/images/1.jpg" />
+        <img src="/static/images/2.jpg" />
+        <img src="/static/images/3.jpg" />
+        <img src="/static/images/4.jpg" />
+        <img src="/static/images/5.jpg" />
+        <img src="/static/images/6.jpg" />
+        <img src="/static/images/7.jpg" />
+        <img src="/static/images/8.jpg" />
+        <img src="/static/images/9.jpg" />
+        <img src="/static/images/10.jpg" />
+        <img src="/static/images/11.jpg" />
+        <p></p><!--白色光底-->
+    </div>
+
+    <script src="/static/js/bundles/jquery-1.11.3.min.js"></script>
+    <script>
+    	$(function(){
+				setTimeout(function() {
+					$("#pic img").each(function(i){
+						$(this).css({
+							transition: 'all .5s',
+							"transform":"rotateY("+i*deg+"deg) translateZ(350px)"
+						});
+						$(this).attr("ondragstart","return false");//禁止图片拖动
+					});
+				}, 200)
+
+				var roY=0,roX=-10;
+				var imgL=$("#pic img").size();
+				var deg=360/imgL;
+				var xN=0,yN=0;
+				var play=null;//用于接收定时器的变量
+
+
+				$(document).mousedown(function(ev){
+					clearInterval(play);//防止产生两个定时器
+					var x_=ev.clientX;
+					var y_=ev.clientY;
+					$(this).bind("mousemove",function(ev){
+						var x=ev.clientX;
+						var y=ev.clientY;
+						xN=x-x_;
+						yN=y-y_;
+						roY+=xN*0.2;//*0.2变慢速度
+						roX-=yN*0.1;//*0.2变慢速度
+						//$("body").append('<div style="width:5px;height:5px;background:red;position:absolute;top:'+y+'px;left:'+x+'px;"></div>');//跟着鼠标点击的轨迹生成小点
+						$("#pic").css({
+							transform:"perspective(800px) rotateX("+roX+"deg) rotateY("+roY+"deg)"
+						});
+						x_=ev.clientX;
+						y_=ev.clientY;
+					});
+				}).mouseup(function(){//惯性停止
+					$(this).unbind("mousemove");
+					var play=setInterval(function(){
+						xN*=0.95;
+						yN*=0.95;
+						if(Math.abs(xN)<1 && Math.abs(yN)<1){
+							clearInterval(play);
+						}
+						roY+=xN*0.2;
+						roX-=yN*0.1;
+						$("#pic").css({
+							transform:"perspective(800px) rotateX("+roX+"deg) rotateY("+roY+"deg)"});
+					},30);
+				});
+			});
+    </script>
+</body>
+</html>

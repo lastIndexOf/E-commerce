@@ -32,6 +32,9 @@
         <div class="tab-item">
           <a href="javascript:;" class="item" @click="payFor">付费咨询</a>
         </div>
+        <div class="tab-item">
+          <a href="/prc/3d" class="item">3D拖动相册</a>
+        </div>
       </section>
 
       <section class="right">
@@ -57,8 +60,8 @@
                 <img :src="_user.avatar" width="75" height="75">
               </div>
               <div class="right-wrapper">
-                <h3 class="name"><a href="/personal">{{ _user.username }}</a></h3>  
-              </div>              
+                <h3 class="name"><a href="/personal">{{ _user.username }}</a></h3>
+              </div>
             </div>
             <div class="second">
               <div class="block-wrapper">
@@ -206,7 +209,7 @@
   </div>
 
   <!--<audio style="display:none" autoplay loop src="/static/musics/宋冬野 - 安和桥.mp3">
-    
+
   </audio>-->
   <script src="/static/js/bundles/home.js"></script>
 </body>

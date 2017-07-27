@@ -5,7 +5,8 @@ const
   Type     =  require('./controler/type'),
   Comment  =  require('./controler/comment'),
   Location =  require('./controler/location'),
-  Func     =  require('./controler/func')
+  Func     =  require('./controler/func'),
+  PRC      =  require('./controler/PRC')
 
 module.exports = router => {
   /**
@@ -146,6 +147,14 @@ module.exports = router => {
   router.get('/v1/api/location/area/:id', Location.getArea)
   router.get('/v1/api/location/areas', Location.getAreas)
 
+
+  // 其他页面
+  router.get('/prc/css', PRC.getCss)
+  router.get('/prc/3d', PRC.getThreeD)
+
+
   //  错误404页面
   router.get('*', Index.notFoundAction)
+
+
 }

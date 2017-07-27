@@ -13,7 +13,7 @@ const config = require('./config.js')
 const app = new Koa()
 
 const router = new Router()
-const render = renderer('./app/view/html', {
+const render = renderer('./app/view', {
 	map: { html: 'pug' },
 	extension: 'pug'
 })
