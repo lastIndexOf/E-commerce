@@ -1,0 +1,1 @@
+export const run = () => console.log(2)
