@@ -3,6 +3,8 @@ import ScrollReveal from 'scrollreveal'
 import swal from 'sweetalert2'
 import request from 'superagent'
 
+import { run } from './test';
+
 window.sr = ScrollReveal({ reset: true })
 
 new Vue({
